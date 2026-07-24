@@ -1,0 +1,230 @@
+/* OASIS project site custom styles */
+
+:root {
+  --oasis-cream: #fffaf1;
+  --oasis-sand: #f1e6d1;
+  --oasis-border: #dbc7a6;
+  --oasis-ink: #21333b;
+  --oasis-slate: #49606a;
+  --oasis-teal: #0d6a72;
+  --oasis-gold: #ad7a25;
+  --oasis-coral: #bf5844;
+  --oasis-shadow: 0 18px 40px rgba(33, 51, 59, 0.10);
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(13, 106, 114, 0.08), transparent 28%),
+    linear-gradient(180deg, #fffaf1 0%, #f7f0e1 100%);
+  color: var(--oasis-ink);
+}
+
+.hero-panel {
+  margin: 0 0 2rem;
+  padding: 2.2rem 1.5rem 1.8rem;
+  border: 1px solid var(--oasis-border);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(13, 106, 114, 0.08), rgba(173, 122, 37, 0.08)),
+    var(--oasis-cream);
+  box-shadow: var(--oasis-shadow);
+  text-align: center;
+}
+
+.hero-kicker,
+.eyebrow {
+  color: var(--oasis-coral);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-tagline {
+  margin: 0.8rem 0 0;
+  color: var(--oasis-coral);
+  font-size: 1.08rem;
+  font-style: italic;
+}
+
+.hero-lede,
+.section-lede {
+  max-width: 52rem;
+  margin: 1rem auto 0;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--oasis-slate);
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.hero-chip {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(13, 106, 114, 0.18);
+  border-radius: 999px;
+  background: rgba(13, 106, 114, 0.08);
+  color: var(--oasis-ink);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.metric-grid,
+.insight-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.metric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.insight-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.metric-card,
+.insight-card,
+.diagram-note {
+  border: 1px solid var(--oasis-border);
+  border-radius: 18px;
+  background: rgba(255, 250, 241, 0.96);
+  box-shadow: var(--oasis-shadow);
+}
+
+.metric-card,
+.insight-card {
+  padding: 1.1rem 1rem;
+}
+
+.metric-value {
+  color: var(--oasis-teal);
+  font-size: 1.75rem;
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.metric-label,
+.insight-card p {
+  margin: 0.55rem 0 0;
+  color: var(--oasis-slate);
+  line-height: 1.6;
+}
+
+.insight-card h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.12rem;
+  color: var(--oasis-ink);
+}
+
+.diagram-note {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  color: var(--oasis-slate);
+}
+
+table {
+  background: rgba(255, 250, 241, 0.92);
+}
+
+/* Make Mermaid diagram backgrounds transparent so they work in both light and dark mode */
+.mermaid svg {
+  background-color: transparent !important;
+}
+
+/* Mermaid container - remove any default background */
+.quarto-figure .mermaid,
+.cell-output-display .mermaid {
+  background-color: transparent !important;
+}
+
+[data-bs-theme="dark"] body {
+  background:
+    radial-gradient(circle at top, rgba(95, 197, 206, 0.12), transparent 28%),
+    linear-gradient(180deg, #122028 0%, #0f171c 100%);
+  color: #edf2f4;
+}
+
+[data-bs-theme="dark"] .hero-panel,
+[data-bs-theme="dark"] .metric-card,
+[data-bs-theme="dark"] .insight-card,
+[data-bs-theme="dark"] .diagram-note,
+[data-bs-theme="dark"] table {
+  background: rgba(25, 37, 45, 0.95);
+  border-color: rgba(95, 197, 206, 0.20);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.30);
+}
+
+[data-bs-theme="dark"] .hero-lede,
+[data-bs-theme="dark"] .section-lede,
+[data-bs-theme="dark"] .metric-label,
+[data-bs-theme="dark"] .insight-card p,
+[data-bs-theme="dark"] .diagram-note {
+  color: #c9d5da;
+}
+
+[data-bs-theme="dark"] .hero-chip {
+  background: rgba(95, 197, 206, 0.10);
+  border-color: rgba(95, 197, 206, 0.24);
+  color: #edf2f4;
+}
+
+[data-bs-theme="dark"] .insight-card h3 {
+  color: #edf2f4;
+}
+
+[data-bs-theme="dark"] .metric-value {
+  color: #5fc5ce;
+}
+
+[data-bs-theme="dark"] .hero-kicker,
+[data-bs-theme="dark"] .eyebrow {
+  color: #e0876a;
+}
+
+[data-bs-theme="dark"] .hero-tagline {
+  color: #e0876a;
+}
+
+/* Callout headers keep their light tint in dark mode; keep their titles legible */
+[data-bs-theme="dark"] .callout-header {
+  color: #12262e;
+}
+
+/* Ensure Mermaid node text is readable in both modes */
+[data-bs-theme="dark"] .mermaid .nodeLabel {
+  color: #e0e0e0;
+}
+
+[data-bs-theme="dark"] .mermaid .edgeLabel {
+  background-color: #2b3035;
+  color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .hero-panel {
+    padding: 1.6rem 1rem 1.4rem;
+    border-radius: 20px;
+  }
+
+  .hero-lede,
+  .section-lede {
+    font-size: 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.45rem;
+  }
+}
+
+/* Responsive mermaid diagrams: scale wide flowcharts to the content column */
+.mermaid svg, .mermaid-js svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
