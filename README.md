@@ -15,7 +15,8 @@ rubric definition through adjudication.
 ## Related projects and demonstrations
 
 - [Explore the UT-REAL multi-site MAPLES project](https://ut-real-ai-project-maples.com/)
-- [Watch Ameer Hamza Shakur demonstrate the MAPLES workflow](https://www.youtube.com/watch?v=tHvS2kqRc2Q)
+- [Watch Ameer Hamza Shakur demonstrate the MAPLES grading and faculty-review workflow](https://www.youtube.com/watch?v=tHvS2kqRc2Q)
+- [Watch Minhan Park and Licheng Yi demonstrate Wayfinder rubric authoring in MAPLES](https://www.youtube.com/watch?v=MKwseFKuFLs)
 
 ## Publication scope
 
