@@ -152,61 +152,9 @@ ul.task-list li input[type="checkbox"] {
 An AI oasis in the desert of manual grading.
 </p>
 <p class="hero-lede">
-OASIS is a systems platform for rubric-based assessment of video, audio, and text with large language models. It works with hosted APIs or institution-controlled open-weight models through Ollama and OpenAI-compatible endpoints such as vLLM. Modality-aware execution, provenance capture, and human review keep scores inspectable from rubric definition through adjudication.
+OASIS is a systems platform for rubric-based assessment of video, audio, and text with large language models. Model execution is provider-flexible, with support for hosted services and compatible local endpoints such as vLLM. Modality-aware execution, provenance capture, and human review keep scores inspectable from rubric definition through adjudication.
 </p>
 </div>
-<section id="hosted-or-local-inference" class="level2">
-<h2 class="anchored" data-anchor-id="hosted-or-local-inference">Hosted or local inference</h2>
-<p>Model choice is an explicit part of an OASIS run rather than a platform lock-in. The same rubric, encounter selection, review workflow, and provenance structure can be used to evaluate hosted models or models served on institutional infrastructure.</p>
-<p>Recent internal engineering runs have exercised local vLLM endpoints with Gemma and Qwen model families across text grading, transcript-first audio, frame-presented video, and selected native-audio research paths. These runs demonstrate an operating capability, not a universal model-performance benchmark: modality support and output quality depend on the selected model, runtime, and media presentation.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Path</th>
-<th>Current interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Local text grading</strong></td>
-<td>Demonstrated through OpenAI-compatible vLLM endpoints with multiple open-weight models</td>
-</tr>
-<tr class="even">
-<td><strong>Local audio assessment</strong></td>
-<td>Demonstrated through local ASR followed by open-weight text grading</td>
-</tr>
-<tr class="odd">
-<td><strong>Native open-weight audio</strong></td>
-<td>Research-tested with selected multimodal models; not a provider-neutral guarantee</td>
-</tr>
-<tr class="even">
-<td><strong>Open-weight video</strong></td>
-<td>Demonstrated with extracted-frame presentations, which are not equivalent to native continuous-video input</td>
-</tr>
-<tr class="odd">
-<td><strong>Hosted multimodal APIs</strong></td>
-<td>Remain available where native media support or model capability makes them the appropriate choice</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>What fully local means.</strong> A workflow is fully local only when every active stage—including transcription, primary grading, and any schema-conversion or post-processing model—runs on institution-controlled infrastructure. A local primary paired with a hosted converter is a hybrid workflow, not a fully local one.</p>
-</div>
-</div>
-</section>
 <section id="technical-report" class="level2">
 <h2 class="anchored" data-anchor-id="technical-report">Technical report</h2>
 <p>The technical report describes the platform architecture, rubric-to-prompt compilation, multimodal grading pipeline, agent-facing command surfaces, provenance model, and operational experience.</p>
