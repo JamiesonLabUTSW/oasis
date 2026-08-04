@@ -442,46 +442,10 @@ Figure&nbsp;1: OASIS platform architecture. The standalone CLI and integrated El
 </section>
 <section id="hosted-and-open-weight-inference" class="level3">
 <h3 class="anchored" data-anchor-id="hosted-and-open-weight-inference">Hosted and Open-Weight Inference</h3>
-<p>OASIS treats the model endpoint as an explicit execution choice rather than a fixed platform dependency. The standalone CLI supports Gemini, OpenAI, Anthropic, Ollama, and OpenAI-compatible endpoints. MAPLES supports Gemini, OpenAI, Azure OpenAI, and OpenAI-compatible endpoints, including models served locally with vLLM. This lets a model comparison change the provider, endpoint, or model while retaining the same rubric snapshot, encounter selection, review states, and result structure.</p>
-<p>Recent internal engineering runs have exercised local vLLM endpoints with Gemma and Qwen model families across four distinct presentation paths:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 39%">
-<col style="width: 49%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Path</th>
-<th>Demonstrated scope</th>
-<th>Interpretation boundary</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Text</strong></td>
-<td>Direct local grading with multiple open-weight primaries</td>
-<td>The strongest and most directly comparable local path</td>
-</tr>
-<tr class="even">
-<td><strong>Transcript-first audio</strong></td>
-<td>Local ASR followed by open-weight text grading</td>
-<td>A pipeline evaluation, not native waveform understanding</td>
-</tr>
-<tr class="odd">
-<td><strong>Frame-presented video</strong></td>
-<td>Extracted frames supplied to open-weight vision-language models</td>
-<td>Not equivalent to native continuous-video input</td>
-</tr>
-<tr class="even">
-<td><strong>Native audio</strong></td>
-<td>Research runs with selected open-weight multimodal models</td>
-<td>Model- and runtime-specific rather than a general provider guarantee</td>
-</tr>
-</tbody>
-</table>
-<p>These runs demonstrate that open-weight inference is an operating mode of the system, not merely an untested adapter. They are engineering evaluations rather than universal performance benchmarks: the effective capability depends on the model, serving runtime, context limits, media processor, generation settings, and exact presentation supplied to the model. OASIS therefore records the provider and model with each result and keeps presentation differences explicit when comparing outputs.</p>
-<p>A local primary does not by itself make a workflow fully local. Every active stage—including transcription, primary grading, and any schema-conversion or post-processing model—must run locally for the complete workflow to have that property. For example, an evaluated MAPLES configuration that uses a local vLLM primary and a hosted schema converter is a hybrid configuration and must be described as such.</p>
+<p>OASIS treats the model endpoint as an explicit execution choice rather than a fixed platform dependency. The standalone CLI supports Gemini, OpenAI, Anthropic, Ollama, and OpenAI-compatible endpoints. MAPLES supports Gemini, OpenAI, Azure OpenAI, and OpenAI-compatible endpoints, including models served locally with vLLM. A model comparison can therefore vary the provider, endpoint, or model while retaining the same rubric snapshot, encounter selection, review states, and result structure.</p>
+<p>To assess compatibility with self-hosted inference, we evaluated representative models from the Gemma and Qwen families through vLLM in several illustrative configurations. Examples included direct grading of text; transcript-mediated audio, in which a locally generated transcript was supplied to a language model; sampled video frames supplied to a vision-language model; and direct audio processing with compatible multimodal models. These examples demonstrate implementation flexibility; they do not prescribe a fixed inference architecture.</p>
+<p>Collectively, the evaluations establish that OASIS can support self-hosted inference for text and selected multimodal workloads. They are capability evaluations, not claims of model equivalence or modality-independent performance. Results depend on the model architecture, serving runtime, context window, preprocessing pipeline, generation parameters, and information available in the input representation. OASIS records provider and model identifiers with each result, while comparative analyses specify the relevant preprocessing and presentation configuration.</p>
+<p>Deployment locality is a property of the complete processing chain, not only the primary model endpoint. A fully local configuration executes transcription, primary grading, schema normalization, and any model-assisted post-processing locally. A configuration that combines a self-hosted primary model with a hosted downstream service is therefore reported as hybrid. The evaluated MAPLES workflow that paired a vLLM-served primary model with a hosted schema-conversion step is one example, not a required architecture.</p>
 </section>
 <section id="standalone-interactive-and-agent-native-operation" class="level3">
 <h3 class="anchored" data-anchor-id="standalone-interactive-and-agent-native-operation">Standalone, Interactive, and Agent-Native Operation</h3>
