@@ -382,7 +382,8 @@ window.Quarto = {
 </section>
 <section id="evolution-and-design-philosophy" class="level2">
 <h2 class="anchored" data-anchor-id="evolution-and-design-philosophy">Evolution and Design Philosophy</h2>
-<p>OASIS evolved through four overlapping stages: a grading pipeline, a reusable platform, an agent-native operating surface, and an accessible tool for non-specialist users. The original MAPLES pipeline established that LLMs could apply rubrics to clinical performance artifacts at operational scale. The platform layer added Elephant for encounter and file management, SimRubrics for rubric quality assurance, and shared contracts across services. The agent-native layer then exposed the same workflow through the CLI, the interactive terminal UI (TUI), and MCP surfaces <span class="citation" data-cites="mcp2024">(<a href="#ref-mcp2024" role="doc-biblioref">Anthropic 2024</a>)</span>, so autonomous assistants could plan, inspect, and recover grading runs without bypassing the human-facing system. A platform agent gateway and an embedded Wayfinder chat assistant later brought the same property to the institutional web interface. (Wayfinder is the platform’s assistant persona; it has two implementations — an agent embedded in the CLI and TUI, and a gateway-backed chat in the MAPLES web application — and this report qualifies each use as CLI-tier or platform-tier.) The fourth layer is accessibility: a standalone binary, guided workflow, reproducibility bundle, and synthetic starter pack let researchers evaluate the system without deploying institutional infrastructure.</p>
+<p>OASIS evolved through four overlapping stages: a grading pipeline, a reusable platform, an agent-native operating surface, and an accessible tool for non-specialist users. The original MAPLES pipeline established that LLMs could apply rubrics to clinical performance artifacts at operational scale. The platform layer added Elephant for encounter and file management, SimRubrics for rubric quality assurance, and shared contracts across services.</p>
+<p>The agent-native layer then exposed the same workflow through the CLI, the interactive terminal UI (TUI), and MCP surfaces <span class="citation" data-cites="mcp2024">(<a href="#ref-mcp2024" role="doc-biblioref">Anthropic 2024</a>)</span>, so autonomous assistants could plan, inspect, and recover grading runs without bypassing the human-facing system. A platform agent gateway and an embedded Wayfinder chat assistant later brought the same property to the institutional web interface. (Wayfinder is the platform’s assistant persona; it has two implementations — an agent embedded in the CLI and TUI, and a gateway-backed chat in the MAPLES web application — and this report qualifies each use as CLI-tier or platform-tier.) The fourth layer is accessibility: a standalone binary, guided workflow, reproducibility bundle, and synthetic starter pack let researchers evaluate the system without deploying institutional infrastructure.</p>
 </section>
 <section id="software-design" class="level2">
 <h2 class="anchored" data-anchor-id="software-design">Software Design</h2>
@@ -855,8 +856,8 @@ output_key = sha256(input_key + model + provider)</code></pre>
 </section>
 <section id="availability" class="level2">
 <h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<p>Project information and this technical report are available through <a href="https://github.com/JamiesonLabUTSW/oasis">https://github.com/JamiesonLabUTSW/oasis</a> and <a href="https://jamiesonlabutsw.github.io/oasis/">https://jamiesonlabutsw.github.io/oasis/</a>. Application and component source code, binaries, installation materials, sample data, and a tagged software release are not included in the current public publication.</p>
-<p>The configurations and command sequences below characterize the system evaluated for this report; they are not an assertion that the software can currently be cloned or installed from the public repository. OASIS was evaluated in three configurations:</p>
+<p>Project information and this technical report are available at <a href="https://github.com/JamiesonLabUTSW/oasis">https://github.com/JamiesonLabUTSW/oasis</a> and <a href="https://jamiesonlabutsw.github.io/oasis/">https://jamiesonlabutsw.github.io/oasis/</a>. Application and component source code, binaries, installation materials, sample data, and a tagged software release are not included in the current public publication.</p>
+<p>The configurations below characterize the system evaluated for this report; they are not an assertion that the software can currently be cloned or installed from the public repository. OASIS was evaluated in three configurations:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 22%">
@@ -970,7 +971,7 @@ output_key = sha256(input_key + model + provider)</code></pre>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>This work was supported by the Office of the President, UT Southwestern Medical Center. AI tools (Claude, Copilot, Gemini) were used during development and documentation; all technical claims and manuscript text were reviewed by the authors, who take responsibility for the final content.</p>
+<p>This work was supported by the Office of the President, UT Southwestern Medical Center. AI tools (Claude, Codex, Copilot, Gemini) were used during development and documentation; all technical claims and manuscript text were reviewed by the authors, who take responsibility for the final content.</p>
 </section>
 <section id="references" class="level2">
 
