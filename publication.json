@@ -8,12 +8,12 @@
   "installable_software_included": false,
   "report_html": {
     "path": "paper/paper.html",
-    "bytes": 135659,
-    "sha256": "7c5d1fcab258e5f100b8aa07dc914d291834c561cffaa47f5224d823e3711780"
+    "bytes": 135180,
+    "sha256": "c7629b99b28c9e087cbf2ad6058b77b4523f658774d04bbdcf03c63df3f28bf6"
   },
   "report_pdf": {
     "path": "paper/OASIS_technical_report.pdf",
-    "bytes": 650326,
-    "sha256": "ecf64ff5ad4bc26c0e5dcd9461221a119786cfb7aa60785fb5b1ddca09233df8"
+    "bytes": 649822,
+    "sha256": "a81f77f04c82ca673fac46f98d7d4ec35de0fe9f8df35b012ce7be470e188eca"
   }
 }
