@@ -151,6 +151,17 @@ def check_checksums() -> None:
 
 
 def check_contract() -> None:
+    for page_name in ("index.html", "tui.html"):
+        page = (OUTPUT / page_name).read_text(encoding="utf-8")
+        stylesheet_links = re.findall(
+            r'href="styles\.css\?v=([0-9a-f]{12})"',
+            page,
+        )
+        if len(stylesheet_links) != 1:
+            raise SystemExit(f"project stylesheet is not fingerprinted in {page_name}")
+        if stylesheet_links[0] != digest(OUTPUT / "styles.css")[:12]:
+            raise SystemExit(f"project stylesheet fingerprint is stale in {page_name}")
+
     tui = (OUTPUT / "tui.html").read_text(encoding="utf-8")
     for marker in (
         'role="tablist"',

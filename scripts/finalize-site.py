@@ -34,9 +34,28 @@ def artifact(path: Path) -> dict[str, object]:
     }
 
 
+def fingerprint_site_styles() -> None:
+    stylesheet = OUTPUT / "styles.css"
+    if not stylesheet.is_file():
+        raise SystemExit(f"rendered stylesheet is missing: {stylesheet}")
+    version = digest(stylesheet)[:12]
+    for page_name in ("index.html", "tui.html"):
+        page = OUTPUT / page_name
+        content = page.read_text(encoding="utf-8")
+        original = 'href="styles.css"'
+        if content.count(original) != 1:
+            raise SystemExit(f"expected one project stylesheet link in {page}")
+        page.write_text(
+            content.replace(original, f'href="styles.css?v={version}"'),
+            encoding="utf-8",
+        )
+
+
 def main() -> None:
     if not OUTPUT.is_dir() or not PUBLICATION.is_file():
         raise SystemExit(f"rendered site is incomplete: {OUTPUT}")
+
+    fingerprint_site_styles()
 
     paper_site_libs = ROOT / "vendor" / "paper-site-libs"
     if not paper_site_libs.is_dir():
