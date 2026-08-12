@@ -55,6 +55,11 @@ body {
   margin-bottom: 0;
 }
 
+.hero-panel img {
+  max-width: 100%;
+  height: auto;
+}
+
 .hero-tagline {
   margin: 0.8rem 0 0;
   color: var(--oasis-coral);
@@ -122,6 +127,11 @@ body {
   display: block;
   width: 100%;
   margin: 0;
+}
+
+.tour-teaser-media img {
+  height: auto;
+  aspect-ratio: 5 / 3;
 }
 
 .tour-cta,

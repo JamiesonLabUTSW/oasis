@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -141,6 +142,17 @@ def check_contract() -> None:
     ):
         if marker not in tui:
             raise SystemExit(f"interactive tour marker missing: {marker}")
+
+    styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
+    teaser_rules = re.findall(r"\.tour-teaser-media img\s*\{([^}]*)\}", styles)
+    ratio_rule = next(
+        (rule for rule in teaser_rules if "aspect-ratio" in rule),
+        None,
+    )
+    if not ratio_rule or not re.search(r"\bheight\s*:\s*auto\s*;", ratio_rule):
+        raise SystemExit("homepage TUI teaser does not preserve its intrinsic aspect ratio")
+    if not re.search(r"\baspect-ratio\s*:\s*5\s*/\s*3\s*;", ratio_rule):
+        raise SystemExit("homepage TUI teaser is missing its 5:3 media contract")
 
     publication = json.loads((OUTPUT / "publication.json").read_text(encoding="utf-8"))
     demo = publication.get("software_demonstrations", {})
