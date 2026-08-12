@@ -9,7 +9,8 @@ used by the website:
   browser icon.
 - `oasis-tui-tour-master.png` is the lossless 1731×909 source artwork for the
   CLI & TUI tour social card. `oasis-tui-tour-social.jpg` is its optimized
-  1200×630 delivery derivative.
+  1200×630 delivery derivative, used as the CLI & TUI page hero and social
+  preview.
 
 The tour artwork was generated for this release with this prompt:
 

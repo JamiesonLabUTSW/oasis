@@ -1,59 +1,472 @@
 {
-  "schema_version": "oasis.tui-site-media.v1",
-  "created_at": "2026-08-11T19:42:21Z",
+  "schema_version": "oasis.tui-site-media.v2",
+  "created_at": "2026-08-12T01:39:37Z",
   "source": {
+    "repository": "https://github.com/JamiesonLabUTSW/oasis",
     "head_sha": "8a13604239a5c13db283b90ced6fc76f38299dbe",
     "implementation_sha": "699b39c2c71f6175aeb73511a8bdc67defe86f5e",
-    "source_included_in_publication": false,
-    "clean_before": true,
-    "clean_after": true
+    "binary_vcs_revision": "8a13604239a5c13db283b90ced6fc76f38299dbe",
+    "binary_vcs_modified": false,
+    "source_clean_before": true,
+    "source_clean_after": true
   },
   "capture": {
     "width": 1200,
     "height": 720,
-    "vhs_version": "0.10.0",
-    "ffmpeg_version": "8.0.1",
+    "terminal_theme": "Catppuccin Mocha",
+    "environment": {
+      "TERM": "xterm-256color",
+      "COLORTERM": "truecolor",
+      "CLICOLOR": "1",
+      "COLORFGBG": "15;0",
+      "OASIS_SPLASH_THEME": "sunset",
+      "LANG": "en_US.UTF-8",
+      "LC_ALL": "en_US.UTF-8",
+      "unset": [
+        "NO_COLOR",
+        "CLICOLOR_FORCE",
+        "FORCE_COLOR",
+        "CI",
+        "OASIS_NO_SPLASH",
+        "OASIS_STYLE"
+      ]
+    },
+    "runtime_namespace": "/tmp/oasis-tui-site-capture",
+    "commands": {
+      "capture": "OASIS_CAPTURE_HOME=/tmp/oasis-tui-site-capture/home/<scene> ./tools/capture-env.sh vhs tapes/<scene>.tape",
+      "encode": "./tools/capture-env.sh ./tools/encode.sh",
+      "pty_proof": "./tools/capture-env.sh ./tools/pty-color-probe.py"
+    },
+    "poster_times_seconds": {
+      "splash": 0.8,
+      "dashboard": 3.2,
+      "workflow": 4.2,
+      "results": 5.4,
+      "elephant": 5.4
+    },
+    "delivery_trim_seconds": {
+      "splash": 0.0,
+      "dashboard": 2.1,
+      "workflow": 2.1,
+      "results": 2.1,
+      "elephant": 2.1
+    },
+    "vhs_version": "vhs version 0.10.0",
+    "ffmpeg_version": "ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers",
     "pillow_version": "12.2.0",
-    "network_policy": "loopback-only deterministic fixture; no external requests",
-    "credentials": "paid-provider variables unset; fixture refs contain non-secret sentinel values",
+    "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+    "network_policy": "loopback-only deterministic fixture; no grading/generation route invoked",
+    "credentials": "paid-provider variables unset; only non-secret fixture sentinels configured",
     "provider_calls": 0,
     "paid_spend_usd": 0
+  },
+  "truecolor_proof": {
+    "bytes": 6550,
+    "term": "xterm-256color",
+    "colorterm": "truecolor",
+    "no_color_present": false,
+    "clicolor_force_present": false,
+    "force_color_present": false,
+    "ansi_csi_count": 192,
+    "truecolor_foreground_count": 87,
+    "truecolor_background_count": 21,
+    "ansi_256_foreground_count": 0,
+    "ansi_256_background_count": 0,
+    "gate": true,
+    "color_metrics": {
+      "splash": {
+        "baseline": {
+          "pixels": 864000,
+          "saturated_count": 908,
+          "saturated_fraction": 0.00105093,
+          "unique_colors": 252
+        },
+        "corrected": {
+          "pixels": 864000,
+          "saturated_count": 97756,
+          "saturated_fraction": 0.11314352,
+          "unique_colors": 250
+        },
+        "materially_greater": true,
+        "comparison": "evidence/color-comparison-splash.jpg"
+      },
+      "dashboard": {
+        "baseline": {
+          "pixels": 864000,
+          "saturated_count": 0,
+          "saturated_fraction": 0.0,
+          "unique_colors": 239
+        },
+        "corrected": {
+          "pixels": 864000,
+          "saturated_count": 18368,
+          "saturated_fraction": 0.02125926,
+          "unique_colors": 245
+        },
+        "materially_greater": true,
+        "comparison": "evidence/color-comparison-dashboard.jpg"
+      },
+      "workflow": {
+        "baseline": {
+          "pixels": 864000,
+          "saturated_count": 0,
+          "saturated_fraction": 0.0,
+          "unique_colors": 235
+        },
+        "corrected": {
+          "pixels": 864000,
+          "saturated_count": 24481,
+          "saturated_fraction": 0.02833449,
+          "unique_colors": 242
+        },
+        "materially_greater": true,
+        "comparison": "evidence/color-comparison-workflow.jpg"
+      },
+      "results": {
+        "baseline": {
+          "pixels": 864000,
+          "saturated_count": 0,
+          "saturated_fraction": 0.0,
+          "unique_colors": 235
+        },
+        "corrected": {
+          "pixels": 864000,
+          "saturated_count": 22208,
+          "saturated_fraction": 0.0257037,
+          "unique_colors": 231
+        },
+        "materially_greater": true,
+        "comparison": "evidence/color-comparison-results.jpg"
+      },
+      "elephant": {
+        "baseline": {
+          "pixels": 864000,
+          "saturated_count": 0,
+          "saturated_fraction": 0.0,
+          "unique_colors": 240
+        },
+        "corrected": {
+          "pixels": 864000,
+          "saturated_count": 23785,
+          "saturated_fraction": 0.02752894,
+          "unique_colors": 207
+        },
+        "materially_greater": true,
+        "comparison": "evidence/color-comparison-elephant.jpg"
+      }
+    }
+  },
+  "content_review": {
+    "raw_frames_ocr_reviewed": 761,
+    "sensitive_or_unexpected_error_hit_lines": 0,
+    "all_frames_passed": true,
+    "expected_states": {
+      "splash": "sunset splash transitions to ready INFO",
+      "dashboard": "4/4 synthetic services nominal; one running and one review run",
+      "workflow": "intentional pre-execution Progressive plan; needs-attention and gate warnings are expected before inputs/review coverage",
+      "results": "synthetic completed run with score, evidence, and honest pending review rows",
+      "elephant": "three synthetic learners filtered to Jordan Rivera/example.edu; wayfinder doctor ready"
+    },
+    "private_or_real_person_data": false,
+    "synthetic_identity_domain": "example.edu"
   },
   "delivery": {
     "video_width": 960,
     "video_height": 576,
     "poster_width": 1200,
     "poster_height": 720,
-    "total_bytes": 2122387,
     "preferred": "webm",
     "fallback": "mp4",
     "legacy_fallback": "gif",
-    "poster": "webp"
+    "poster": "lossless webp",
+    "total_media_bytes": 1897905,
+    "asset_count": 20
   },
   "assets": [
-    {"path":"assets/tui/splash-poster.webp","scene":"splash","format":"webp","width":1200,"height":720,"bytes":55612,"sha256":"74c74ad503da6ad3d3d3c9ab8327fd0225843639f9f42d8e5153d2969f785ac5"},
-    {"path":"assets/tui/splash.webm","scene":"splash","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":3.85,"bytes":64331,"sha256":"30fbdc3b167aec1eaf400b8f2ea54073ce4b186ac9e1221d61ff1099e6fc56fb"},
-    {"path":"assets/tui/splash.mp4","scene":"splash","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":3.85,"bytes":82440,"sha256":"ce707fe33902f71693b19060bae7affbef4a8d653d5ea235e685e365af439003"},
-    {"path":"assets/tui/splash.gif","scene":"splash","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":3.87,"bytes":179850,"sha256":"9e2b06bccf82b680df8413cb0a5d8eb2db28f80687917f281c424e55afd046aa"},
-
-    {"path":"assets/tui/dashboard-poster.webp","scene":"dashboard","format":"webp","width":1200,"height":720,"bytes":104914,"sha256":"7de39fc9306bff37e829fe37a5c947da03dd80a61154d881bba3788105dc7cde"},
-    {"path":"assets/tui/dashboard.webm","scene":"dashboard","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.70,"bytes":72065,"sha256":"2a7ac20a698b047fcd1e255ef36d4c3127115a91a51e70882ce9b4153ceef658"},
-    {"path":"assets/tui/dashboard.mp4","scene":"dashboard","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.70,"bytes":78004,"sha256":"3cee8c2ff28b5dddb640fc7b80abb8e9f462316eceffdc1898eb021ace389011"},
-    {"path":"assets/tui/dashboard.gif","scene":"dashboard","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.74,"bytes":194174,"sha256":"5e0960daf644a900d8967045ba3005e8d84d0ba61d01fe2c37df016d12154ac9"},
-
-    {"path":"assets/tui/workflow-poster.webp","scene":"workflow","format":"webp","width":1200,"height":720,"bytes":105172,"sha256":"7580bf02e6e43a1d501cc107bdf0c25cafaceb2eae6ff1f884bd1dba0c86bf0b"},
-    {"path":"assets/tui/workflow.webm","scene":"workflow","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.75,"bytes":79433,"sha256":"bf06a58aa6a32aea31a2c5efd7bbe7adf5d6098f287cd1cb050d472030496669"},
-    {"path":"assets/tui/workflow.mp4","scene":"workflow","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.75,"bytes":95398,"sha256":"b706a4af2c6ed07d396a375054883e0d0fc5e706d343704131adb6a4ef4b99d0"},
-    {"path":"assets/tui/workflow.gif","scene":"workflow","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.74,"bytes":214908,"sha256":"4c1503ac45df9cfc45ee8c2dccf884fc85bdc72bed38c47b6e7daa5bc9d74180"},
-
-    {"path":"assets/tui/results-poster.webp","scene":"results","format":"webp","width":1200,"height":720,"bytes":96696,"sha256":"f67516f640c2be912f1b6a0eccd739203e728567a350e643ced7e5b1d74ca019"},
-    {"path":"assets/tui/results.webm","scene":"results","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.50,"bytes":70516,"sha256":"4fe285ddc84ef13bcd6bb57c2ff26ca58a2179ed13fdf4537ccfc1ca91b273bb"},
-    {"path":"assets/tui/results.mp4","scene":"results","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.50,"bytes":88845,"sha256":"b603226f3d7432d0b7ff7cef9415342e6bbf3e02e0997d6785b5c9e7acfc33f9"},
-    {"path":"assets/tui/results.gif","scene":"results","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.54,"bytes":249403,"sha256":"45332bcd4c3e599fffb4f495ccf060dbbb48f9657b2cda0ab9f7b5524c663233"},
-
-    {"path":"assets/tui/elephant-poster.webp","scene":"elephant","format":"webp","width":1200,"height":720,"bytes":54908,"sha256":"f5ec78f12cff520b6750ad2ada60ffccb1b095665cf1effe7102e5eaa0065b7b"},
-    {"path":"assets/tui/elephant.webm","scene":"elephant","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.45,"bytes":43736,"sha256":"fa2bb7fa2cadb948324a7c7fb4688279b1a2cf3f7219b4271b11fb3baef77ad3"},
-    {"path":"assets/tui/elephant.mp4","scene":"elephant","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.45,"bytes":46657,"sha256":"f0d2e0f35164f3aec4c0906e87a05878751cabafc9f49bd840579d607fefcbbb"},
-    {"path":"assets/tui/elephant.gif","scene":"elephant","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.47,"bytes":145325,"sha256":"34a1cbc7b40660065ba4d0d7f4ca409215e51203bede238ca84edb451d7b51ce"}
+    {
+      "path": "assets/tui/splash-poster.webp",
+      "scene": "splash",
+      "format": "webp",
+      "bytes": 54966,
+      "sha256": "6109c73e3b84f0a2dafeaffa1f98af26fd000911a7d9e50212d0bbf7bfcf5e72",
+      "width": 1200,
+      "height": 720,
+      "lossless": true,
+      "pixel_exact_to_source": true
+    },
+    {
+      "path": "assets/tui/splash.webm",
+      "scene": "splash",
+      "format": "webm",
+      "bytes": 63098,
+      "sha256": "9b7a97ed138537d13db558c825468c076614a0686beb6bbc04406fc861ef7ea4",
+      "codec": "vp9",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 3.85,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/splash.mp4",
+      "scene": "splash",
+      "format": "mp4",
+      "bytes": 88309,
+      "sha256": "9057c7d8135950fb8de9748e010e5a2ea7c2905be8e0e0893c587b081381fa7f",
+      "codec": "h264",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 3.85,
+      "audio_streams": 0,
+      "metadata_tags": {
+        "compatible_brands": "isomiso2avc1mp41",
+        "major_brand": "isom",
+        "minor_version": "512"
+      }
+    },
+    {
+      "path": "assets/tui/splash.gif",
+      "scene": "splash",
+      "format": "gif",
+      "bytes": 164489,
+      "sha256": "b4df51369aac5db54dd2a05787527b19082dfc2143caf90d5a069ecb9a2c587e",
+      "codec": "gif",
+      "width": 960,
+      "height": 576,
+      "fps": 16.6667,
+      "duration_seconds": 3.87,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/dashboard-poster.webp",
+      "scene": "dashboard",
+      "format": "webp",
+      "bytes": 98196,
+      "sha256": "44a7287dc4b007d377a09124d8bfc22f8eb02e7460138c7aa27773d171a0ea11",
+      "width": 1200,
+      "height": 720,
+      "lossless": true,
+      "pixel_exact_to_source": true
+    },
+    {
+      "path": "assets/tui/dashboard.webm",
+      "scene": "dashboard",
+      "format": "webm",
+      "bytes": 65466,
+      "sha256": "5739e5b7a30277d3ca93af3ab1afeedcfcf9991f1d31a233b9a8a62f4ffd4834",
+      "codec": "vp9",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.65,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/dashboard.mp4",
+      "scene": "dashboard",
+      "format": "mp4",
+      "bytes": 78727,
+      "sha256": "16a2a6f2a15f75f089ef9476d3f39a0daa122d353ef1deaa9205a50138cf799e",
+      "codec": "h264",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.65,
+      "audio_streams": 0,
+      "metadata_tags": {
+        "compatible_brands": "isomiso2avc1mp41",
+        "major_brand": "isom",
+        "minor_version": "512"
+      }
+    },
+    {
+      "path": "assets/tui/dashboard.gif",
+      "scene": "dashboard",
+      "format": "gif",
+      "bytes": 177418,
+      "sha256": "a4316ff52e294b4645c440b3deecb3ebc9f826227245dd0e47fb62fb85da0f92",
+      "codec": "gif",
+      "width": 960,
+      "height": 576,
+      "fps": 16.6667,
+      "duration_seconds": 4.67,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/workflow-poster.webp",
+      "scene": "workflow",
+      "format": "webp",
+      "bytes": 100070,
+      "sha256": "b07ff01f4bfea976bba6a972f9ea1a763332128c54ad8ef46187e48e5a50f58d",
+      "width": 1200,
+      "height": 720,
+      "lossless": true,
+      "pixel_exact_to_source": true
+    },
+    {
+      "path": "assets/tui/workflow.webm",
+      "scene": "workflow",
+      "format": "webm",
+      "bytes": 71710,
+      "sha256": "34c0d3500bcea371de26ff560eeff22b8fd3181e6750e8d564c3a9ca9a9c08c1",
+      "codec": "vp9",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.7,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/workflow.mp4",
+      "scene": "workflow",
+      "format": "mp4",
+      "bytes": 91438,
+      "sha256": "4328bd55b9a839cc0306e44126e5f9e208d1c04db2e110708bae7e9023d3d05a",
+      "codec": "h264",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.7,
+      "audio_streams": 0,
+      "metadata_tags": {
+        "compatible_brands": "isomiso2avc1mp41",
+        "major_brand": "isom",
+        "minor_version": "512"
+      }
+    },
+    {
+      "path": "assets/tui/workflow.gif",
+      "scene": "workflow",
+      "format": "gif",
+      "bytes": 172040,
+      "sha256": "45f3878883d3c8b8eabefc734a70a009abd185f1e95b111fbaf01f8d19fc5b7e",
+      "codec": "gif",
+      "width": 960,
+      "height": 576,
+      "fps": 16.6667,
+      "duration_seconds": 4.74,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/results-poster.webp",
+      "scene": "results",
+      "format": "webp",
+      "bytes": 88090,
+      "sha256": "a2ff026a6eb1240b5b0119fbea8961c12f3856c2c2733738d23973a6005a2e89",
+      "width": 1200,
+      "height": 720,
+      "lossless": true,
+      "pixel_exact_to_source": true
+    },
+    {
+      "path": "assets/tui/results.webm",
+      "scene": "results",
+      "format": "webm",
+      "bytes": 65425,
+      "sha256": "31c6227aac4967cfb0b6a011b9a1541ef82dc087207c999611c00d32431897cb",
+      "codec": "vp9",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/results.mp4",
+      "scene": "results",
+      "format": "mp4",
+      "bytes": 88909,
+      "sha256": "d76300492c762accf87fc0e490ce3c95bcc34a2601d72e8bafa785be4dc53d9b",
+      "codec": "h264",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {
+        "compatible_brands": "isomiso2avc1mp41",
+        "major_brand": "isom",
+        "minor_version": "512"
+      }
+    },
+    {
+      "path": "assets/tui/results.gif",
+      "scene": "results",
+      "format": "gif",
+      "bytes": 200040,
+      "sha256": "06d3df18bb2bc476058634ff237d3cafbacba9b7f0ae59769b2925eea6f66f55",
+      "codec": "gif",
+      "width": 960,
+      "height": 576,
+      "fps": 16.6667,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/elephant-poster.webp",
+      "scene": "elephant",
+      "format": "webp",
+      "bytes": 46144,
+      "sha256": "f3e912df3d5b324dabcc22124db08c7ab38a058d07f09e3aa332c72dc47fcc5e",
+      "width": 1200,
+      "height": 720,
+      "lossless": true,
+      "pixel_exact_to_source": true
+    },
+    {
+      "path": "assets/tui/elephant.webm",
+      "scene": "elephant",
+      "format": "webm",
+      "bytes": 39505,
+      "sha256": "84eed72ca037399990cee971c30e29c27f20f5d64b7902e651448024ad07eea8",
+      "codec": "vp9",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    },
+    {
+      "path": "assets/tui/elephant.mp4",
+      "scene": "elephant",
+      "format": "mp4",
+      "bytes": 48015,
+      "sha256": "2eeffe13e86f357a6f7eaf784a69be9176c3ea2911b42ce6379a631a0c5f668a",
+      "codec": "h264",
+      "width": 960,
+      "height": 576,
+      "fps": 20.0,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {
+        "compatible_brands": "isomiso2avc1mp41",
+        "major_brand": "isom",
+        "minor_version": "512"
+      }
+    },
+    {
+      "path": "assets/tui/elephant.gif",
+      "scene": "elephant",
+      "format": "gif",
+      "bytes": 95850,
+      "sha256": "9059b893ee8c00371c587abc30c8f89107d2f35e21b0fc50f21256cd76d40d63",
+      "codec": "gif",
+      "width": 960,
+      "height": 576,
+      "fps": 16.6667,
+      "duration_seconds": 4.4,
+      "audio_streams": 0,
+      "metadata_tags": {}
+    }
   ]
 }
