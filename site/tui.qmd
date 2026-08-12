@@ -1,0 +1,98 @@
+---
+title: "Explore the OASIS CLI & TUI"
+subtitle: "A lightweight, clickable tour of planning, monitoring, and evidence"
+description: "Explore recorded OASIS terminal interface views without connecting to a live service"
+image: images/oasis-tui-tour-social.jpg
+page-layout: full
+include-after-body: tour-dialog.html
+---
+
+::: {#tui-tour .tui-explorer data-tui-tour=""}
+::: {.tui-explorer-topline}
+::: {.tui-explorer-heading}
+::: {.eyebrow}
+Interactive TUI tour
+:::
+
+<h2 id="tour-view-title">Start at the oasis</h2>
+<p id="tour-view-summary">Launch into a readiness-aware workspace where every operation stays inspectable.</p>
+:::
+
+::: {.tour-status aria-label="Tour status"}
+<span class="tour-status-dot" aria-hidden="true"></span>
+<span>Recorded · sanitized · offline</span>
+:::
+:::
+
+<div class="tui-tour-tabs" role="tablist" aria-label="OASIS interface views">
+  <button type="button" role="tab" id="tour-tab-splash" aria-controls="tour-stage" aria-selected="true" tabindex="0" data-view="splash">Splash & INFO</button>
+  <button type="button" role="tab" id="tour-tab-dashboard" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="dashboard">Dashboard</button>
+  <button type="button" role="tab" id="tour-tab-workflow" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="workflow">Workflow</button>
+  <button type="button" role="tab" id="tour-tab-results" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="results">Results</button>
+  <button type="button" role="tab" id="tour-tab-elephant" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="elephant">Elephant</button>
+</div>
+
+::: {#tour-stage .tui-stage role="tabpanel" aria-labelledby="tour-tab-splash" tabindex="0"}
+::: {.terminal-window}
+<picture>
+  <source id="tour-image-source" type="image/webp" srcset="assets/tui/splash-poster.webp">
+  <img id="tour-image" src="assets/tui/splash-poster.webp" alt="OASIS dusk-themed startup splash" width="1200" height="720" decoding="async" fetchpriority="high">
+</picture>
+
+::: {.terminal-fallback aria-hidden="true"}
+<span class="fallback-kicker">OASIS</span>
+<strong>Multimodal assessment, from plan to evidence.</strong>
+<span>Select a view above to explore the recorded interface.</span>
+:::
+:::
+:::
+
+::: {.tour-controls}
+<button type="button" class="tour-button tour-button-primary" id="tour-next">Next view <span aria-hidden="true">→</span></button>
+<button type="button" class="tour-button" id="tour-watch" data-video="assets/tui/splash.webm">Watch this flow</button>
+<a class="tour-deep-link" id="tour-deep-link" href="#splash" aria-label="Link to the current tour view">Link to this view</a>
+:::
+
+<div id="tour-live" class="visually-hidden" aria-live="polite"></div>
+:::
+
+::: {.tour-notes}
+::: {.tour-note-card}
+### Plan before spending
+
+OASIS resolves files, rubric prompts, modalities, providers, expected calls, and estimated cost before an execution begins.
+:::
+
+::: {.tour-note-card}
+### Follow the evidence
+
+Results remain connected to their run, execution plan, input identities, provider metadata, and review state.
+:::
+
+::: {.tour-note-card}
+### Keep people in control
+
+Confirmation gates, visible partial states, cancellation, and review handoffs make consequential actions explicit.
+:::
+:::
+
+::: {.tour-method}
+## What this tour represents
+
+The interface recordings use deterministic or synthetic fixtures with credentials scrubbed. They demonstrate product interaction and layout, not a live grading claim. Motion is opt-in, pauses when closed, and is removed for visitors who prefer reduced motion.
+
+The CLI and TUI are part of the OASIS software release process; this project page currently publishes demonstrations and the technical report only. Release materials will identify their exact contents and version when available.
+
+<details class="tour-transcript">
+<summary>Read the five flow descriptions</summary>
+
+1. **Splash & INFO:** The OASIS launch screen opens the INFO workspace, where readiness and available operations are summarized.
+2. **Dashboard:** Four connected services report healthy status while the run list and selected run show progress and the next action.
+3. **Workflow:** A mission is staged from sanitized inputs, then previewed as a dry-run plan before any execution.
+4. **Results:** A synthetic result is selected and filtered; its score, evidence, rationale, inspection, and provenance remain in context.
+5. **Elephant:** Sanitized example records are browsed from a dataset into encounters and files with keyboard-first navigation.
+
+</details>
+:::
+
+<script src="tour.js" defer></script>

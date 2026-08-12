@@ -1,0 +1,59 @@
+{
+  "schema_version": "oasis.tui-site-media.v1",
+  "created_at": "2026-08-11T19:42:21Z",
+  "source": {
+    "head_sha": "8a13604239a5c13db283b90ced6fc76f38299dbe",
+    "implementation_sha": "699b39c2c71f6175aeb73511a8bdc67defe86f5e",
+    "source_included_in_publication": false,
+    "clean_before": true,
+    "clean_after": true
+  },
+  "capture": {
+    "width": 1200,
+    "height": 720,
+    "vhs_version": "0.10.0",
+    "ffmpeg_version": "8.0.1",
+    "pillow_version": "12.2.0",
+    "network_policy": "loopback-only deterministic fixture; no external requests",
+    "credentials": "paid-provider variables unset; fixture refs contain non-secret sentinel values",
+    "provider_calls": 0,
+    "paid_spend_usd": 0
+  },
+  "delivery": {
+    "video_width": 960,
+    "video_height": 576,
+    "poster_width": 1200,
+    "poster_height": 720,
+    "total_bytes": 2122387,
+    "preferred": "webm",
+    "fallback": "mp4",
+    "legacy_fallback": "gif",
+    "poster": "webp"
+  },
+  "assets": [
+    {"path":"assets/tui/splash-poster.webp","scene":"splash","format":"webp","width":1200,"height":720,"bytes":55612,"sha256":"74c74ad503da6ad3d3d3c9ab8327fd0225843639f9f42d8e5153d2969f785ac5"},
+    {"path":"assets/tui/splash.webm","scene":"splash","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":3.85,"bytes":64331,"sha256":"30fbdc3b167aec1eaf400b8f2ea54073ce4b186ac9e1221d61ff1099e6fc56fb"},
+    {"path":"assets/tui/splash.mp4","scene":"splash","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":3.85,"bytes":82440,"sha256":"ce707fe33902f71693b19060bae7affbef4a8d653d5ea235e685e365af439003"},
+    {"path":"assets/tui/splash.gif","scene":"splash","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":3.87,"bytes":179850,"sha256":"9e2b06bccf82b680df8413cb0a5d8eb2db28f80687917f281c424e55afd046aa"},
+
+    {"path":"assets/tui/dashboard-poster.webp","scene":"dashboard","format":"webp","width":1200,"height":720,"bytes":104914,"sha256":"7de39fc9306bff37e829fe37a5c947da03dd80a61154d881bba3788105dc7cde"},
+    {"path":"assets/tui/dashboard.webm","scene":"dashboard","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.70,"bytes":72065,"sha256":"2a7ac20a698b047fcd1e255ef36d4c3127115a91a51e70882ce9b4153ceef658"},
+    {"path":"assets/tui/dashboard.mp4","scene":"dashboard","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.70,"bytes":78004,"sha256":"3cee8c2ff28b5dddb640fc7b80abb8e9f462316eceffdc1898eb021ace389011"},
+    {"path":"assets/tui/dashboard.gif","scene":"dashboard","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.74,"bytes":194174,"sha256":"5e0960daf644a900d8967045ba3005e8d84d0ba61d01fe2c37df016d12154ac9"},
+
+    {"path":"assets/tui/workflow-poster.webp","scene":"workflow","format":"webp","width":1200,"height":720,"bytes":105172,"sha256":"7580bf02e6e43a1d501cc107bdf0c25cafaceb2eae6ff1f884bd1dba0c86bf0b"},
+    {"path":"assets/tui/workflow.webm","scene":"workflow","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.75,"bytes":79433,"sha256":"bf06a58aa6a32aea31a2c5efd7bbe7adf5d6098f287cd1cb050d472030496669"},
+    {"path":"assets/tui/workflow.mp4","scene":"workflow","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.75,"bytes":95398,"sha256":"b706a4af2c6ed07d396a375054883e0d0fc5e706d343704131adb6a4ef4b99d0"},
+    {"path":"assets/tui/workflow.gif","scene":"workflow","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.74,"bytes":214908,"sha256":"4c1503ac45df9cfc45ee8c2dccf884fc85bdc72bed38c47b6e7daa5bc9d74180"},
+
+    {"path":"assets/tui/results-poster.webp","scene":"results","format":"webp","width":1200,"height":720,"bytes":96696,"sha256":"f67516f640c2be912f1b6a0eccd739203e728567a350e643ced7e5b1d74ca019"},
+    {"path":"assets/tui/results.webm","scene":"results","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.50,"bytes":70516,"sha256":"4fe285ddc84ef13bcd6bb57c2ff26ca58a2179ed13fdf4537ccfc1ca91b273bb"},
+    {"path":"assets/tui/results.mp4","scene":"results","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.50,"bytes":88845,"sha256":"b603226f3d7432d0b7ff7cef9415342e6bbf3e02e0997d6785b5c9e7acfc33f9"},
+    {"path":"assets/tui/results.gif","scene":"results","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.54,"bytes":249403,"sha256":"45332bcd4c3e599fffb4f495ccf060dbbb48f9657b2cda0ab9f7b5524c663233"},
+
+    {"path":"assets/tui/elephant-poster.webp","scene":"elephant","format":"webp","width":1200,"height":720,"bytes":54908,"sha256":"f5ec78f12cff520b6750ad2ada60ffccb1b095665cf1effe7102e5eaa0065b7b"},
+    {"path":"assets/tui/elephant.webm","scene":"elephant","format":"webm","codec":"vp9","width":960,"height":576,"fps":20,"duration_seconds":4.45,"bytes":43736,"sha256":"fa2bb7fa2cadb948324a7c7fb4688279b1a2cf3f7219b4271b11fb3baef77ad3"},
+    {"path":"assets/tui/elephant.mp4","scene":"elephant","format":"mp4","codec":"h264","width":960,"height":576,"fps":20,"duration_seconds":4.45,"bytes":46657,"sha256":"f0d2e0f35164f3aec4c0906e87a05878751cabafc9f49bd840579d607fefcbbb"},
+    {"path":"assets/tui/elephant.gif","scene":"elephant","format":"gif","width":960,"height":576,"fps":15,"duration_seconds":4.47,"bytes":145325,"sha256":"34a1cbc7b40660065ba4d0d7f4ca409215e51203bede238ca84edb451d7b51ce"}
+  ]
+}

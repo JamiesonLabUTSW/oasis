@@ -1,0 +1,15 @@
+<dialog id="tour-video-dialog" class="tour-dialog" aria-labelledby="tour-video-title">
+  <div class="tour-dialog-header">
+    <div>
+      <p class="eyebrow">Recorded flow</p>
+      <h2 id="tour-video-title">OASIS TUI demonstration</h2>
+    </div>
+    <button type="button" id="tour-video-close" class="tour-dialog-close" aria-label="Close demonstration">×</button>
+  </div>
+  <video id="tour-video" controls muted playsinline preload="none" width="960" height="576">
+    <source id="tour-video-webm" type="video/webm">
+    <source id="tour-video-mp4" type="video/mp4">
+  </video>
+  <p id="tour-video-caption" class="tour-video-caption"></p>
+  <p class="tour-video-download"><a id="tour-gif-download" download>Download GIF fallback</a></p>
+</dialog>
