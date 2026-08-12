@@ -1,0 +1,44 @@
+name: Publish project site
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-site.yml"
+      - "scripts/build-site.sh"
+      - "scripts/check-site.py"
+      - "scripts/finalize-site.py"
+      - "site/**"
+      - "vendor/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-oasis-project-site
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto 1.6.42
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.6.42
+
+      - name: Render and validate
+        run: ./scripts/build-site.sh
+
+      - name: Publish to gh-pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+          path: site
+          render: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,53 @@
+project:
+  type: website
+  output-dir: _site
+  post-render: ../scripts/finalize-site.py
+  resources:
+    - .nojekyll
+    - assets/**
+    - images/**
+    - paper/**
+    - publication.json
+
+website:
+  title: OASIS
+  description: "Project information, recorded software demonstrations, and the OASIS technical report"
+  site-url: https://jamiesonlabutsw.github.io/oasis/
+  search: false
+  favicon: images/oasis-favicon.png
+  navbar:
+    logo: images/oasis-logo-nav.webp
+    logo-alt: OASIS
+    search: false
+    left:
+      - href: index.qmd
+        text: Home
+      - href: tui.qmd
+        text: CLI & TUI
+      - href: paper/paper.html
+        text: Technical Report
+      - href: paper/OASIS_technical_report.pdf
+        text: PDF
+    right:
+      - icon: github
+        href: https://github.com/JamiesonLabUTSW/oasis
+        aria-label: OASIS project repository
+  open-graph:
+    image: images/oasis-tui-tour-social.jpg
+    image-alt: OASIS terminal interface beside a dusk desert oasis
+  page-footer:
+    left: "OASIS — Open Assessment and Scoring Infrastructure Stack"
+    right:
+      - text: Technical report
+        href: paper/paper.html
+
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    css: styles.css
+    toc: false
+    anchor-sections: false
+    code-copy: false
+    smooth-scroll: false

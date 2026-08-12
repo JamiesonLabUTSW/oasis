@@ -1,0 +1,28 @@
+{
+  "title": "OASIS Technical Report",
+  "publication_date": "2026-08-03",
+  "canonical_url": "https://jamiesonlabutsw.github.io/oasis/",
+  "repository_url": "https://github.com/JamiesonLabUTSW/oasis",
+  "scope": "project information, sanitized recorded software demonstrations, and technical report only",
+  "application_source_included": false,
+  "installable_software_included": false,
+  "software_demonstrations": {
+    "included": true,
+    "recorded": true,
+    "sanitized": true,
+    "live_service": false,
+    "path": "tui.html"
+  },
+  "brand_assets": [],
+  "report_html": {
+    "path": "paper/paper.html",
+    "bytes": 135238,
+    "sha256": "659ba167b40d899c1f52584993143053b92877eae503504d7b9b7e97e751f7a3"
+  },
+  "report_pdf": {
+    "path": "paper/OASIS_technical_report.pdf",
+    "bytes": 649878,
+    "sha256": "927731cb52d5670ce0ec33556f663f446b51734906e508f64126d9d214b97d5a"
+  },
+  "demo_media": []
+}

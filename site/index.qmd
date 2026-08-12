@@ -1,0 +1,54 @@
+---
+title: "OASIS: Open Assessment and Scoring Infrastructure Stack"
+subtitle: "Rubric-based multimodal assessment using large language models"
+description: "Project information, recorded software demonstrations, and technical report for OASIS"
+image: images/oasis-tui-tour-social.jpg
+page-layout: article
+---
+
+::: {.hero-panel}
+![](images/oasis-logo.webp){fig-alt="OASIS logo" width="460" height="307"}
+
+::: {.hero-tagline}
+An AI oasis in the desert of manual grading.
+:::
+
+::: {.hero-lede}
+OASIS grades video, audio, and text against evaluator-defined rubrics, using hosted or self-hosted large language models. Modality-aware execution, provenance capture, and human review keep scores inspectable from rubric definition through adjudication.
+:::
+:::
+
+## See OASIS in action
+
+::: {.tour-teaser}
+::: {.tour-teaser-copy}
+### Explore the CLI & TUI
+
+Step through the terminal interface, from startup readiness to workflow planning, live run monitoring, results inspection, provenance, and Elephant-backed data browsing. The tour uses sanitized recorded software demonstrations and does not contact a live service.
+
+[Open the interactive tour](tui.qmd){.tour-cta}
+:::
+
+::: {.tour-teaser-media aria-hidden="true"}
+![](assets/tui/splash-poster.webp){fig-alt="" loading="lazy" width="1200" height="720"}
+:::
+:::
+
+## Technical report
+
+The report covers the platform's architecture, rubric-to-prompt compilation, multimodal grading pipeline, command-line and agent interfaces, provenance model, and operational experience.
+
+- [Read the technical report online](paper/paper.html)
+- [Download the technical report (PDF)](paper/OASIS_technical_report.pdf)
+
+## Related projects and demonstrations
+
+MAPLES is the platform's grading and review application; Wayfinder is the assistant embedded in it.
+
+- [Explore UT-REAL, a multi-site MAPLES project](https://ut-real-ai-project-maples.com/)
+- [Watch Ameer Hamza Shakur demonstrate the MAPLES grading and faculty-review workflow](https://www.youtube.com/watch?v=tHvS2kqRc2Q)
+- [Watch Minhan Park and Licheng Yi demonstrate rubric authoring with Wayfinder in MAPLES](https://www.youtube.com/watch?v=MKwseFKuFLs)
+
+## Publication scope
+
+Project information, sanitized recorded software demonstrations, and this technical report are available at [github.com/JamiesonLabUTSW/oasis](https://github.com/JamiesonLabUTSW/oasis) and [jamiesonlabutsw.github.io/oasis](https://jamiesonlabutsw.github.io/oasis/). Application and component source code, binaries, installation materials, sample data, and tagged software releases are not part of this publication. Any future software release will identify its exact contents, version, and terms.
