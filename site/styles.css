@@ -13,6 +13,11 @@
   --oasis-coral: #ad4734;
   --oasis-night: #0c161c;
   --oasis-night-soft: #12232b;
+  --oasis-nav-bg: #10272f;
+  --oasis-nav-text: #d7e6e9;
+  --oasis-nav-active: #ffe09a;
+  --oasis-nav-brand: #fff8dc;
+  --oasis-nav-hover: #ffffff;
   --oasis-shadow: 0 18px 40px rgba(33, 51, 59, 0.1);
   --oasis-focus: #176fba;
 }
@@ -29,8 +34,48 @@ body {
 }
 
 .navbar {
-  background: rgba(16, 39, 47, 0.98);
+  background: var(--oasis-nav-bg);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-title {
+  color: var(--oasis-nav-brand);
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: var(--oasis-nav-hover);
+}
+
+.navbar .navbar-nav .nav-link {
+  color: var(--oasis-nav-text);
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
+  color: var(--oasis-nav-hover);
+}
+
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link[aria-current="page"] {
+  color: var(--oasis-nav-active);
+  font-weight: 700;
+}
+
+.navbar .navbar-brand:focus-visible,
+.navbar .navbar-nav .nav-link:focus-visible,
+.navbar .navbar-toggler:focus-visible {
+  outline: 3px solid #79cfff;
+  outline-offset: 3px;
+}
+
+.navbar .navbar-toggler {
+  border-color: rgba(215, 230, 233, 0.7);
+}
+
+.navbar .navbar-toggler-icon {
+  filter: invert(1) grayscale(1) brightness(2);
 }
 
 .navbar-logo {
