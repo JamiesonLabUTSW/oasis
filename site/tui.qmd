@@ -7,6 +7,10 @@ page-layout: full
 include-after-body: tour-dialog.html
 ---
 
+::: {.tui-tour-hero}
+<img src="images/oasis-tui-tour-social.jpg" alt="Pixel-art OASIS CLI and TUI title beside a moonlit desert oasis" width="1200" height="630" decoding="async" fetchpriority="high">
+:::
+
 ::: {#tui-tour .tui-explorer data-tui-tour=""}
 ::: {.tui-explorer-topline}
 ::: {.tui-explorer-heading}
@@ -36,7 +40,7 @@ Interactive TUI tour
 ::: {.terminal-window}
 <picture>
   <source id="tour-image-source" type="image/webp" srcset="assets/tui/splash-poster.webp">
-  <img id="tour-image" src="assets/tui/splash-poster.webp" alt="OASIS dusk-themed startup splash" width="1200" height="720" decoding="async" fetchpriority="high">
+  <img id="tour-image" src="assets/tui/splash-poster.webp" alt="OASIS dusk-themed startup splash" width="1200" height="720" loading="lazy" decoding="async">
 </picture>
 
 ::: {.terminal-fallback aria-hidden="true"}

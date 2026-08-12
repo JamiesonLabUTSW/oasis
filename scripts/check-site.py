@@ -64,9 +64,34 @@ def check_references() -> None:
 def check_media_manifest() -> None:
     manifest_path = OUTPUT / "assets" / "tui" / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema_version") != "oasis.tui-site-media.v2":
+        raise SystemExit("recorded media manifest is not the truecolor v2 contract")
+
+    capture = manifest.get("capture", {})
+    environment = capture.get("environment", {})
+    if environment.get("TERM") != "xterm-256color" or environment.get("COLORTERM") != "truecolor":
+        raise SystemExit("recorded media was not captured in a truecolor terminal")
+    forbidden_color_controls = {"NO_COLOR", "CLICOLOR_FORCE", "FORCE_COLOR"}
+    if not forbidden_color_controls.issubset(set(environment.get("unset", []))):
+        raise SystemExit("recorded media does not prove color-suppression controls were unset")
+
+    proof = manifest.get("truecolor_proof", {})
+    if not proof.get("gate") or proof.get("truecolor_foreground_count", 0) <= 0 or proof.get("truecolor_background_count", 0) <= 0:
+        raise SystemExit("recorded media is missing its truecolor ANSI proof")
+    metrics = proof.get("color_metrics", {})
+    expected_scenes = {"splash", "dashboard", "workflow", "results", "elephant"}
+    if set(metrics) != expected_scenes or not all(item.get("materially_greater") for item in metrics.values()):
+        raise SystemExit("recorded media is missing corrected color evidence for every scene")
+
+    content_review = manifest.get("content_review", {})
+    if not content_review.get("all_frames_passed") or content_review.get("sensitive_or_unexpected_error_hit_lines") != 0:
+        raise SystemExit("recorded media did not pass its all-frame safety review")
+
     assets = manifest.get("assets", [])
     if len(assets) != 20:
         raise SystemExit(f"expected 20 recorded media assets, found {len(assets)}")
+    if {item.get("scene") for item in assets} != expected_scenes:
+        raise SystemExit("recorded media scene inventory is incomplete")
     for item in assets:
         path = OUTPUT / item["path"]
         if not path.is_file():
@@ -75,6 +100,8 @@ def check_media_manifest() -> None:
             raise SystemExit(f"manifest size mismatch: {item['path']}")
         if digest(path) != item["sha256"]:
             raise SystemExit(f"manifest hash mismatch: {item['path']}")
+        if item.get("format") in {"webm", "mp4", "gif"} and item.get("audio_streams") != 0:
+            raise SystemExit(f"recorded media unexpectedly contains audio: {item['path']}")
 
 
 def check_checksums() -> None:
