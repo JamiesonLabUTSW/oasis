@@ -21,7 +21,8 @@ Build the site with Quarto 1.6.42:
 ```
 
 The generated site is written to `site/_site/`. Changes merged to `main` are
-rendered and published to the existing `gh-pages` branch by GitHub Actions.
+rendered, validated, and deployed to GitHub Pages as an immutable Actions
+artifact.
 
 ## Technical report
 
