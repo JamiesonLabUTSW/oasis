@@ -24,6 +24,28 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def relative_luminance(hex_color: str) -> float:
+    channels = [
+        int(hex_color[index : index + 2], 16) / 255
+        for index in (1, 3, 5)
+    ]
+    linear = [
+        channel / 12.92
+        if channel <= 0.04045
+        else ((channel + 0.055) / 1.055) ** 2.4
+        for channel in channels
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast_ratio(first: str, second: str) -> float:
+    brighter, darker = sorted(
+        (relative_luminance(first), relative_luminance(second)),
+        reverse=True,
+    )
+    return (brighter + 0.05) / (darker + 0.05)
+
+
 class ReferenceParser(HTMLParser):
     def __init__(self, page: Path) -> None:
         super().__init__()
@@ -144,6 +166,20 @@ def check_contract() -> None:
             raise SystemExit(f"interactive tour marker missing: {marker}")
 
     styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
+    nav_palette = {}
+    for name in ("bg", "text", "active", "brand", "hover"):
+        match = re.search(
+            rf"--oasis-nav-{name}\s*:\s*(#[0-9a-fA-F]{{6}})\s*;",
+            styles,
+        )
+        if not match:
+            raise SystemExit(f"navbar palette color is missing: {name}")
+        nav_palette[name] = match.group(1)
+    for name in ("text", "active", "brand", "hover"):
+        ratio = contrast_ratio(nav_palette[name], nav_palette["bg"])
+        if ratio < 4.5:
+            raise SystemExit(f"navbar {name} contrast is below WCAG AA: {ratio:.2f}:1")
+
     teaser_rules = re.findall(r"\.tour-teaser-media img\s*\{([^}]*)\}", styles)
     ratio_rule = next(
         (rule for rule in teaser_rules if "aspect-ratio" in rule),
