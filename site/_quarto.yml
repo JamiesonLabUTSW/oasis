@@ -11,7 +11,7 @@ project:
 
 website:
   title: OASIS
-  description: "Project information, recorded software demonstrations, and the OASIS technical report"
+  description: "Project information, guided product tours, recorded software demonstrations, and the OASIS technical report"
   site-url: https://jamiesonlabutsw.github.io/oasis/
   search: false
   favicon: images/oasis-favicon.png
@@ -22,8 +22,14 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: tui.qmd
-        text: CLI & TUI
+      - text: Explore
+        menu:
+          - href: explore.qmd
+            text: Tour overview
+          - href: tui.qmd
+            text: CLI & TUI
+          - href: maples.qmd
+            text: MAPLES
       - href: paper/paper.html
         text: Technical Report
       - href: paper/OASIS_technical_report.pdf
@@ -32,9 +38,7 @@ website:
       - icon: github
         href: https://github.com/JamiesonLabUTSW/oasis
         aria-label: OASIS project repository
-  open-graph:
-    image: images/oasis-tui-tour-social.jpg
-    image-alt: OASIS terminal interface beside a dusk desert oasis
+  open-graph: true
   page-footer:
     left: "OASIS — Open Assessment and Scoring Infrastructure Stack"
     right:

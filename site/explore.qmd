@@ -1,0 +1,108 @@
+---
+title: "Explore OASIS"
+subtitle: "Choose a path through assessment, review, evidence, and experimentation"
+description: "Explore current and planned guided tours of the OASIS CLI and TUI, MAPLES review workflows, provenance, rubric authoring, and experiments at scale."
+image: images/oasis-tui-tour-social.jpg
+page-layout: article
+---
+
+::: {.hero-panel}
+::: {.hero-kicker}
+Guided product tours
+:::
+
+## Start with the outcome you need
+
+::: {.hero-lede}
+OASIS spans terminal operations, integrated grading and review, data services, and evidence. These focused tours show how the pieces support real assessment work without turning the experience into a component catalog.
+:::
+
+::: {.hero-chips}
+::: {.hero-chip}
+Recorded demonstrations
+:::
+::: {.hero-chip}
+Synthetic or sanitized data
+:::
+::: {.hero-chip}
+Clearly marked tour status
+:::
+:::
+:::
+
+## Choose a journey
+
+::: {.insight-grid}
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Available now · recorded
+:::
+
+### Plan and operate from the terminal
+
+Move from startup readiness through workflow planning, run monitoring, results inspection, provenance, and Elephant-backed data browsing in the OASIS CLI and TUI.
+
+[Open the CLI & TUI tour](tui.qmd){.tour-cta}
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Available now · recorded fixture
+:::
+
+### Take selected encounters to reviewed results
+
+Follow a coded synthetic MAPLES fixture from a bounded group and reconstructed rubric through deterministic run states, source-note inspection, and an unsaved human review.
+
+[Open the MAPLES tour](maples.qmd){.tour-cta}
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="planned"}
+Planned
+:::
+
+### Follow one score
+
+Trace a single result from source identity and rubric version through execution, model output, human review, and verification. This future explorer will focus on provenance rather than another application walkthrough.
+
+[Read the technical report](paper/paper.html)
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="planned"}
+Planned
+:::
+
+### Author and refine a rubric
+
+See how rubric authoring and guided checks fit into **Wayfinder Rubric Studio**, then compare that experience with **Wayfinder Operator** in the CLI and TUI. They are related sibling profiles, not one identical interface.
+
+[Read the technical report](paper/paper.html)
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="planned"}
+Planned
+:::
+
+### Compare experiments at scale
+
+Explore repeatable batch experiments, side-by-side comparisons, and replayable evidence while keeping partial outcomes and execution policy visible.
+
+[Read the technical report](paper/paper.html)
+:::
+:::
+
+## Where each experience begins and ends
+
+::: {.diagram-note}
+- **OASIS CLI and TUI** support the operator workflow: planning, execution, monitoring, inspection, and evidence handling.
+- **MAPLES** is the integrated web experience for orchestration, grading, and human review.
+- **Elephant** provides data transport and storage used by those workflows; it is not the review interface itself.
+- **Wayfinder Rubric Studio** appears in MAPLES, while **Wayfinder Operator** appears in the CLI and TUI. These related sibling profiles should be evaluated in their own user contexts.
+:::
+
+## What these tours represent
+
+Recorded tours replay static captured states and do not connect visitors to live services. The CLI/TUI and MAPLES tours declare their fixture, provider-call, privacy, and capture boundaries separately. No public tour contains real learner data.

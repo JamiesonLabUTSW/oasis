@@ -1,0 +1,260 @@
+---
+title: "MAPLES: From grading group to reviewed results"
+subtitle: "A guided tour of grouping, rubric setup, grading, source-aware inspection, and human review"
+description: "Explore the MAPLES assessment lifecycle using a synthetic, privacy-safe walkthrough"
+page-layout: full
+include-after-body: product-tour-dialog.html
+---
+
+::: {.tour-intro}
+Follow three coded synthetic encounters through rubric lineage, station mapping, deterministic recorded run states, source-note inspection, and an unsaved human review. These screens contain no real learner data and were captured with zero model or provider calls.
+:::
+
+::: {#maples-tour .tui-explorer data-product-tour="" data-tour-id="maples"}
+::: {.tui-explorer-topline}
+::: {.tui-explorer-heading}
+::: {.eyebrow}
+Interactive MAPLES tour
+:::
+
+<h2 data-role="title">Review the bounded synthetic group</h2>
+<p data-role="summary">Confirm that the existing Candle Making group contains only the three coded DEMO records intended for this walkthrough.</p>
+:::
+
+::: {.tour-status aria-label="Tour data status"}
+<span class="tour-status-dot" aria-hidden="true"></span>
+<span>Recorded deterministic fixture · coded synthetic data · zero provider calls</span>
+:::
+:::
+
+<div class="tui-tour-tabs" role="tablist" aria-label="MAPLES lifecycle steps">
+  <button type="button" role="tab" id="maples-tab-group" aria-controls="maples-tour-stage" aria-selected="true" tabindex="0" data-role="tab" data-step="group">1 · Group</button>
+  <button type="button" role="tab" id="maples-tab-rubric-path" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="rubric-path">2 · Rubric path</button>
+  <button type="button" role="tab" id="maples-tab-rubric" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="rubric">3 · Inspect rubric</button>
+  <button type="button" role="tab" id="maples-tab-mapping" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="mapping">4 · Configure</button>
+  <button type="button" role="tab" id="maples-tab-launch" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="launch">5 · Run states</button>
+  <button type="button" role="tab" id="maples-tab-results" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="results">6 · Results</button>
+  <button type="button" role="tab" id="maples-tab-review" aria-controls="maples-tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="review">7 · Review</button>
+</div>
+
+::: {#maples-tour-stage .tui-stage data-role="stage" role="tabpanel" aria-labelledby="maples-tab-group" tabindex="0"}
+::: {.terminal-window}
+<picture data-role="poster-frame">
+  <source data-role="poster-source" type="image/webp" srcset="assets/maples/maples-01-group.webp">
+  <img data-role="poster" src="assets/maples/maples-01-group.webp" alt="MAPLES group detail showing three coded DEMO records in the synthetic Candle Making group." width="1200" height="720" loading="lazy" decoding="async">
+</picture>
+
+::: {.terminal-fallback data-tour-placeholder="" aria-hidden="true"}
+<span class="fallback-kicker" data-role="placeholder-title">GROUP</span>
+<strong data-role="placeholder-detail">Review the three coded records in the existing synthetic group.</strong>
+<span data-role="placeholder-status">Recorded preview unavailable</span>
+:::
+:::
+:::
+
+::: {.tour-controls}
+<button type="button" class="tour-button" data-role="previous" disabled><span aria-hidden="true">←</span> Previous step</button>
+<button type="button" class="tour-button tour-button-primary" data-role="next">Next step <span aria-hidden="true">→</span></button>
+<button type="button" class="tour-button" data-role="watch" disabled>Watch this flow</button>
+<a class="tour-deep-link" data-role="deep-link" href="#group" aria-label="Link to the current MAPLES tour step">Link to this step</a>
+:::
+
+<div class="visually-hidden" data-role="live" aria-live="polite"></div>
+
+<noscript><p class="tour-noscript">Interactive controls require JavaScript. The complete seven-step walkthrough is available below.</p></noscript>
+
+<script type="application/json" data-product-tour-data>
+{
+  "id": "maples",
+  "steps": [
+    {
+      "id": "group",
+      "label": "1 · Group",
+      "title": "Review the bounded synthetic group",
+      "summary": "Confirm that the existing Candle Making group contains only the three coded DEMO records intended for this walkthrough.",
+      "poster": {
+        "src": "assets/maples/maples-01-group.webp",
+        "srcset": "assets/maples/maples-01-group.webp",
+        "type": "image/webp",
+        "alt": "MAPLES group detail showing three coded DEMO records in the synthetic Candle Making group.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "GROUP",
+        "detail": "Review the three coded records in the existing synthetic group.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "rubric-path",
+      "label": "2 · Rubric path",
+      "title": "Stage the reconstructed rubric request",
+      "summary": "Review the domain-neutral Perfume-to-Candle request in MAPLES Create Rubric. It is deliberately left unsubmitted, so no Wayfinder or provider request occurs.",
+      "poster": {
+        "src": "assets/maples/maples-02-rubric-path.webp",
+        "srcset": "assets/maples/maples-02-rubric-path.webp",
+        "type": "image/webp",
+        "alt": "MAPLES Create Rubric dialog staged with the reconstructed Perfume-to-Candle rubric request; it was not submitted.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "RUBRIC PATH",
+        "detail": "Stage the reconstructed request without submitting it.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "rubric",
+      "label": "3 · Inspect rubric",
+      "title": "Inspect the stored synthetic rubric",
+      "summary": "Confirm the ready version, Note modality, three criteria, questions, and controls indicating four scoring levels in the newly authored Candle Making rubric.",
+      "poster": {
+        "src": "assets/maples/maples-03-rubric.webp",
+        "srcset": "assets/maples/maples-03-rubric.webp",
+        "type": "image/webp",
+        "alt": "MAPLES rubric detail dialog showing three Note criteria and controls indicating four scoring levels for Candle Making.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "RUBRIC",
+        "detail": "Inspect the stored rubric and its three Note criteria.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "mapping",
+      "label": "4 · Configure",
+      "title": "Confirm the deterministic station mapping",
+      "summary": "Match Candle Making and Scented Container Candle to the Candle Making Station. The displayed suggestion comes from fixture data, not a model.",
+      "poster": {
+        "src": "assets/maples/maples-04-mapping.webp",
+        "srcset": "assets/maples/maples-04-mapping.webp",
+        "type": "image/webp",
+        "alt": "MAPLES station mapping dialog matching the synthetic candle-making case to the Candle Making Station.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "MAPPING",
+        "detail": "Confirm the fixture activity, case, and station mapping.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "launch",
+      "label": "5 · Run states",
+      "title": "Inspect deterministic run states",
+      "summary": "Compare seeded Running and Completed interface states with their visible progress. No grading pipeline was launched for this capture.",
+      "poster": {
+        "src": "assets/maples/maples-05-launch.webp",
+        "srcset": "assets/maples/maples-05-launch.webp",
+        "type": "image/webp",
+        "alt": "MAPLES Grading page showing a recorded Running state at one of three encounters and a Completed state at 67 percent review progress.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "RUN STATES",
+        "detail": "Inspect deterministic Running and Completed interface states.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "results",
+      "label": "6 · Results",
+      "title": "Inspect a fixture result with source context",
+      "summary": "Review a recorded synthetic score beside its synthetic source note and deterministic assessment and rationale.",
+      "poster": {
+        "src": "assets/maples/maples-06-results.webp",
+        "srcset": "assets/maples/maples-06-results.webp",
+        "type": "image/webp",
+        "alt": "MAPLES Results page showing DEMO-001, a synthetic source note, and recorded fixture scores and rationales.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "RESULTS",
+        "detail": "Inspect the fixture score, rationale, and synthetic source note together.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "review",
+      "label": "7 · Review",
+      "title": "Stage the human review decision",
+      "summary": "Choose reviewed score 3 and add a clearly synthetic comment without saving. The displayed source value is a fixture value, not a model output.",
+      "poster": {
+        "src": "assets/maples/maples-07-review.webp",
+        "srcset": "assets/maples/maples-07-review.webp",
+        "type": "image/webp",
+        "alt": "MAPLES review panel showing the run-bound scoring guide, reviewed score 3, and a synthetic comment before saving.",
+        "width": 1200,
+        "height": 720
+      },
+      "media": null,
+      "placeholder": {
+        "title": "REVIEW",
+        "detail": "Stage an unsaved reviewed score and synthetic comment.",
+        "status": "Recorded preview unavailable"
+      }
+    }
+  ]
+}
+</script>
+:::
+
+::: {.tour-notes}
+::: {.tour-note-card}
+### Start with a bounded group
+
+The existing fixture group makes the three coded records visible so the operator can verify what would be in scope before a live run.
+:::
+
+::: {.tour-note-card}
+### Pause at each decision
+
+The tour pauses at the staged rubric request, stored rubric, deterministic mapping, fixture result inspection, and human review instead of implying that every detail occupies one screen.
+:::
+
+::: {.tour-note-card}
+### End with human review
+
+Review controls remain explicit. The final screen stops before saving so the tour demonstrates the decision surface without mutating even the synthetic fixture.
+:::
+:::
+
+::: {.tour-method}
+## What this tour represents
+
+These screens use the production MAPLES React interface from OASIS commit 90031150529bbfa1a3de4f5769039fb91940ed08 against a deterministic same-origin loopback fixture. The live MAPLES stack and grading pipeline were not used. Provider calls, external service clients, outbound connections, and spend were all zero. Displayed scores, rationales, progress, and review states are authored fixture values—not model outputs.
+
+The published page replays seven static WebP screenshots. Visitors do not connect to MAPLES or call its APIs. The public media manifest records the source revision, fixture boundary, hashes, dimensions, zero-provider evidence, and privacy review.
+
+The Perfume Making → Candle Making narrative was inspired by Minhan Park and Licheng Yi’s [public walkthrough](https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo) and [video](https://www.youtube.com/watch?v=MKwseFKuFLs). All rubric wording, notes, scores, rationales, and coded records in this tour were newly authored. This is not a reproduction of the interns’ original prompts, outputs, data, runtime, or exact demo.
+
+**Wayfinder Rubric Studio** helps create or upload rubric material inside the MAPLES web workflow. **Wayfinder Operator** is the distinct CLI/TUI experience. They share an ecosystem name and related goals, but they are sibling profiles with different interfaces and trust boundaries.
+
+<details class="tour-transcript">
+<summary>Read the seven-step walkthrough</summary>
+
+1. **Group:** Open the existing Candle Making group and verify that it contains only DEMO-001, DEMO-002, and DEMO-003.
+2. **Rubric path:** Stage the reconstructed Perfume-to-Candle request in Create Rubric. The request is not submitted, so no Wayfinder or provider call occurs.
+3. **Inspect rubric:** Open the stored synthetic rubric and inspect its ready version, Note modality, three criteria, questions, and controls indicating four scoring levels.
+4. **Configure:** Match Candle Making and Scented Container Candle to the Candle Making Station. The suggestion shown is deterministic fixture data.
+5. **Run states:** Compare seeded Running and Completed interface states and their visible progress. The capture does not start a grading pipeline.
+6. **Results:** Select DEMO-001 and inspect its synthetic source note, recorded fixture score, and deterministic assessment and rationale.
+7. **Review:** Choose reviewed score 3 and add a synthetic comment. The screenshot is taken before Save Review, so no review mutation occurs.
+
+</details>
+:::
+
+<script src="product-tour.js" defer></script>

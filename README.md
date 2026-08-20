@@ -10,9 +10,10 @@ definition through adjudication.
 ## Project site
 
 The source for the project website lives in [`site/`](site/). It includes a
-lightweight, recorded CLI and TUI tour and the prebuilt technical-report
-publication artifacts. The tour uses sanitized fixtures and does not call a
-model or a live clinical service.
+guided-tour overview, lightweight recorded CLI/TUI and MAPLES lifecycle
+tours, and the prebuilt technical-report publication artifacts. Each tour
+declares whether its fixture is synthetic or sanitized, along with its
+provider-call and live-service boundary.
 
 Build the site with Quarto 1.6.42:
 
@@ -31,17 +32,23 @@ artifact.
 
 ## Related projects and demonstrations
 
-MAPLES is the platform's grading and review application; Wayfinder is the
-assistant embedded in it.
+MAPLES is the platform's grading and review application. Wayfinder Rubric
+Studio is its authoring assistant; Wayfinder Operator is the CLI/TUI sibling.
+They share an ecosystem name but are not the same interface.
 
 - [Explore UT-REAL, a multi-site MAPLES project](https://ut-real-ai-project-maples.com/)
 - [Watch Ameer Hamza Shakur demonstrate the MAPLES grading and faculty-review workflow](https://www.youtube.com/watch?v=tHvS2kqRc2Q)
 - [Watch Minhan Park and Licheng Yi demonstrate rubric authoring with Wayfinder in MAPLES](https://www.youtube.com/watch?v=MKwseFKuFLs)
 
+The recorded MAPLES tour uses a new Perfume-to-Candle reconstruction inspired
+by Minhan Park and Licheng Yi's public walkthrough. Its rubric wording, notes,
+scores, rationales, and coded records were newly authored for the website; it
+does not reproduce their original prompts, outputs, data, or runtime.
+
 ## Publication scope
 
-Project information, sanitized recorded software demonstrations, and this
-technical report are available at
+Project information, guided product tours, recorded software
+demonstrations, and this technical report are available at
 [https://github.com/JamiesonLabUTSW/oasis](https://github.com/JamiesonLabUTSW/oasis)
 and
 [https://jamiesonlabutsw.github.io/oasis/](https://jamiesonlabutsw.github.io/oasis/).

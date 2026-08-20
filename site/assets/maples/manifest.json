@@ -1,0 +1,287 @@
+{
+  "schema_version": "oasis.maples-site-media.v1",
+  "recorded_at": "2026-08-20T17:06:27Z",
+  "scenario": {
+    "id": "intern-perfume-to-candle-v1",
+    "description": "A fresh domain-neutral Perfume Making to Candle Making reconstruction inspired by Minhan Park and Licheng Yi's public MAPLES walkthrough.",
+    "public_narrative_sources": [
+      "https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo",
+      "https://www.youtube.com/watch?v=MKwseFKuFLs"
+    ],
+    "source_data_reused": false,
+    "source_media_reused": false,
+    "original_prompts_or_outputs_reused": false,
+    "student_or_patient_data": false,
+    "visible_record_ids": [
+      "DEMO-001",
+      "DEMO-002",
+      "DEMO-003"
+    ]
+  },
+  "application": {
+    "source_sha": "90031150529bbfa1a3de4f5769039fb91940ed08",
+    "maples_tree_sha": "f7577341a2e04f6e5efa32298904e55d5f2cc04e",
+    "tracked_source_clean": true,
+    "frontend_dist_manifest_sha256": "6f3d2d5dd19742320960f964ead4ddb5741684c8737e0ce816d1b3ede2b3ea65",
+    "frontend_index_sha256": "2ac63ca8b359b027d93e8d5aea663f9854ecf1e77e0cd772b8bf4fd49026ff62",
+    "capture_mode": "production React UI with a deterministic same-origin loopback API fixture",
+    "live_maples_stack": false
+  },
+  "execution_boundary": {
+    "grading_pipeline_invoked": false,
+    "provider_calls": 0,
+    "network_clients": 0,
+    "spend_usd": 0,
+    "displayed_scores_are_fixture_values": true,
+    "visitor_network_calls": false,
+    "sealed_request_log_sha256": "911a075280ac9ae3b171bbe0169fde525b181e254f4601ee5cc298dee1cd3bcc",
+    "request_count": 62,
+    "unexpected_non_2xx": 0,
+    "expected_notes_only_video_probe_404": 1
+  },
+  "capture": {
+    "viewport_css_pixels": {
+      "width": 1440,
+      "height": 864
+    },
+    "delivery_pixels": {
+      "width": 1200,
+      "height": 720
+    },
+    "zoom_percent": 100,
+    "application_viewport_only": true,
+    "loopback_only": true,
+    "browser_profile_ephemeral": false,
+    "profile_safety_note": "The isolated loopback origin exposed only coded fixture data; DOM, OCR, and manual review passed."
+  },
+  "privacy_review": {
+    "dom_scenes_reviewed": 7,
+    "ocr_scenes_reviewed": 7,
+    "ocr_variants_per_scene": 6,
+    "manual_scenes_reviewed": 7,
+    "sensitive_hits": 0,
+    "real_person_data_visible": false,
+    "all_passed": true
+  },
+  "delivery": {
+    "format": "webp",
+    "encoder": "Pillow quality=88 method=6 exact=true",
+    "asset_count": 7,
+    "total_bytes": 286454,
+    "per_file_cap_bytes": 225000,
+    "aggregate_cap_bytes": 1400000,
+    "motion_media_included": false
+  },
+  "assets": [
+    {
+      "order": 1,
+      "scene": "group",
+      "path": "assets/maples/maples-01-group.webp",
+      "format": "webp",
+      "bytes": 31952,
+      "sha256": "e5aee0b718655bd8a84a9a99515bd9db261bbec609b2046fec6c5da5bca2e63f",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES group detail showing three coded DEMO records in the synthetic Candle Making group.",
+      "dom_text_sha256": "1ccc136fd12f6920c41ff46a5c740be80de192e4ad4bc57339462bbd83f06bcf",
+      "ocr_text_sha256": {
+        "delivery_2x": "8d2f616a1fd04cecfaabc17350c9d638e8be4c912e8f8e26d9c2dc75f493a972",
+        "delivery_native": "8084e9dd9e15c62a90230995f22368b3a4e96fffef9263b00f34b4d2745c06f2",
+        "delivery_tiled2x": "0a86f27a71e22705fd2f1fd97270810a92eb958e8a454a48fd28787c247b0a05",
+        "raw_2x": "0f7b0906779a5219b440cdd7f4633562fad1e2b47f7778035fbe065e91530044",
+        "raw_native": "209c5edfe22c6a8a9c896f89a0855a1604866a769f42c843a4a97dfc004f0917",
+        "raw_tiled2x": "b73e11f3cd84034a4a8af78aa871441a2ef23fc0d9fbccaf4d0399365cdfdb8a"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 2,
+      "scene": "rubric-path",
+      "path": "assets/maples/maples-02-rubric-path.webp",
+      "format": "webp",
+      "bytes": 28426,
+      "sha256": "5caaa9b0ee69bf80f380ba45033537ee8254830fc9f705a3ad60957e0f2474d8",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES Create Rubric dialog staged with the reconstructed Perfume-to-Candle rubric request; it was not submitted.",
+      "dom_text_sha256": "45d273d6fec32796ece5edfd934bbab8ff6ee8f61e17a5544418ce900cdf2fb3",
+      "ocr_text_sha256": {
+        "delivery_2x": "419e049f85ade18d1550836473d419d76029d80de06b5fab8fa54d08c8c6490e",
+        "delivery_native": "7a44c588abfd8438ab19a42d1a9d39363528932812bfa8d0cd87795af8179e0a",
+        "delivery_tiled2x": "a415845f1f915c24ce62967a9e82576a3d9863cf13c7da54f8c4e5f9820253e5",
+        "raw_2x": "6c48ccea3b53cc399ffe91c5bdb4201e483eb40fd4e3115347473f62a7af9ac8",
+        "raw_native": "634dc8361f436ea76f609405cee164a9a9671a2b195770a95f54d032c6ca8bee",
+        "raw_tiled2x": "aafe4341fe11eb13f26ec44f9e7e6811d4b57d1dbda22c5dbd3bd33cd612fee4"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 3,
+      "scene": "rubric",
+      "path": "assets/maples/maples-03-rubric.webp",
+      "format": "webp",
+      "bytes": 39058,
+      "sha256": "4d3ee1b5d67244d74aed305d9b51d8ba16867e7a3e32c211b81b521850b133f4",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES rubric detail dialog showing three Note criteria and controls indicating four scoring levels for Candle Making.",
+      "dom_text_sha256": "a4f8a36c71a118106746d5229deff525132080eb23b96fd4aaab0fcdae218a76",
+      "ocr_text_sha256": {
+        "delivery_2x": "11c55aa5e3d9145201e60f93451f8551155aefe5727af9ba0508cd9b0c2f35c2",
+        "delivery_native": "72f66a1c4f794eecf6b91360bcd50b8c1549aa942183bc80988de92a6077aa6c",
+        "delivery_tiled2x": "184032ff9630c6f8355fe49b5c5e888bd9ba95d529b65f3c37f319f496f625e2",
+        "raw_2x": "f8aa9d160cac3b4a45e18a33ae8d23e77fb92eacde104e2ff43bd784b492aa79",
+        "raw_native": "962a984df06d81864e14cd5407d82355cc05cefa4d2c7838e9c477c56b011db2",
+        "raw_tiled2x": "acb59bf1abccdeaa306f4d2cae86c71cf292440c11effbc4d1d2db817b10583e"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 4,
+      "scene": "mapping",
+      "path": "assets/maples/maples-04-mapping.webp",
+      "format": "webp",
+      "bytes": 33726,
+      "sha256": "5bb944b4c522c0341214eb793d411ce6f9128fe14a997b20b6d82d1e34644427",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES station mapping dialog matching the synthetic candle-making case to the Candle Making Station.",
+      "dom_text_sha256": "2ec45ce6ab4fe5a827ea00e8660133e9357fd0255a44b80d8a2cf5576a5fb24a",
+      "ocr_text_sha256": {
+        "delivery_2x": "d14022f8819d738769804ca356ec0c46bfd0b5218233e5328169a54f17e153e0",
+        "delivery_native": "07d63c366ae99e72484936d8e2e98e8dcf762feef97b7f6a315da4f33cc08f0a",
+        "delivery_tiled2x": "f7edbd77b296d845e1cb5e3b8541ddd741936e347855002b90c14f01ddc70046",
+        "raw_2x": "de053a65304ae01611e4928f8a0f798940b9399b6b861a4b2425f36efd249cbb",
+        "raw_native": "dca634948e88d6462618bd9b62f34bd7c6ff2ed1b4de8fda53b7b9f4a3bf0a5e",
+        "raw_tiled2x": "96b4e55a0750571b7a41595fd21d3cd20758b12e3a4f256168facb0cee7ca77f"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 5,
+      "scene": "launch",
+      "path": "assets/maples/maples-05-launch.webp",
+      "format": "webp",
+      "bytes": 34762,
+      "sha256": "7ae6ed9ae1936cd04f2f05a4d0daf90a5a48dce4b0d97392646519f1bbcdac57",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES Grading page showing a recorded Running state at one of three encounters and a Completed state at 67 percent review progress.",
+      "dom_text_sha256": "7e45d7bcdcffd8680ecc4b967e4efdc17115f321556b772527d88d1dd4563b77",
+      "ocr_text_sha256": {
+        "delivery_2x": "a5f9dd2df2a1919b6262ee47ae2fdd3edca179ab7781b3c9f5ec139a18e2c4ae",
+        "delivery_native": "c2b7b7e752f8d43113991b655178ad80c461826ac126aaad766836a3af1b45c6",
+        "delivery_tiled2x": "8dc2402c887e2b67d4f2eaa26f1fd71e98113c72a791478a7e56f5492da9c93f",
+        "raw_2x": "5e2ce188581cfedca13d5414d6facd26c22bf295572bd0a6aa1beaf6b21209a4",
+        "raw_native": "dff6e19a9b5c30045762f622319de20fc1eafa1ddc859a4aeeb81bb989a05cb0",
+        "raw_tiled2x": "97f70f72cad86893e0816479406b3c2883721b3a0cd87fbebc47680528992f2a"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 6,
+      "scene": "results",
+      "path": "assets/maples/maples-06-results.webp",
+      "format": "webp",
+      "bytes": 56076,
+      "sha256": "00206295a7e5cedde394678819e9e3c76fd7c018d7236433c79c5d3ee04a782a",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES Results page showing DEMO-001, a synthetic source note, and recorded fixture scores and rationales.",
+      "dom_text_sha256": "7ca34f34606b6747ee6ce9b6af1c49062996c3abaf6cea1a10dfbb0acb7ae2fc",
+      "ocr_text_sha256": {
+        "delivery_2x": "db82667dbab6f4f0fd0af8550b33310ef53efdad6b9c92ce39331360e5619fe5",
+        "delivery_native": "aff538272cae152436770b88e0665ac797c8b6fc7be9d7393966a62978fc1657",
+        "delivery_tiled2x": "e7aca13e52bd330715ce43fcdf1e08f35d803cd73ffc2da04ffdea6bfb4f6a2e",
+        "raw_2x": "bb5fc17a69f44e5cdedebd8a4396542e88857927ed88aed456c962570654980f",
+        "raw_native": "0eec9eb4f7b4c91f21159445dfd0655f7e54d01f7d348fc6627cc36a0f1cf998",
+        "raw_tiled2x": "38759d8016dcabcdef05e3bb016e4fa6aa360d6674e2225008dda8dd2de742de"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    },
+    {
+      "order": 7,
+      "scene": "review",
+      "path": "assets/maples/maples-07-review.webp",
+      "format": "webp",
+      "bytes": 62454,
+      "sha256": "086a45f2c1f5fa5f5a54908bd5e8f82aa8948bd7821cd394a719e3f3bb587cde",
+      "width": 1200,
+      "height": 720,
+      "metadata_chunks": [
+        "VP8"
+      ],
+      "alt": "MAPLES review panel showing the run-bound scoring guide, reviewed score 3, and a synthetic comment before saving.",
+      "dom_text_sha256": "f1ea0e0d741c8e7a3ea0703e3f28fb7131f6cc102d5321c5a6a521345be4eec4",
+      "ocr_text_sha256": {
+        "delivery_2x": "e75f5c9ec5ff0933999fec6db8b421016f137abc263ba4d7c10ee482fe446612",
+        "delivery_native": "74bd77d981e01eed90d8b2a3c8ef2f58779c87ac1f34d955756fab73339c80b3",
+        "delivery_tiled2x": "2b8198e578358609dc43c7ef871723a4226daf4aee64b3210398356c8ce1b47d",
+        "raw_2x": "e6156acc402c0f048f2e255ea4095c0f295941be1726c93ce125791afa6e0d20",
+        "raw_native": "26449192e026a08a7f8de44672072fcce82f81fdf714417b7de2262274ce0380",
+        "raw_tiled2x": "129b829c3af7232c8ec0f5de9a2d21d9c1dd8e886f1c2194c5b4b0cd0bb4f7d2"
+      },
+      "manual_review": {
+        "passed": true,
+        "review_scale_percent": 200,
+        "real_person_data_visible": false,
+        "browser_or_os_chrome_visible": false,
+        "redaction_or_blur_used": false
+      }
+    }
+  ]
+}
