@@ -14,7 +14,7 @@ An AI oasis in the desert of manual grading.
 :::
 
 ::: {.hero-lede}
-OASIS grades video, audio, and text against evaluator-defined rubrics, using hosted or self-hosted large language models. Modality-aware execution, provenance capture, and human review keep scores inspectable from rubric definition through adjudication.
+OASIS grades video, audio, and text with evaluator-defined rubrics and your choice of hosted or self-hosted language model. It plans each run around the material involved, records how every score was produced, and keeps people in control from rubric setup through final review.
 :::
 :::
 
@@ -24,7 +24,7 @@ OASIS grades video, audio, and text against evaluator-defined rubrics, using hos
 ::: {.tour-teaser-copy}
 ### Explore the CLI & TUI
 
-Step through the terminal interface, from startup readiness to workflow planning, live run monitoring, results inspection, provenance, and Elephant-backed data browsing. The tour uses sanitized recorded software demonstrations and does not contact a live service.
+See how the terminal checks that OASIS is ready, builds a workflow, follows a run, opens results, traces evidence, and browses data stored in Elephant. Everything shown is a sanitized recording, so this page never connects to a live service.
 
 [Open the CLI & TUI tour](tui.qmd){.tour-cta}
 :::
@@ -38,7 +38,7 @@ Step through the terminal interface, from startup readiness to workflow planning
 ::: {.tour-teaser-copy}
 ### Explore MAPLES
 
-Follow three coded synthetic encounters through group confirmation, rubric setup, station mapping, recorded run states, source-note inspection, and a staged, unsaved human review. The walkthrough contains no real learner data; displayed scores are fixture values, and visitors make no live-service or provider calls.
+Follow three clearly labeled demo records through group setup, rubric review, station matching, run status, source-note inspection, and a human review that is deliberately left unsaved. There is no real learner data here: the scores are fixture values, and simply viewing the tour makes no service or model calls.
 
 [Open the MAPLES tour](maples.qmd){.tour-cta}
 :::
@@ -52,9 +52,9 @@ Follow three coded synthetic encounters through group confirmation, rubric setup
 ::: {.tour-teaser-copy}
 ### Follow a complete CLI & MCP run
 
-See OASIS take three coded synthetic Candle Making notes through local intake, file validation, a strict rubric check, call planning, a one-record sample, a full standalone run, a cache-backed MCP request, and evidence verification. The recorded workflow uses a deterministic loopback fixture, makes no external-provider calls, and incurs $0 paid spend.
+Watch OASIS check three synthetic Candle Making notes, validate the rubric, preview the work and estimated cost, try one note, run all three, reuse the results through MCP, and verify the evidence. The recording uses a predictable local test fixture, never calls an external model provider, and incurs $0 in provider charges.
 
-[Open the Candle Maker tour](candle.qmd){.tour-cta}
+[Open the Candle Making tour](candle.qmd){.tour-cta}
 
 [Download the overview GIF](assets/candle/candle-overview.gif){download="candle-overview.gif"}
 :::
@@ -80,14 +80,14 @@ See OASIS take three coded synthetic Candle Making notes through local intake, f
 
 ## Technical report
 
-The report covers the platform's architecture, rubric-to-prompt compilation, multimodal grading pipeline, command-line and agent interfaces, provenance model, and operational experience.
+For readers who want the details, the report explains the architecture, how rubrics become model prompts, how each media type is graded, how the command-line and agent interfaces work, and how OASIS records evidence.
 
 - [Read the technical report online](paper/paper.html)
 - [Download the technical report (PDF)](paper/OASIS_technical_report.pdf)
 
 ## Related projects and demonstrations
 
-MAPLES is the platform's grading and review application. Wayfinder Rubric Studio is its authoring assistant; Wayfinder Operator is the distinct CLI/TUI sibling.
+MAPLES is the web application for grading and review. Wayfinder Rubric Studio helps authors build rubrics inside MAPLES, while Wayfinder Operator is the related—but separate—CLI/TUI experience.
 
 - [Explore UT-REAL, a multi-site MAPLES project](https://ut-real-ai-project-maples.com/)
 - [Watch Ameer Hamza Shakur demonstrate the MAPLES grading and faculty-review workflow](https://www.youtube.com/watch?v=tHvS2kqRc2Q)
@@ -95,6 +95,6 @@ MAPLES is the platform's grading and review application. Wayfinder Rubric Studio
 
 ## Publication scope
 
-Project information, guided product tours, recorded software demonstrations, and this technical report are available at [github.com/JamiesonLabUTSW/oasis](https://github.com/JamiesonLabUTSW/oasis) and [jamiesonlabutsw.github.io/oasis](https://jamiesonlabutsw.github.io/oasis/). Each tour declares its synthetic or sanitized fixture and its live-service boundary. Application and component source code, binaries, installation materials, sample data, and tagged software releases are not part of this publication. Any future software release will identify its exact contents, version, and terms.
+This publication includes project information, guided tours, recorded demonstrations, and the technical report. Each tour explains what data it uses and whether anything was connected live. It does not yet include application source code, binaries, installation packages, sample datasets, or a tagged software release; any future release will state exactly what it contains and which terms apply.
 
 <script src="homepage-terminal.js" defer></script>

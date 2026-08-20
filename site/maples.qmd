@@ -1,13 +1,13 @@
 ---
-title: "MAPLES: From grading group to reviewed results"
-subtitle: "A guided tour of grouping, rubric setup, grading, source-aware inspection, and human review"
-description: "Explore the MAPLES assessment lifecycle using a synthetic, privacy-safe walkthrough"
+title: "MAPLES: From group setup to human review"
+subtitle: "See how a small demo group moves from rubric setup to human review"
+description: "Explore group setup, rubric review, station matching, results, and human review in MAPLES using a synthetic, privacy-safe walkthrough."
 page-layout: full
 include-after-body: product-tour-dialog.html
 ---
 
 ::: {.tour-intro}
-Follow three coded synthetic encounters through rubric lineage, station mapping, deterministic recorded run states, source-note inspection, and an unsaved human review. These screens contain no real learner data and were captured with zero model or provider calls.
+Follow three coded demo records as you check the group, preview a rubric request, inspect the saved rubric, match it to a station, read a result beside its source note, and try a human review without saving it. Every screen uses made-up data, and the capture made no model or provider calls.
 :::
 
 ::: {#maples-tour .tui-explorer data-product-tour="" data-tour-id="maples"}
@@ -17,13 +17,13 @@ Follow three coded synthetic encounters through rubric lineage, station mapping,
 Interactive MAPLES tour
 :::
 
-<h2 data-role="title">Review the bounded synthetic group</h2>
-<p data-role="summary">Confirm that the existing Candle Making group contains only the three coded DEMO records intended for this walkthrough.</p>
+<h2 data-role="title">Check the demo group first</h2>
+<p data-role="summary">Make sure the Candle Making group contains only the three coded DEMO records used in this walkthrough.</p>
 :::
 
 ::: {.tour-status aria-label="Tour data status"}
 <span class="tour-status-dot" aria-hidden="true"></span>
-<span>Recorded deterministic fixture · coded synthetic data · zero provider calls</span>
+<span>Recorded demo · coded synthetic data · no provider calls</span>
 :::
 :::
 
@@ -46,7 +46,7 @@ Interactive MAPLES tour
 
 ::: {.terminal-fallback data-tour-placeholder="" aria-hidden="true"}
 <span class="fallback-kicker" data-role="placeholder-title">GROUP</span>
-<strong data-role="placeholder-detail">Review the three coded records in the existing synthetic group.</strong>
+<strong data-role="placeholder-detail">Check the three coded records in the demo group.</strong>
 <span data-role="placeholder-status">Recorded preview unavailable</span>
 :::
 :::
@@ -70,8 +70,8 @@ Interactive MAPLES tour
     {
       "id": "group",
       "label": "1 · Group",
-      "title": "Review the bounded synthetic group",
-      "summary": "Confirm that the existing Candle Making group contains only the three coded DEMO records intended for this walkthrough.",
+      "title": "Check the demo group first",
+      "summary": "Make sure the Candle Making group contains only the three coded DEMO records used in this walkthrough.",
       "poster": {
         "src": "assets/maples/maples-01-group.webp",
         "srcset": "assets/maples/maples-01-group.webp",
@@ -83,15 +83,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "GROUP",
-        "detail": "Review the three coded records in the existing synthetic group.",
+        "detail": "Check the three coded records in the demo group.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "rubric-path",
       "label": "2 · Rubric path",
-      "title": "Stage the reconstructed rubric request",
-      "summary": "Review the domain-neutral Perfume-to-Candle request in MAPLES Create Rubric. It is deliberately left unsubmitted, so no Wayfinder or provider request occurs.",
+      "title": "Preview a rubric request without sending it",
+      "summary": "The Create Rubric window contains a neutral Perfume-to-Candle request, but we leave it unsent. Wayfinder and the model provider are never called.",
       "poster": {
         "src": "assets/maples/maples-02-rubric-path.webp",
         "srcset": "assets/maples/maples-02-rubric-path.webp",
@@ -103,15 +103,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "RUBRIC PATH",
-        "detail": "Stage the reconstructed request without submitting it.",
+        "detail": "Preview the request without sending it.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "rubric",
       "label": "3 · Inspect rubric",
-      "title": "Inspect the stored synthetic rubric",
-      "summary": "Confirm the ready version, Note modality, three criteria, questions, and controls indicating four scoring levels in the newly authored Candle Making rubric.",
+      "title": "Open the saved rubric",
+      "summary": "Check that version 1 is ready and that the new Candle Making rubric has three text-note criteria, their questions, and four scoring levels.",
       "poster": {
         "src": "assets/maples/maples-03-rubric.webp",
         "srcset": "assets/maples/maples-03-rubric.webp",
@@ -123,15 +123,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "RUBRIC",
-        "detail": "Inspect the stored rubric and its three Note criteria.",
+        "detail": "Open the saved rubric and check its three text-note criteria.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "mapping",
       "label": "4 · Configure",
-      "title": "Confirm the deterministic station mapping",
-      "summary": "Match Candle Making and Scented Container Candle to the Candle Making Station. The displayed suggestion comes from fixture data, not a model.",
+      "title": "Check the station match",
+      "summary": "Match Candle Making and Scented Container Candle to the Candle Making Station. The suggestion shown here comes from the demo fixture, not a model.",
       "poster": {
         "src": "assets/maples/maples-04-mapping.webp",
         "srcset": "assets/maples/maples-04-mapping.webp",
@@ -143,15 +143,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "MAPPING",
-        "detail": "Confirm the fixture activity, case, and station mapping.",
+        "detail": "Check how the demo activity and case map to the station.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "launch",
       "label": "5 · Run states",
-      "title": "Inspect deterministic run states",
-      "summary": "Compare seeded Running and Completed interface states with their visible progress. No grading pipeline was launched for this capture.",
+      "title": "See what run progress looks like",
+      "summary": "Compare prepared Running and Completed screens and their progress indicators. No grading pipeline was launched for this capture.",
       "poster": {
         "src": "assets/maples/maples-05-launch.webp",
         "srcset": "assets/maples/maples-05-launch.webp",
@@ -163,15 +163,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "RUN STATES",
-        "detail": "Inspect deterministic Running and Completed interface states.",
+        "detail": "Compare the prepared Running and Completed screens.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "results",
       "label": "6 · Results",
-      "title": "Inspect a fixture result with source context",
-      "summary": "Review a recorded synthetic score beside its synthetic source note and deterministic assessment and rationale.",
+      "title": "Read a result beside its source",
+      "summary": "Open a prepared demo score beside the synthetic source note, assessment, and rationale that go with it.",
       "poster": {
         "src": "assets/maples/maples-06-results.webp",
         "srcset": "assets/maples/maples-06-results.webp",
@@ -183,15 +183,15 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "RESULTS",
-        "detail": "Inspect the fixture score, rationale, and synthetic source note together.",
+        "detail": "Read the demo score, rationale, and source note together.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "review",
       "label": "7 · Review",
-      "title": "Stage the human review decision",
-      "summary": "Choose reviewed score 3 and add a clearly synthetic comment without saving. The displayed source value is a fixture value, not a model output.",
+      "title": "Try a human review without saving it",
+      "summary": "Choose score 3 and add a clearly synthetic comment, then stop before Save Review. The original value is a prepared fixture value, not a model output.",
       "poster": {
         "src": "assets/maples/maples-07-review.webp",
         "srcset": "assets/maples/maples-07-review.webp",
@@ -203,7 +203,7 @@ Interactive MAPLES tour
       "media": null,
       "placeholder": {
         "title": "REVIEW",
-        "detail": "Stage an unsaved reviewed score and synthetic comment.",
+        "detail": "Try a reviewed score and comment without saving either one.",
         "status": "Recorded preview unavailable"
       }
     }
@@ -214,45 +214,45 @@ Interactive MAPLES tour
 
 ::: {.tour-notes}
 ::: {.tour-note-card}
-### Start with a bounded group
+### Check the group first
 
-The existing fixture group makes the three coded records visible so the operator can verify what would be in scope before a live run.
+The demo group shows all three coded records up front, so an operator can confirm exactly what would be included before a real run.
 :::
 
 ::: {.tour-note-card}
-### Pause at each decision
+### Take one decision at a time
 
-The tour pauses at the staged rubric request, stored rubric, deterministic mapping, fixture result inspection, and human review instead of implying that every detail occupies one screen.
+The tour stops at the rubric request, saved rubric, station match, result, and review screen in turn. This keeps each decision tied to the screen where it actually happens.
 :::
 
 ::: {.tour-note-card}
-### End with human review
+### Keep the final say with a person
 
-Review controls remain explicit. The final screen stops before saving so the tour demonstrates the decision surface without mutating even the synthetic fixture.
+The review controls stay visible and deliberate. The final screen stops before saving, so you can see the decision without changing even the demo data.
 :::
 :::
 
 ::: {.tour-method}
 ## What this tour represents
 
-These screens use the production MAPLES React interface from OASIS commit 90031150529bbfa1a3de4f5769039fb91940ed08 against a deterministic same-origin loopback fixture. The live MAPLES stack and grading pipeline were not used. Provider calls, external service clients, outbound connections, and spend were all zero. Displayed scores, rationales, progress, and review states are authored fixture values—not model outputs.
+These screens show the production MAPLES React interface from OASIS commit 90031150529bbfa1a3de4f5769039fb91940ed08, connected only to a predictable test fixture on the same machine. The live MAPLES stack was not used, and no grading pipeline was launched for this capture. There were no provider calls, external service connections, outbound requests, or provider charges. Every displayed score, rationale, progress value, and review state was prepared for the demo—not produced by a model.
 
-The published page replays seven static WebP screenshots. Visitors do not connect to MAPLES or call its APIs. The public media manifest records the source revision, fixture boundary, hashes, dimensions, zero-provider evidence, and privacy review.
+The page shows seven static WebP screenshots. Visitors do not connect to MAPLES or call its APIs. The public media manifest records the source version, what the capture did and did not connect to, file hashes and dimensions, proof that no model provider was called, and the privacy review.
 
 The Perfume Making → Candle Making narrative was inspired by Minhan Park and Licheng Yi’s [public walkthrough](https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo) and [video](https://www.youtube.com/watch?v=MKwseFKuFLs). All rubric wording, notes, scores, rationales, and coded records in this tour were newly authored. This is not a reproduction of the interns’ original prompts, outputs, data, runtime, or exact demo.
 
-**Wayfinder Rubric Studio** helps create or upload rubric material inside the MAPLES web workflow. **Wayfinder Operator** is the distinct CLI/TUI experience. They share an ecosystem name and related goals, but they are sibling profiles with different interfaces and trust boundaries.
+**Wayfinder Rubric Studio** helps people create or upload rubrics inside MAPLES. **Wayfinder Operator** is the separate CLI/TUI experience. They share a family name and related goals, but they use different interfaces and have different operating boundaries.
 
 <details class="tour-transcript">
 <summary>Read the seven-step walkthrough</summary>
 
-1. **Group:** Open the existing Candle Making group and verify that it contains only DEMO-001, DEMO-002, and DEMO-003.
-2. **Rubric path:** Stage the reconstructed Perfume-to-Candle request in Create Rubric. The request is not submitted, so no Wayfinder or provider call occurs.
-3. **Inspect rubric:** Open the stored synthetic rubric and inspect its ready version, Note modality, three criteria, questions, and controls indicating four scoring levels.
-4. **Configure:** Match Candle Making and Scented Container Candle to the Candle Making Station. The suggestion shown is deterministic fixture data.
-5. **Run states:** Compare seeded Running and Completed interface states and their visible progress. The capture does not start a grading pipeline.
-6. **Results:** Select DEMO-001 and inspect its synthetic source note, recorded fixture score, and deterministic assessment and rationale.
-7. **Review:** Choose reviewed score 3 and add a synthetic comment. The screenshot is taken before Save Review, so no review mutation occurs.
+1. **Group:** Open the Candle Making group and confirm that it contains only DEMO-001, DEMO-002, and DEMO-003.
+2. **Rubric path:** Preview the reconstructed Perfume-to-Candle request in Create Rubric. It is never submitted, so Wayfinder and the provider are not called.
+3. **Inspect rubric:** Open the saved demo rubric and check its ready version, three text-note criteria, questions, and four scoring levels.
+4. **Configure:** Match Candle Making and Scented Container Candle to the Candle Making Station. The suggestion comes from prepared demo data, not a model.
+5. **Run states:** Compare prepared Running and Completed screens and their progress. The capture does not start a grading pipeline.
+6. **Results:** Select DEMO-001 and read its synthetic source note beside the prepared score, assessment, and rationale.
+7. **Review:** Choose score 3 and add a synthetic comment. The screenshot is taken before Save Review, so nothing is changed.
 
 </details>
 :::
