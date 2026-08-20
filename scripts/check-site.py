@@ -1071,7 +1071,15 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         'href="./candle.html"',
         'href="assets/candle/candle-overview.gif"',
         'download="candle-overview.gif"',
+        'data-ambient-terminal',
+        'data-ambient-terminal-video',
+        'data-ambient-terminal-toggle',
         'src="assets/candle/candle-06-run-poster.webp"',
+        'data-src="assets/candle/candle-overview.webm"',
+        'data-src="assets/candle/candle-overview.mp4"',
+        'preload="none"',
+        'Recorded terminal · silent',
+        'aria-label="Play preview — recorded terminal"',
         "makes no external-provider calls",
         "$0 paid spend",
         "Explore MAPLES",
@@ -1090,6 +1098,78 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
     )
     if teaser_count != 3:
         raise SystemExit("homepage must present exactly three recorded-tour teasers")
+
+    homepage_runtime_links = re.findall(
+        r'src="homepage-terminal\.js\?v=([0-9a-f]{12})"',
+        home,
+    )
+    if len(homepage_runtime_links) != 1:
+        raise SystemExit("homepage terminal runtime is not fingerprinted")
+    homepage_runtime = OUTPUT / "homepage-terminal.js"
+    if homepage_runtime_links[0] != digest(homepage_runtime)[:12]:
+        raise SystemExit("homepage terminal runtime fingerprint is stale")
+    if homepage_runtime.stat().st_size > 6_000:
+        raise SystemExit("homepage terminal runtime exceeds its 6 KB budget")
+    runtime_text = homepage_runtime.read_text(encoding="utf-8")
+    for runtime_marker in (
+        "IntersectionObserver",
+        "prefers-reduced-motion: reduce",
+        "saveData",
+        "visibilitychange",
+        "source[data-src]",
+        "pagehide",
+        "userPaused",
+        "Pause preview — recorded terminal",
+    ):
+        if runtime_marker not in runtime_text:
+            raise SystemExit(
+                f"homepage terminal runtime guard is missing: {runtime_marker}"
+            )
+    if re.search(
+        r'<source\s+[^>]*\ssrc="assets/candle/candle-overview\.(?:webm|mp4)"',
+        home,
+    ):
+        raise SystemExit("homepage terminal motion must not load before activation")
+    video_match = re.search(
+        r'<video\s+[^>]*data-ambient-terminal-video[^>]*>',
+        home,
+    )
+    if not video_match:
+        raise SystemExit("homepage ambient terminal video is missing")
+    for attribute in (
+        "autoplay",
+        "muted",
+        "loop",
+        "playsinline",
+        'tabindex="-1"',
+        'aria-hidden="true"',
+    ):
+        if attribute not in video_match.group(0):
+            raise SystemExit(
+                f"homepage ambient terminal video is missing {attribute}"
+            )
+    toggle_match = re.search(
+        r'<button\s+[^>]*data-ambient-terminal-toggle[^>]*>',
+        home,
+    )
+    if (
+        not toggle_match
+        or 'aria-controls="homepage-candle-terminal"' not in toggle_match.group(0)
+    ):
+        raise SystemExit("homepage terminal motion lacks an accessible pause control")
+    if " hidden" not in toggle_match.group(0):
+        raise SystemExit("homepage terminal control must remain hidden without JavaScript")
+    ambient_media_match = re.search(
+        r'<div\s+class="[^"]*tour-teaser-media--ambient[^"]*"[^>]*>',
+        home,
+    )
+    if (
+        not ambient_media_match
+        or "aria-hidden" in ambient_media_match.group(0)
+    ):
+        raise SystemExit("homepage terminal pause control must remain exposed to assistive technology")
+    if home.count('id="homepage-candle-terminal"') != 1:
+        raise SystemExit("homepage terminal control target must be unique")
 
     for page_name in ("tui.html", "candle.html", "maples.html"):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
@@ -1325,6 +1405,16 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
             raise SystemExit(f"Explore overview marker missing: {marker}")
 
     styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
+    for motion_style_contract in (
+        r"\.ambient-terminal-toggle\s*\{[^}]*min-width:\s*44px;[^}]*min-height:\s*44px;",
+        r"\.ambient-terminal-toggle:focus-visible\s*\{[^}]*outline:\s*3px solid #79cfff;",
+        r"\.ambient-terminal:not\(\.motion-enabled\) video\s*\{[^}]*display:\s*none;",
+        r"\.ambient-terminal img\s*\{[^}]*opacity:\s*1 !important;",
+    ):
+        if not re.search(motion_style_contract, styles, flags=re.DOTALL):
+            raise SystemExit(
+                f"homepage terminal accessibility rule is missing: {motion_style_contract}"
+            )
     nav_palette = {}
     for name in ("bg", "text", "active", "brand", "hover"):
         match = re.search(

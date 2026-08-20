@@ -43,6 +43,12 @@ def fingerprint_project_assets() -> None:
     if not tour_runtime.is_file():
         raise SystemExit(f"rendered product-tour runtime is missing: {tour_runtime}")
     runtime_version = digest(tour_runtime)[:12]
+    homepage_runtime = OUTPUT / "homepage-terminal.js"
+    if not homepage_runtime.is_file():
+        raise SystemExit(
+            f"rendered homepage terminal runtime is missing: {homepage_runtime}"
+        )
+    homepage_runtime_version = digest(homepage_runtime)[:12]
     project_pages = sorted(OUTPUT.glob("*.html"))
     if not project_pages:
         raise SystemExit("no rendered project pages found for stylesheet fingerprinting")
@@ -60,6 +66,20 @@ def fingerprint_project_assets() -> None:
             content = content.replace(
                 runtime_original,
                 f'src="product-tour.js?v={runtime_version}"',
+            )
+        homepage_runtime_original = 'src="homepage-terminal.js"'
+        homepage_runtime_count = content.count(homepage_runtime_original)
+        if homepage_runtime_count > 1:
+            raise SystemExit(
+                f"expected at most one homepage terminal runtime link in {page}"
+            )
+        if homepage_runtime_count == 1:
+            content = content.replace(
+                homepage_runtime_original,
+                (
+                    'src="homepage-terminal.js'
+                    f'?v={homepage_runtime_version}"'
+                ),
             )
         page.write_text(content, encoding="utf-8")
 
