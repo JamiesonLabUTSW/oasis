@@ -1066,9 +1066,14 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
     for marker in (
         "Explore the CLI &amp; TUI",
         "Open the CLI &amp; TUI tour",
-        "Follow a complete Candle CLI &amp; MCP run",
-        "See files become verifiable evidence",
+        "Follow a complete CLI &amp; MCP run",
+        "Open the Candle Maker tour",
         'href="./candle.html"',
+        'href="assets/candle/candle-overview.gif"',
+        'download="candle-overview.gif"',
+        'src="assets/candle/candle-06-run-poster.webp"',
+        "makes no external-provider calls",
+        "$0 paid spend",
         "Explore MAPLES",
         'href="./maples.html"',
         'src="assets/maples/maples-01-group.webp"',
@@ -1083,8 +1088,8 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         "tour-teaser" in class_names.split()
         for class_names in re.findall(r'class="([^"]*)"', home)
     )
-    if teaser_count != 2:
-        raise SystemExit("homepage must present exactly two recorded-tour teasers")
+    if teaser_count != 3:
+        raise SystemExit("homepage must present exactly three recorded-tour teasers")
 
     for page_name in ("tui.html", "candle.html", "maples.html"):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")

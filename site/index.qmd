@@ -27,8 +27,6 @@ OASIS grades video, audio, and text against evaluator-defined rubrics, using hos
 Step through the terminal interface, from startup readiness to workflow planning, live run monitoring, results inspection, provenance, and Elephant-backed data browsing. The tour uses sanitized recorded software demonstrations and does not contact a live service.
 
 [Open the CLI & TUI tour](tui.qmd){.tour-cta}
-
-[Follow a complete Candle CLI & MCP run](candle.qmd)
 :::
 
 ::: {.tour-teaser-media aria-hidden="true"}
@@ -50,8 +48,24 @@ Follow three coded synthetic encounters through group confirmation, rubric setup
 :::
 :::
 
+::: {.tour-teaser}
+::: {.tour-teaser-copy}
+### Follow a complete CLI & MCP run
+
+See OASIS take three coded synthetic Candle Making notes through local intake, file validation, a strict rubric check, call planning, a one-record sample, a full standalone run, a cache-backed MCP request, and evidence verification. The recorded workflow uses a deterministic loopback fixture, makes no external-provider calls, and incurs $0 paid spend.
+
+[Open the Candle Maker tour](candle.qmd){.tour-cta}
+
+[Download the overview GIF](assets/candle/candle-overview.gif){download="candle-overview.gif"}
+:::
+
+::: {.tour-teaser-media aria-hidden="true"}
+![](assets/candle/candle-06-run-poster.webp){fig-alt="" loading="lazy" width="1200" height="720"}
+:::
+:::
+
 ::: {.tour-overview-link}
-[Browse all guided tours](explore.qmd) · [See files become verifiable evidence](candle.qmd)
+[Browse all guided tours](explore.qmd)
 :::
 
 ## Technical report
