@@ -1,6 +1,6 @@
 ---
 title: "Explore the OASIS CLI & TUI"
-subtitle: "A lightweight, clickable tour of planning, monitoring, and evidence"
+subtitle: "Click through planning, run monitoring, results, and evidence"
 description: "Explore recorded OASIS terminal interface views without connecting to a live service"
 image: images/oasis-tui-tour-social.jpg
 page-layout: full
@@ -18,8 +18,8 @@ include-after-body: product-tour-dialog.html
 Interactive TUI tour
 :::
 
-<h2 id="tour-view-title" data-role="title">Start at the oasis</h2>
-<p id="tour-view-summary" data-role="summary">Launch into a readiness-aware workspace where every operation stays inspectable.</p>
+<h2 id="tour-view-title" data-role="title">Get oriented before you begin</h2>
+<p id="tour-view-summary" data-role="summary">OASIS opens with a clear view of what is ready and what you can do next.</p>
 :::
 
 ::: {.tour-status aria-label="Tour status"}
@@ -68,8 +68,8 @@ Interactive TUI tour
     {
       "id": "splash",
       "label": "Splash & INFO",
-      "title": "Start at the oasis",
-      "summary": "Launch into a readiness-aware workspace where every operation stays inspectable.",
+      "title": "Get oriented before you begin",
+      "summary": "OASIS opens with a clear view of what is ready and what you can do next.",
       "poster": {
         "src": "assets/tui/splash-poster.webp",
         "srcset": "assets/tui/splash-poster.webp",
@@ -83,7 +83,7 @@ Interactive TUI tour
         "mp4": "assets/tui/splash.mp4",
         "gif": "assets/tui/splash.gif",
         "title": "Splash & INFO demonstration",
-        "caption": "The branded launch gives way to INFO, where OASIS summarizes local readiness and the available workspace."
+        "caption": "The animated launch opens into INFO, where you can check local readiness and see the available workspace."
       },
       "placeholder": {
         "title": "OASIS",
@@ -95,7 +95,7 @@ Interactive TUI tour
       "id": "dashboard",
       "label": "Dashboard",
       "title": "See the run, not just a spinner",
-      "summary": "Dashboard brings service health, run state, progress, and the next useful action into one view.",
+      "summary": "The Dashboard puts service health, run status, progress, and the next useful action in one place.",
       "poster": {
         "src": "assets/tui/dashboard-poster.webp",
         "srcset": "assets/tui/dashboard-poster.webp",
@@ -109,7 +109,7 @@ Interactive TUI tour
         "mp4": "assets/tui/dashboard.mp4",
         "gif": "assets/tui/dashboard.gif",
         "title": "Dashboard demonstration",
-        "caption": "Dashboard follows a run across its lifecycle and provides direct handoffs to progress and results."
+        "caption": "Follow a run from start to finish and jump directly to its progress or results."
       },
       "placeholder": {
         "title": "DASHBOARD",
@@ -121,7 +121,7 @@ Interactive TUI tour
       "id": "workflow",
       "label": "Workflow",
       "title": "Plan before spending",
-      "summary": "Workflow stages inputs and mission notes, then exposes the dry-run plan before execution.",
+      "summary": "Add the inputs and working notes, then review the dry-run plan before anything is executed.",
       "poster": {
         "src": "assets/tui/workflow-poster.webp",
         "srcset": "assets/tui/workflow-poster.webp",
@@ -135,7 +135,7 @@ Interactive TUI tour
         "mp4": "assets/tui/workflow.mp4",
         "gif": "assets/tui/workflow.gif",
         "title": "Workflow demonstration",
-        "caption": "Workflow turns an assessment request into a reviewable command and execution plan."
+        "caption": "See how an assessment request becomes a command and plan you can review before running it."
       },
       "placeholder": {
         "title": "WORKFLOW",
@@ -147,7 +147,7 @@ Interactive TUI tour
       "id": "results",
       "label": "Results",
       "title": "Move from score to evidence",
-      "summary": "Results supports filtering, drill-down, inspection, and provenance without losing run context.",
+      "summary": "Filter the results, open the details, and trace the evidence without losing track of the run they came from.",
       "poster": {
         "src": "assets/tui/results-poster.webp",
         "srcset": "assets/tui/results-poster.webp",
@@ -161,24 +161,24 @@ Interactive TUI tour
         "mp4": "assets/tui/results.mp4",
         "gif": "assets/tui/results.gif",
         "title": "Results demonstration",
-        "caption": "Results keeps scores, rationale, filters, and provenance close enough to support review rather than blind acceptance."
+        "caption": "Scores stay beside their rationale, evidence, and audit trail so reviewers can judge them instead of accepting them blindly."
       },
       "placeholder": {
         "title": "RESULTS",
-        "detail": "Keep scores, evidence, rationale, filters, and provenance in context.",
+        "detail": "Keep scores, evidence, rationale, filters, and the audit trail in context.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "elephant",
       "label": "Elephant",
-      "title": "Browse the data in context",
-      "summary": "Elephant-backed views move from datasets to encounters and files using the same keyboard-first interaction.",
+      "title": "See the data behind the run",
+      "summary": "Move from datasets to individual encounters and files in Elephant without leaving the keyboard-first interface.",
       "poster": {
         "src": "assets/tui/elephant-poster.webp",
         "srcset": "assets/tui/elephant-poster.webp",
         "type": "image/webp",
-        "alt": "OASIS Elephant view showing sanitized student records",
+        "alt": "OASIS Elephant view showing sanitized example records",
         "width": 1200,
         "height": 720
       },
@@ -187,7 +187,7 @@ Interactive TUI tour
         "mp4": "assets/tui/elephant.mp4",
         "gif": "assets/tui/elephant.gif",
         "title": "Elephant demonstration",
-        "caption": "Elephant browsing uses sanitized fixture records here; the tour does not contact a live data service."
+        "caption": "This recording browses sanitized example records; viewing the tour never contacts a live data service."
       },
       "placeholder": {
         "title": "ELEPHANT",
@@ -204,39 +204,39 @@ Interactive TUI tour
 ::: {.tour-note-card}
 ### Plan before spending
 
-OASIS resolves files, rubric prompts, modalities, providers, expected calls, and estimated cost before an execution begins.
+Before a run starts, OASIS shows which files and rubric items it found, how each media type will be handled, which model service will be used, how many calls to expect, and what they may cost.
 :::
 
 ::: {.tour-note-card}
 ### Follow the evidence
 
-Results remain connected to their run, execution plan, input identities, provider metadata, and review state.
+Every result stays linked to its run, plan, source files, model details, and review status.
 :::
 
 ::: {.tour-note-card}
 ### Keep people in control
 
-Confirmation gates, visible partial states, cancellation, and review handoffs make consequential actions explicit.
+OASIS asks for confirmation before consequential steps, shows incomplete runs clearly, and keeps cancellation and human review within reach.
 :::
 :::
 
 ::: {.tour-method}
 ## What this tour represents
 
-The interface recordings use deterministic or synthetic fixtures with credentials scrubbed. They demonstrate product interaction and layout, not a live grading claim. Motion is opt-in, pauses when closed, and is removed for visitors who prefer reduced motion.
+These recordings use predictable test data or synthetic examples, with credentials removed. They show how the interface works; they are not evidence of a live grading run. Motion starts only when requested, stops when the viewer closes it, and stays off for visitors who prefer reduced motion.
 
 The CLI and TUI are part of the OASIS software release process; this project page currently publishes demonstrations and the technical report only. Release materials will identify their exact contents and version when available.
 
-For a longer operator example, [follow three coded Candle notes from standalone CLI intake through a cache-backed MCP run and verified evidence](candle.qmd). That walkthrough uses the real OASIS command and MCP surfaces against a deterministic loopback fixture, with its execution boundary stated on the page.
+For a longer example, [follow three coded Candle Making notes from local file checks through a cache-backed MCP run and verified evidence](candle.qmd). It uses the real OASIS CLI and MCP server with a local test service that always returns the same prepared responses; the page explains exactly what was—and was not—run.
 
 <details class="tour-transcript">
 <summary>Read the five flow descriptions</summary>
 
-1. **Splash & INFO:** The OASIS launch screen opens the INFO workspace, where readiness and available operations are summarized.
-2. **Dashboard:** Four connected services report healthy status while the run list and selected run show progress and the next action.
-3. **Workflow:** A mission is staged from sanitized inputs, then previewed as a dry-run plan before any execution.
-4. **Results:** A synthetic result is selected and filtered; its score, evidence, rationale, inspection, and provenance remain in context.
-5. **Elephant:** Sanitized example records are browsed from a dataset into encounters and files with keyboard-first navigation.
+1. **Splash & INFO:** The launch screen opens INFO, where you can see what is ready and which operations are available.
+2. **Dashboard:** Four recorded service checks appear healthy while the run list and selected run show progress and the next action.
+3. **Workflow:** Sanitized inputs are added to a workflow and previewed as a dry-run plan before execution.
+4. **Results:** A synthetic result is filtered and opened with its score, evidence, rationale, inspection details, and audit trail still in view.
+5. **Elephant:** Sanitized example records are opened from a dataset down to individual encounters and files using keyboard-first navigation.
 
 </details>
 :::

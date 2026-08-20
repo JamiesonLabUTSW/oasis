@@ -1,7 +1,7 @@
 ---
 title: "Explore OASIS"
-subtitle: "Choose a path through assessment, review, evidence, and experimentation"
-description: "Explore current and planned guided tours of the OASIS CLI and TUI, MAPLES review workflows, provenance, rubric authoring, and experiments at scale."
+subtitle: "Pick a guided tour based on what you want to accomplish"
+description: "Explore recorded and planned tours of the OASIS terminal, MAPLES review workflow, evidence, rubric authoring, and larger experiments."
 image: images/oasis-tui-tour-social.jpg
 page-layout: article
 ---
@@ -11,10 +11,10 @@ page-layout: article
 Guided product tours
 :::
 
-## Start with the outcome you need
+## What would you like to do?
 
 ::: {.hero-lede}
-OASIS spans terminal operations, integrated grading and review, data services, and evidence. These focused tours show how the pieces support real assessment work without turning the experience into a component catalog.
+OASIS brings together terminal tools, grading and review, data services, and verifiable evidence. Choose a tour by the job you want to do; each one tells a complete story instead of listing features.
 :::
 
 ::: {.hero-chips}
@@ -38,33 +38,33 @@ Clearly marked tour status
 Available now · recorded
 :::
 
-### Plan and operate from the terminal
+### Run OASIS from the terminal
 
-Move from startup readiness through workflow planning, run monitoring, results inspection, provenance, and Elephant-backed data browsing in the OASIS CLI and TUI.
+See OASIS check its setup, plan a workflow, follow a run, open results, trace evidence, and browse data stored in Elephant—all from the CLI and TUI.
 
 [Open the CLI & TUI tour](tui.qmd){.tour-cta}
 :::
 
 ::: {.insight-card}
 ::: {.explore-status data-status="available"}
-Available now · recorded fixture
+Available now · recorded demo
 :::
 
-### Take a standalone assessment from files to evidence
+### Go from local files to verified results
 
-Follow three coded synthetic Candle notes through CLI intake checks, strict rubric validation, planning, a bounded sample, a full fixture-backed run, a cache-backed MCP run, and evidence verification.
+Follow three synthetic Candle Making notes through file checks, rubric validation, planning, a one-note trial, a full recorded run, an MCP request served from cache, and final evidence verification.
 
 [Open the Candle CLI & MCP tour](candle.qmd){.tour-cta}
 :::
 
 ::: {.insight-card}
 ::: {.explore-status data-status="available"}
-Available now · recorded fixture
+Available now · recorded demo
 :::
 
-### Take selected encounters to reviewed results
+### Review results in MAPLES
 
-Follow a coded synthetic MAPLES fixture from a bounded group and reconstructed rubric through deterministic run states, source-note inspection, and an unsaved human review.
+Open a three-record demo group, inspect its rubric and station match, compare recorded run states, read a result beside its source note, and try a human review without saving it.
 
 [Open the MAPLES tour](maples.qmd){.tour-cta}
 :::
@@ -76,7 +76,7 @@ Planned
 
 ### Follow one score
 
-Trace a single result from source identity and rubric version through execution, model output, human review, and verification. This future explorer will focus on provenance rather than another application walkthrough.
+This planned tour will follow one result from its source file and rubric version through execution, model output, human review, and verification. Its focus will be trust and traceability rather than another interface tour.
 
 [Read the technical report](paper/paper.html)
 :::
@@ -88,7 +88,7 @@ Planned
 
 ### Author and refine a rubric
 
-See how rubric authoring and guided checks fit into **Wayfinder Rubric Studio**, then compare that experience with **Wayfinder Operator** in the CLI and TUI. They are related sibling profiles, not one identical interface.
+See how **Wayfinder Rubric Studio** helps authors create and check a rubric inside MAPLES, then compare it with **Wayfinder Operator** in the CLI and TUI. The two are related, but they are designed for different settings.
 
 [Read the technical report](paper/paper.html)
 :::
@@ -100,22 +100,22 @@ Planned
 
 ### Compare experiments at scale
 
-Explore repeatable batch experiments, side-by-side comparisons, and replayable evidence while keeping partial outcomes and execution policy visible.
+See how to run repeatable batch experiments, compare results side by side, and keep evidence and partial outcomes visible along the way.
 
 [Read the technical report](paper/paper.html)
 :::
 :::
 
-## Where each experience begins and ends
+## How the pieces fit together
 
 ::: {.diagram-note}
-- **OASIS CLI and TUI** support the operator workflow: planning, execution, monitoring, inspection, and evidence handling.
-- **Standalone CLI and MCP** expose the same validated assessment operations to people at a terminal and agents using typed tools.
-- **MAPLES** is the integrated web experience for orchestration, grading, and human review.
-- **Elephant** provides data transport and storage used by those workflows; it is not the review interface itself.
-- **Wayfinder Rubric Studio** appears in MAPLES, while **Wayfinder Operator** appears in the CLI and TUI. These related sibling profiles should be evaluated in their own user contexts.
+- **OASIS CLI and TUI** are where operators plan work, start and monitor runs, inspect results, and verify evidence.
+- **Standalone CLI and MCP** offer the same checked assessment workflow to people at a terminal and to agents using typed tools.
+- **MAPLES** is the web application for organizing grading work and completing human review.
+- **Elephant** stores and moves the data those workflows use; it is not itself the review screen.
+- **Wayfinder Rubric Studio** lives in MAPLES, while **Wayfinder Operator** lives in the CLI and TUI. They share a family name, but each is designed for its own setting.
 :::
 
-## What these tours represent
+## About the recordings
 
-Recorded tours replay captured states and do not connect visitors to live services. The CLI/TUI, standalone Candle, and MAPLES tours declare their fixture, provider-call, privacy, and capture boundaries separately. No public tour contains real learner data.
+These tours replay recorded screens; they do not connect visitors to live OASIS services. Each tour explains which fixture it uses, whether model calls were made during recording, and how the media was checked for privacy. None of the public tours contains real learner data.

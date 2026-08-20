@@ -1,14 +1,14 @@
 ---
 title: "Candle Making: From files to verified evidence"
-subtitle: "A recorded OASIS CLI and MCP walkthrough using coded synthetic notes"
-description: "Follow a standalone OASIS assessment through intake, rubric checks, planning, a fixture-backed run, MCP cache reuse, and evidence verification"
+subtitle: "A recorded CLI and MCP walkthrough using three coded synthetic notes"
+description: "Follow OASIS from local file checks and rubric validation through a one-note trial, a full recorded run, MCP cache reuse, and evidence verification."
 image: assets/candle/candle-01-inputs-poster.webp
 page-layout: full
 include-after-body: product-tour-dialog.html
 ---
 
 ::: {.tour-intro}
-Follow three newly authored, coded Candle Making notes through the real OASIS CLI and MCP server. The recorded assessment uses a deterministic OpenAI-compatible endpoint bound to loopback: no note leaves the machine, no external provider is called, and paid spend is $0. The displayed scores and token usage are fixture values—not live-model assessments.
+Follow three newly authored, coded Candle Making notes through a real OASIS CLI and MCP workflow. For this recording, OASIS talks only to a predictable OpenAI-compatible test service running on the same machine. No note leaves the computer, no external model provider is called, and nothing is billed. The scores and token counts are prepared fixture values, not judgments from a live model.
 :::
 
 ::: {#candle-tour .tui-explorer data-product-tour="" data-tour-id="candle-cli-mcp"}
@@ -18,13 +18,13 @@ Follow three newly authored, coded Candle Making notes through the real OASIS CL
 Recorded standalone walkthrough
 :::
 
-<h2 data-role="title">Begin with a bounded synthetic fixture</h2>
-<p data-role="summary">Inspect the three coded notes, the Candle Making rubric, and the isolated output location before OASIS reads them.</p>
+<h2 data-role="title">Start with three clearly defined demo notes</h2>
+<p data-role="summary">Before OASIS reads anything, check the three coded notes, the Candle Making rubric, and the dedicated output folder.</p>
 :::
 
 ::: {.tour-status aria-label="Tour execution status"}
 <span class="tour-status-dot" aria-hidden="true"></span>
-<span>Real CLI &amp; MCP · deterministic loopback fixture · $0 paid</span>
+<span>Real CLI &amp; MCP · local test fixture · $0 paid</span>
 :::
 :::
 
@@ -75,8 +75,8 @@ Recorded standalone walkthrough
     {
       "id": "inputs",
       "label": "1 · Inputs",
-      "title": "Begin with a bounded synthetic fixture",
-      "summary": "Inspect the three coded notes, the Candle Making rubric, and the isolated output location before OASIS reads them.",
+      "title": "Start with three clearly defined demo notes",
+      "summary": "Before OASIS reads anything, check the three coded notes, the Candle Making rubric, and the dedicated output folder.",
       "poster": {
         "src": "assets/candle/candle-01-inputs-poster.webp",
         "srcset": "assets/candle/candle-01-inputs-poster.webp",
@@ -95,8 +95,8 @@ Recorded standalone walkthrough
     {
       "id": "data",
       "label": "2 · Data checks",
-      "title": "Validate intake before grading",
-      "summary": "OASIS validates the files, scans their identities and hashes, and resolves Note modality at the Candle Making station.",
+      "title": "Check the files before grading",
+      "summary": "OASIS confirms that the files are readable, records their identities and digital fingerprints, and recognizes them as text notes for the Candle Making station.",
       "poster": {
         "src": "assets/candle/candle-02-data-poster.webp",
         "srcset": "assets/candle/candle-02-data-poster.webp",
@@ -108,15 +108,15 @@ Recorded standalone walkthrough
       "media": null,
       "placeholder": {
         "title": "DATA CHECKS",
-        "detail": "Validate files, identities, hashes, and station mapping.",
+        "detail": "Check the files, their identities, and their station match.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "rubric",
       "label": "3 · Rubric",
-      "title": "Check the rubric strictly",
-      "summary": "The strict checker accepts the three Note criteria and their scoring logic before any assessment request is made.",
+      "title": "Catch rubric problems early",
+      "summary": "The strict check confirms that all three text-note criteria and their scoring rules are properly structured before any assessment request is made.",
       "poster": {
         "src": "assets/candle/candle-03-rubric-poster.webp",
         "srcset": "assets/candle/candle-03-rubric-poster.webp",
@@ -128,15 +128,15 @@ Recorded standalone walkthrough
       "media": null,
       "placeholder": {
         "title": "RUBRIC",
-        "detail": "Reject structural problems before they become run problems.",
+        "detail": "Catch structural problems before they affect a run.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "plan",
       "label": "4 · Plan",
-      "title": "Review the execution plan",
-      "summary": "The dry run resolves three encounters, the selected fixture model, three expected requests, and a conservative rough pre-run estimate of $0.010096 without making a call.",
+      "title": "See the plan before making any calls",
+      "summary": "The dry run finds three records, selects the fixture model, expects three requests, and shows a conservative $0.010096 forecast—all without making a call.",
       "poster": {
         "src": "assets/candle/candle-04-plan-poster.webp",
         "srcset": "assets/candle/candle-04-plan-poster.webp",
@@ -148,15 +148,15 @@ Recorded standalone walkthrough
       "media": null,
       "placeholder": {
         "title": "PLAN",
-        "detail": "See selection, expected calls, and a conservative rough estimate before running.",
+        "detail": "Review what will run, how many calls to expect, and the rough cost forecast.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "sample",
       "label": "5 · Sample",
-      "title": "Prove the result shape on one record",
-      "summary": "A bounded sample checks the provider-adapter, parsing, score, rationale, and evidence path before the three-record run.",
+      "title": "Test one complete result first",
+      "summary": "A one-record trial checks the model-service connector, result parsing, score, rationale, and evidence before all three records run.",
       "poster": {
         "src": "assets/candle/candle-05-sample-poster.webp",
         "srcset": "assets/candle/candle-05-sample-poster.webp",
@@ -175,8 +175,8 @@ Recorded standalone walkthrough
     {
       "id": "run",
       "label": "6 · Full run",
-      "title": "Run all three encounters through the real CLI",
-      "summary": "Three requests to the local fixture produce nine fixture scores and 1,080 fixture-reported tokens through the normal OASIS execution path.",
+      "title": "Run all three notes through the real CLI",
+      "summary": "Three requests to the local test service produce nine prepared scores and 1,080 tokens reported by that service through the normal OASIS execution path.",
       "poster": {
         "src": "assets/candle/candle-06-run-poster.webp",
         "srcset": "assets/candle/candle-06-run-poster.webp",
@@ -190,19 +190,19 @@ Recorded standalone walkthrough
         "mp4": "assets/candle/candle-overview.mp4",
         "gif": "assets/candle/candle-overview.gif",
         "title": "Candle Making CLI walkthrough",
-        "caption": "Watch the real OASIS CLI move from coded synthetic notes through data and rubric checks, planning, a bounded sample, the full deterministic loopback run, and evidence verification. No external provider is contacted."
+        "caption": "Watch the real OASIS CLI move from coded synthetic notes through file and rubric checks, planning, a one-note trial, the full run against a predictable local test service, and evidence verification. No external provider is contacted."
       },
       "placeholder": {
         "title": "FULL RUN",
-        "detail": "Run three encounters through the normal CLI execution path.",
+        "detail": "Run all three notes through the normal CLI workflow.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "mcp",
       "label": "7 · MCP cache run",
-      "title": "Issue a cache-backed request through typed MCP tools",
-      "summary": "The OASIS MCP server accepts a fresh auto-grade request for the same three records; all three calls are cache hits, adding no new loopback requests to the fixture, fixture-reported tokens, or estimated cost.",
+      "title": "Run the same assessment through MCP using the cache",
+      "summary": "The OASIS MCP server accepts a new auto-grade request for the same three records. All three calls are cache hits, so the run adds no requests to the local test service, no reported tokens, and no estimated cost.",
       "poster": {
         "src": "assets/candle/candle-07-mcp-poster.webp",
         "srcset": "assets/candle/candle-07-mcp-poster.webp",
@@ -214,15 +214,15 @@ Recorded standalone walkthrough
       "media": null,
       "placeholder": {
         "title": "MCP CACHE RUN",
-        "detail": "Issue a fresh typed request that reuses the CLI run cache without new assessment calls.",
+        "detail": "Use MCP to request the same work and reuse the CLI results from cache.",
         "status": "Recorded preview unavailable"
       }
     },
     {
       "id": "evidence",
       "label": "8 · Evidence",
-      "title": "End with verifiable evidence",
-      "summary": "Summary and inspection keep scores tied to their inputs and plan; all 22 recorded CLI-run evidence hashes verify.",
+      "title": "Verify the evidence",
+      "summary": "OASIS keeps every score linked to its inputs and plan, then confirms that all 22 digital fingerprints for the recorded CLI evidence are valid.",
       "poster": {
         "src": "assets/candle/candle-08-evidence-poster.webp",
         "srcset": "assets/candle/candle-08-evidence-poster.webp",
@@ -234,7 +234,7 @@ Recorded standalone walkthrough
       "media": null,
       "placeholder": {
         "title": "EVIDENCE",
-        "detail": "Inspect results, provenance, and verified hashes together.",
+        "detail": "Check the results, their audit trail, and the verified file fingerprints together.",
         "status": "Recorded preview unavailable"
       }
     }
@@ -245,30 +245,30 @@ Recorded standalone walkthrough
 
 ::: {.tour-notes}
 ::: {.tour-note-card}
-### Real OASIS surfaces
+### Real OASIS code
 
-The recording runs binaries built from a clean tracked OASIS source tree at `db2861fdc79aa3bddeaed949c1282e068e7f4eb9`. It exercises the CLI, MCP server, OpenAI-compatible adapter, parser, cache, and evidence code.
+The recording runs binaries built from a clean OASIS source tree at `db2861fdc79aa3bddeaed949c1282e068e7f4eb9`. It uses the real CLI, MCP server, model-service connector, parser, cache, and evidence code.
 :::
 
 ::: {.tour-note-card}
-### Deliberately bounded inference
+### A safe stand-in for a model
 
-The compatible endpoint is a deterministic fixture on loopback—not OpenAI, Anthropic, Gemini, or another live model. Three full-run requests return authored fixture values; external provider calls and paid spend are zero.
+The model-compatible endpoint is a local test service that always returns the same prepared responses—not OpenAI, Anthropic, Gemini, or another live model. The full run makes three requests to that service. External provider calls and paid spend remain zero.
 :::
 
 ::: {.tour-note-card}
-### Estimates are not bills
+### Estimates are not charges
 
-Before execution, the zero-call plan shows a conservative rough estimate of $0.010096; it is not added to observed capture usage. The sample reports 360 fixture tokens and a $0.00084 usage-derived estimate; the full run reports 1,080 and $0.00252. The capture-wide observed estimate is therefore $0.00336. These values demonstrate usage accounting, not provider charges: paid spend is $0, and the MCP cache run adds $0.
+Before execution, the zero-call plan shows a conservative rough estimate of $0.010096; it is not added to observed capture usage. The sample reports 360 tokens from the test service and a $0.00084 usage estimate; the full run reports 1,080 tokens and $0.00252. Together, the sample and full run account for 1,440 tokens and a $0.00336 estimate. These are accounting estimates, not provider charges: paid spend is $0, and the MCP cache run adds $0.
 :::
 :::
 
 ::: {.tour-method}
-## CLI and MCP: the same operator contract
+## CLI and MCP: two ways to run the same workflow
 
-The MCP view is an actual wire transcript rendered from the OASIS server’s structured responses, not a simulated agent chat. The server is restricted to the synthetic fixture and output roots. The CLI run warms the content-addressed cache; a fresh MCP auto-grade request for the same content then reports 3/3 cache hits with zero new loopback requests, tokens, or estimated cost.
+The MCP view comes from the real messages exchanged with the OASIS server; it is not a simulated agent chat. The server can access only the synthetic fixture and output folders. After the CLI completes the run, a new MCP request for identical content reuses all three results from cache, adding no local test-service requests, reported tokens, or estimated cost.
 
-| Operator intent | CLI surface | MCP tool |
+| What you want to do | CLI command | MCP tool |
 |---|---|---|
 | Validate readable inputs | `oasis --format json data validate candle-data` | `oasis.data.validate` |
 | Discover records and hashes | `oasis --format json data scan candle-data --rubric rubric/candle-rubric.yaml --hash --summary-only --output evidence/capture/intake-manifest.json` | `oasis.data.scan` |
@@ -278,11 +278,13 @@ The MCP view is an actual wire transcript rendered from the OASIS server’s str
 | Run the full fixture | `oasis --format json --trace-id candle-run auto-grade candle-data --rubric rubric/candle-rubric.yaml --provider openai-compatible --output output/capture-run --max-files 10 --hash --standalone --skip-sample --concurrency 1 --no-transcript --depth shallow` | `oasis.pipeline.auto_grade` |
 | Summarize a completed run | `oasis --format json summary output/capture-run --depth prompt` | `oasis.summary` |
 | Inspect results and verify evidence | `oasis --format json inspect output/capture-run --verify --provenance` | `oasis.inspect` |
-| Review the provenance ledger (available; not invoked in the clip) | `oasis ledger --limit 10` | `oasis.ledger` |
+| Review the broader audit ledger (available; not invoked in the clip) | `oasis ledger --limit 10` | `oasis.ledger` |
 
-Except for the clearly marked ledger row, these are the recorded command forms with their capture-relative operands and options. They assume `candle-data/`, `rubric/candle-rubric.yaml`, and the declared loopback provider/model environment; use a configured supported provider outside this fixture. The recording also enables OASIS audit output as capture instrumentation. In the MCP session, `oasis.data.scan` proves record and hash discovery; the station mapping shown here comes from the CLI scan with `--rubric` and the auto-grade plan, not from an MCP scan field. The loopback helper exists only during capture and is not a service contacted by visitors.
+Except for the clearly marked ledger row, the table lists the exact commands used in the recording. The paths are relative to its working folder, and the commands use its local provider and model settings; outside this demo, configure a supported provider for your own environment. The recording also turns on OASIS audit output so the actions can be checked afterward.
 
-Here, **intake** means local file validation and discovery. It does not claim an Elephant upload or managed-data ingestion. Site visitors download only the static page and opt-in recorded media; they do not start OASIS, contact the loopback fixture, or call a provider.
+In the MCP session, `oasis.data.scan` confirms that the records and their hashes were discovered. It does not return a station mapping; the mapping shown here comes from the CLI scan with `--rubric` and the auto-grade plan. The local test helper existed only during capture, and visitors never contact it.
+
+In this tour, **intake** means checking and discovering local files. It does not mean uploading data to Elephant or another managed data service. Visitors receive only the static page and any recorded media they choose to play; they do not start OASIS, contact the local test fixture, or call a provider.
 
 ## Complete recorded transcript
 
@@ -290,19 +292,19 @@ Here, **intake** means local file validation and discovery. It does not claim an
 <summary>Read the eight-step walkthrough without JavaScript</summary>
 
 <ol>
-<li><noscript><span id="inputs" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Inputs:</strong> List the isolated working set: three newly authored text notes named DEMO-001, DEMO-002, and DEMO-003, plus the Candle Making rubric and a fresh output directory. The record IDs are codes, not people.</li>
-<li><noscript><span id="data" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Data checks:</strong> Run validation to confirm all three files are readable, then scan with hashing and the rubric to resolve three encounters with Note modality at the Candle Making station. This is local intake, not a managed-service upload.</li>
-<li><noscript><span id="rubric" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Rubric:</strong> Run the strict checker. It accepts the three Note criteria and their scoring logic before any assessment request or estimated spend can occur.</li>
+<li><noscript><span id="inputs" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Inputs:</strong> Start with three newly authored text notes named DEMO-001, DEMO-002, and DEMO-003, the Candle Making rubric, and an empty output folder. The record IDs are codes, not people.</li>
+<li><noscript><span id="data" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Data checks:</strong> Confirm that all three files are readable, then scan them with the rubric and record their hashes. OASIS recognizes three text-note records for the Candle Making station. This is a local check, not an upload to a managed service.</li>
+<li><noscript><span id="rubric" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Rubric:</strong> Run the strict check. It accepts the three text-note criteria and their scoring rules before any assessment request or estimated cost can occur.</li>
 <li><noscript><span id="plan" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Plan:</strong> Ask OASIS for a dry-run plan. It resolves three encounters and three expected requests, records the selected fixture model, and shows a conservative rough pre-run estimate of $0.010096. Planning makes zero assessment calls, so this rough estimate is not added to the capture’s post-execution usage accounting.</li>
-<li><noscript><span id="sample" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Sample:</strong> Execute one bounded record first. One loopback request returns one result with three item scores, 360 fixture-reported tokens, and a $0.00084 OASIS estimate. The response travels through the normal compatible-provider and parsing path so its score, rationale, and evidence shape can be inspected before the full set runs.</li>
-<li><noscript><span id="run" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Full run:</strong> Execute all three coded encounters. The CLI makes three HTTP requests to the deterministic loopback endpoint and records nine authored fixture scores plus 1,080 fixture-reported tokens. The full-run OASIS estimate is $0.00252. Across sample and full run, the capture makes four loopback requests and records a $0.00336 estimate, while external provider calls and actual paid spend remain zero.</li>
-<li><noscript><span id="mcp" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>MCP cache run:</strong> Start the real OASIS MCP server and call its typed tools over stdio. A fresh auto-grade request for the same three-record assessment is satisfied by three cache hits, so it adds no new loopback requests to the fixture, fixture-reported tokens, or estimated cost. The transcript identifies MCP messages and never impersonates a named model or chat product.</li>
-<li><noscript><span id="evidence" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Evidence:</strong> Use summary and inspection with verification to keep results connected to input identities, the rubric, plan, cache status, and provider metadata. The recorded CLI-run verification passes all 22 of 22 evidence hashes; the ledger command remains available for reviewing provenance records.</li>
+<li><noscript><span id="sample" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Sample:</strong> Try one record first. One local request returns one result with three item scores, 360 test-service tokens, and a $0.00084 OASIS estimate. The response follows the normal model-service and parsing path, so its score, rationale, and evidence can be checked before all three records run.</li>
+<li><noscript><span id="run" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Full run:</strong> Run all three coded records. The CLI makes three HTTP requests to the predictable local test service and records nine prepared scores plus 1,080 test-service tokens. The full-run OASIS estimate is $0.00252. Together, the trial and full run make four local requests and record a $0.00336 estimate; external provider calls and actual paid spend remain zero.</li>
+<li><noscript><span id="mcp" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>MCP cache run:</strong> Start the real OASIS MCP server and call its defined tools. A new auto-grade request for the same three-record assessment finds three cache hits, so it adds no local test-service requests, reported tokens, or estimated cost. The transcript labels MCP messages clearly and does not pretend to be a named model or chat product.</li>
+<li><noscript><span id="evidence" class="tour-transcript-anchor" aria-hidden="true"></span></noscript><strong>Evidence:</strong> Use summary and inspection to keep the results connected to their source files, rubric, plan, cache status, and model-service details. Verification confirms all 22 digital fingerprints for the recorded CLI evidence. The ledger command remains available for reviewing the broader audit trail.</li>
 </ol>
 
 </details>
 
-The [public capture manifest](assets/candle/manifest.json) records the exact source and binary identities, media hashes, execution counts, privacy review, and zero-external-provider boundary. The notes, rubric wording, scores, rationales, and fixture responses were newly authored for this demonstration and are not learner, student, patient, or customer data.
+The [public capture manifest](assets/candle/manifest.json) records the exact software version, binary and media hashes, run counts, privacy review, and confirmation that no external provider was used. The notes, rubric wording, scores, rationales, and test responses were written for this demonstration; none is learner, student, patient, or customer data.
 
 [Explore every tour](explore.qmd) · [Open the CLI & TUI tour](tui.qmd) · [Open the MAPLES tour](maples.qmd) · [Return home](index.qmd)
 :::
