@@ -34,28 +34,41 @@ def artifact(path: Path) -> dict[str, object]:
     }
 
 
-def fingerprint_site_styles() -> None:
+def fingerprint_project_assets() -> None:
     stylesheet = OUTPUT / "styles.css"
     if not stylesheet.is_file():
         raise SystemExit(f"rendered stylesheet is missing: {stylesheet}")
     version = digest(stylesheet)[:12]
-    for page_name in ("index.html", "tui.html"):
-        page = OUTPUT / page_name
+    tour_runtime = OUTPUT / "product-tour.js"
+    if not tour_runtime.is_file():
+        raise SystemExit(f"rendered product-tour runtime is missing: {tour_runtime}")
+    runtime_version = digest(tour_runtime)[:12]
+    project_pages = sorted(OUTPUT.glob("*.html"))
+    if not project_pages:
+        raise SystemExit("no rendered project pages found for stylesheet fingerprinting")
+    for page in project_pages:
         content = page.read_text(encoding="utf-8")
         original = 'href="styles.css"'
         if content.count(original) != 1:
             raise SystemExit(f"expected one project stylesheet link in {page}")
-        page.write_text(
-            content.replace(original, f'href="styles.css?v={version}"'),
-            encoding="utf-8",
-        )
+        content = content.replace(original, f'href="styles.css?v={version}"')
+        runtime_original = 'src="product-tour.js"'
+        runtime_count = content.count(runtime_original)
+        if runtime_count > 1:
+            raise SystemExit(f"expected at most one product-tour runtime link in {page}")
+        if runtime_count == 1:
+            content = content.replace(
+                runtime_original,
+                f'src="product-tour.js?v={runtime_version}"',
+            )
+        page.write_text(content, encoding="utf-8")
 
 
 def main() -> None:
     if not OUTPUT.is_dir() or not PUBLICATION.is_file():
         raise SystemExit(f"rendered site is incomplete: {OUTPUT}")
 
-    fingerprint_site_styles()
+    fingerprint_project_assets()
 
     paper_site_libs = ROOT / "vendor" / "paper-site-libs"
     if not paper_site_libs.is_dir():
@@ -80,15 +93,41 @@ def main() -> None:
         artifact(OUTPUT / "images" / name) for name in brand_names
     ]
 
-    media_root = OUTPUT / "assets" / "tui"
-    metadata["demo_media"] = [
-        artifact(path)
-        for path in sorted(media_root.glob("*"))
-        if path.is_file() and path.name not in {"manifest.json", "README.md"}
-    ]
-    manifest = media_root / "manifest.json"
-    if manifest.is_file():
-        metadata["software_demonstrations"]["capture_manifest"] = artifact(manifest)
+    demo_roots = {
+        "cli-tui": OUTPUT / "assets" / "tui",
+        "maples": OUTPUT / "assets" / "maples",
+    }
+    tours = {
+        tour.get("id"): tour
+        for tour in metadata.get("tours", [])
+        if isinstance(tour, dict)
+    }
+    demo_media = []
+    capture_manifests = []
+    for tour_id, media_root in demo_roots.items():
+        if not media_root.is_dir():
+            raise SystemExit(f"recorded tour media is missing: {media_root}")
+        media_assets = [
+            artifact(path)
+            for path in sorted(media_root.glob("*"))
+            if path.is_file() and path.name not in {"manifest.json", "README.md"}
+        ]
+        demo_media.extend(media_assets)
+        if tour_id not in tours:
+            raise SystemExit(f"recorded tour metadata is missing: {tour_id}")
+        tours[tour_id]["media_assets"] = media_assets
+
+        manifest = media_root / "manifest.json"
+        if not manifest.is_file():
+            raise SystemExit(f"recorded tour manifest is missing: {manifest}")
+        manifest_artifact = artifact(manifest)
+        tours[tour_id]["capture_manifest"] = manifest_artifact
+        capture_manifests.append({"tour_id": tour_id, **manifest_artifact})
+        if tour_id == "cli-tui":
+            metadata["software_demonstrations"]["capture_manifest"] = manifest_artifact
+
+    metadata["demo_media"] = demo_media
+    metadata["capture_manifests"] = capture_manifests
     PUBLICATION.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
 
     rows = []

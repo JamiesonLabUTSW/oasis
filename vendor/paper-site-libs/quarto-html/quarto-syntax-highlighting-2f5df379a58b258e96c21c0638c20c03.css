@@ -1,0 +1,82 @@
+/* Quarto syntax highlighting used by the pre-rendered technical report. */
+:root {
+  --quarto-hl-ot-color: #003b4f;
+  --quarto-hl-at-color: #657422;
+  --quarto-hl-ss-color: #20794d;
+  --quarto-hl-an-color: #5e5e5e;
+  --quarto-hl-fu-color: #4758ab;
+  --quarto-hl-st-color: #20794d;
+  --quarto-hl-cf-color: #003b4f;
+  --quarto-hl-op-color: #5e5e5e;
+  --quarto-hl-er-color: #ad0000;
+  --quarto-hl-bn-color: #ad0000;
+  --quarto-hl-al-color: #ad0000;
+  --quarto-hl-va-color: #111;
+  --quarto-hl-bu-color: inherit;
+  --quarto-hl-ex-color: inherit;
+  --quarto-hl-pp-color: #ad0000;
+  --quarto-hl-in-color: #5e5e5e;
+  --quarto-hl-vs-color: #20794d;
+  --quarto-hl-wa-color: #5e5e5e;
+  --quarto-hl-do-color: #5e5e5e;
+  --quarto-hl-im-color: #00769e;
+  --quarto-hl-ch-color: #20794d;
+  --quarto-hl-dt-color: #ad0000;
+  --quarto-hl-fl-color: #ad0000;
+  --quarto-hl-co-color: #5e5e5e;
+  --quarto-hl-cv-color: #5e5e5e;
+  --quarto-hl-cn-color: #8f5902;
+  --quarto-hl-sc-color: #5e5e5e;
+  --quarto-hl-dv-color: #ad0000;
+  --quarto-hl-kw-color: #003b4f;
+  --quarto-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+pre > code.sourceCode > span,
+code span,
+code.sourceCode > span,
+div.sourceCode,
+div.sourceCode pre.sourceCode {
+  color: #003b4f;
+}
+
+code span.ot { color: #003b4f; }
+code span.at { color: #657422; }
+code span.ss { color: #20794d; }
+code span.an { color: #5e5e5e; }
+code span.fu { color: #4758ab; }
+code span.st { color: #20794d; }
+code span.cf,
+code span.kw {
+  color: #003b4f;
+  font-weight: bold;
+}
+code span.op { color: #5e5e5e; }
+code span.er,
+code span.bn,
+code span.al,
+code span.pp,
+code span.dt,
+code span.fl,
+code span.dv { color: #ad0000; }
+code span.va { color: #111; }
+code span.in,
+code span.an,
+code span.co { color: #5e5e5e; }
+code span.vs,
+code span.ch,
+code span.ss { color: #20794d; }
+code span.wa,
+code span.do,
+code span.cv {
+  color: #5e5e5e;
+  font-style: italic;
+}
+code span.im { color: #00769e; }
+code span.cn { color: #8f5902; }
+code span.sc { color: #5e5e5e; }
+
+.prevent-inlining {
+  content: "</";
+}

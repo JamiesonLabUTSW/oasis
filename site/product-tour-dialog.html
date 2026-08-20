@@ -1,0 +1,16 @@
+<dialog id="product-tour-dialog" class="tour-dialog" aria-labelledby="product-tour-video-title" aria-describedby="product-tour-video-caption">
+  <div class="tour-dialog-header">
+    <div>
+      <p class="eyebrow">Recorded flow</p>
+      <h2 id="product-tour-video-title" data-role="title">Product demonstration</h2>
+    </div>
+    <button type="button" class="tour-dialog-close" data-role="close" aria-label="Close demonstration">×</button>
+  </div>
+  <video data-role="video" controls muted playsinline preload="none" width="960" height="576">
+    <source data-role="video-webm" type="video/webm">
+    <source data-role="video-mp4" type="video/mp4">
+    Recorded demonstrations require a browser with HTML video support.
+  </video>
+  <p id="product-tour-video-caption" class="tour-video-caption" data-role="caption">A recorded, sanitized product flow.</p>
+  <p class="tour-video-download" data-role="gif-row" hidden><a data-role="gif" download>Download GIF fallback</a></p>
+</dialog>

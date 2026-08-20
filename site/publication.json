@@ -3,16 +3,53 @@
   "publication_date": "2026-08-03",
   "canonical_url": "https://jamiesonlabutsw.github.io/oasis/",
   "repository_url": "https://github.com/JamiesonLabUTSW/oasis",
-  "scope": "project information, sanitized recorded software demonstrations, and technical report only",
+  "site_updated_at": "2026-08-20",
+  "scope": "project information, guided product tours, recorded software demonstrations, and technical report only",
   "application_source_included": false,
   "installable_software_included": false,
   "software_demonstrations": {
     "included": true,
     "recorded": true,
-    "sanitized": true,
     "live_service": false,
-    "path": "tui.html"
+    "path": "explore.html",
+    "tour_count": 2,
+    "data_classification": "declared per tour"
   },
+  "tour_overview": "explore.html",
+  "tours": [
+    {
+      "id": "cli-tui",
+      "title": "Explore the OASIS CLI & TUI",
+      "path": "tui.html",
+      "status": "recorded",
+      "recorded": true,
+      "synthetic_or_sanitized": true,
+      "data_classification": "sanitized",
+      "real_person_data": false,
+      "live_service": false,
+      "visitor_network_calls": false,
+      "provider_calls": 0
+    },
+    {
+      "id": "maples",
+      "title": "MAPLES: From grading group to reviewed results",
+      "path": "maples.html",
+      "status": "recorded",
+      "recorded": true,
+      "synthetic_or_sanitized": true,
+      "data_classification": "synthetic-coded",
+      "real_person_data": false,
+      "live_service": false,
+      "visitor_network_calls": false,
+      "grading_pipeline_invoked": false,
+      "provider_calls": 0,
+      "paid_spend_usd": 0,
+      "capture_state": "verified-offline",
+      "scenario_id": "intern-perfume-to-candle-v1",
+      "source_head_sha": "90031150529bbfa1a3de4f5769039fb91940ed08",
+      "source_maples_tree": "f7577341a2e04f6e5efa32298904e55d5f2cc04e"
+    }
+  ],
   "brand_assets": [],
   "report_html": {
     "path": "paper/paper.html",

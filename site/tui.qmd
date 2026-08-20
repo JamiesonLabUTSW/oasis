@@ -4,22 +4,22 @@ subtitle: "A lightweight, clickable tour of planning, monitoring, and evidence"
 description: "Explore recorded OASIS terminal interface views without connecting to a live service"
 image: images/oasis-tui-tour-social.jpg
 page-layout: full
-include-after-body: tour-dialog.html
+include-after-body: product-tour-dialog.html
 ---
 
 ::: {.tui-tour-hero}
 <img src="images/oasis-tui-tour-social.jpg" alt="Pixel-art OASIS CLI and TUI title beside a moonlit desert oasis" width="1200" height="630" decoding="async" fetchpriority="high">
 :::
 
-::: {#tui-tour .tui-explorer data-tui-tour=""}
+::: {#tui-tour .tui-explorer data-product-tour="" data-tour-id="tui"}
 ::: {.tui-explorer-topline}
 ::: {.tui-explorer-heading}
 ::: {.eyebrow}
 Interactive TUI tour
 :::
 
-<h2 id="tour-view-title">Start at the oasis</h2>
-<p id="tour-view-summary">Launch into a readiness-aware workspace where every operation stays inspectable.</p>
+<h2 id="tour-view-title" data-role="title">Start at the oasis</h2>
+<p id="tour-view-summary" data-role="summary">Launch into a readiness-aware workspace where every operation stays inspectable.</p>
 :::
 
 ::: {.tour-status aria-label="Tour status"}
@@ -29,35 +29,175 @@ Interactive TUI tour
 :::
 
 <div class="tui-tour-tabs" role="tablist" aria-label="OASIS interface views">
-  <button type="button" role="tab" id="tour-tab-splash" aria-controls="tour-stage" aria-selected="true" tabindex="0" data-view="splash">Splash & INFO</button>
-  <button type="button" role="tab" id="tour-tab-dashboard" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="dashboard">Dashboard</button>
-  <button type="button" role="tab" id="tour-tab-workflow" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="workflow">Workflow</button>
-  <button type="button" role="tab" id="tour-tab-results" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="results">Results</button>
-  <button type="button" role="tab" id="tour-tab-elephant" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-view="elephant">Elephant</button>
+  <button type="button" role="tab" id="tour-tab-splash" aria-controls="tour-stage" aria-selected="true" tabindex="0" data-role="tab" data-step="splash">Splash & INFO</button>
+  <button type="button" role="tab" id="tour-tab-dashboard" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="dashboard">Dashboard</button>
+  <button type="button" role="tab" id="tour-tab-workflow" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="workflow">Workflow</button>
+  <button type="button" role="tab" id="tour-tab-results" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="results">Results</button>
+  <button type="button" role="tab" id="tour-tab-elephant" aria-controls="tour-stage" aria-selected="false" tabindex="-1" data-role="tab" data-step="elephant">Elephant</button>
 </div>
 
-::: {#tour-stage .tui-stage role="tabpanel" aria-labelledby="tour-tab-splash" tabindex="0"}
+::: {#tour-stage .tui-stage data-role="stage" role="tabpanel" aria-labelledby="tour-tab-splash" tabindex="0"}
 ::: {.terminal-window}
-<picture>
-  <source id="tour-image-source" type="image/webp" srcset="assets/tui/splash-poster.webp">
-  <img id="tour-image" src="assets/tui/splash-poster.webp" alt="OASIS dusk-themed startup splash" width="1200" height="720" loading="lazy" decoding="async">
+<picture data-role="poster-frame">
+  <source id="tour-image-source" data-role="poster-source" type="image/webp" srcset="assets/tui/splash-poster.webp">
+  <img id="tour-image" data-role="poster" src="assets/tui/splash-poster.webp" alt="OASIS dusk-themed startup splash" width="1200" height="720" loading="lazy" decoding="async">
 </picture>
 
-::: {.terminal-fallback aria-hidden="true"}
-<span class="fallback-kicker">OASIS</span>
-<strong>Multimodal assessment, from plan to evidence.</strong>
-<span>Select a view above to explore the recorded interface.</span>
+::: {.terminal-fallback data-tour-placeholder="" aria-hidden="true"}
+<span class="fallback-kicker" data-role="placeholder-title">OASIS</span>
+<strong data-role="placeholder-detail">Multimodal assessment, from plan to evidence.</strong>
+<span data-role="placeholder-status">Select a view above to explore the recorded interface.</span>
 :::
 :::
 :::
 
 ::: {.tour-controls}
-<button type="button" class="tour-button tour-button-primary" id="tour-next">Next view <span aria-hidden="true">→</span></button>
-<button type="button" class="tour-button" id="tour-watch" data-video="assets/tui/splash.webm">Watch this flow</button>
-<a class="tour-deep-link" id="tour-deep-link" href="#splash" aria-label="Link to the current tour view">Link to this view</a>
+<button type="button" class="tour-button" data-role="previous" disabled><span aria-hidden="true">←</span> Previous view</button>
+<button type="button" class="tour-button tour-button-primary" id="tour-next" data-role="next">Next view <span aria-hidden="true">→</span></button>
+<button type="button" class="tour-button" id="tour-watch" data-role="watch">Watch this flow</button>
+<a class="tour-deep-link" id="tour-deep-link" data-role="deep-link" href="#splash" aria-label="Link to the current tour view">Link to this view</a>
 :::
 
-<div id="tour-live" class="visually-hidden" aria-live="polite"></div>
+<div id="tour-live" class="visually-hidden" data-role="live" aria-live="polite"></div>
+
+<noscript><p class="tour-noscript">Interactive controls require JavaScript. The complete five-view description is available below.</p></noscript>
+
+<script type="application/json" data-product-tour-data>
+{
+  "steps": [
+    {
+      "id": "splash",
+      "label": "Splash & INFO",
+      "title": "Start at the oasis",
+      "summary": "Launch into a readiness-aware workspace where every operation stays inspectable.",
+      "poster": {
+        "src": "assets/tui/splash-poster.webp",
+        "srcset": "assets/tui/splash-poster.webp",
+        "type": "image/webp",
+        "alt": "OASIS dusk-themed startup splash",
+        "width": 1200,
+        "height": 720
+      },
+      "media": {
+        "webm": "assets/tui/splash.webm",
+        "mp4": "assets/tui/splash.mp4",
+        "gif": "assets/tui/splash.gif",
+        "title": "Splash & INFO demonstration",
+        "caption": "The branded launch gives way to INFO, where OASIS summarizes local readiness and the available workspace."
+      },
+      "placeholder": {
+        "title": "OASIS",
+        "detail": "Multimodal assessment, from plan to evidence.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "dashboard",
+      "label": "Dashboard",
+      "title": "See the run, not just a spinner",
+      "summary": "Dashboard brings service health, run state, progress, and the next useful action into one view.",
+      "poster": {
+        "src": "assets/tui/dashboard-poster.webp",
+        "srcset": "assets/tui/dashboard-poster.webp",
+        "type": "image/webp",
+        "alt": "OASIS Dashboard showing service health and run progress",
+        "width": 1200,
+        "height": 720
+      },
+      "media": {
+        "webm": "assets/tui/dashboard.webm",
+        "mp4": "assets/tui/dashboard.mp4",
+        "gif": "assets/tui/dashboard.gif",
+        "title": "Dashboard demonstration",
+        "caption": "Dashboard follows a run across its lifecycle and provides direct handoffs to progress and results."
+      },
+      "placeholder": {
+        "title": "DASHBOARD",
+        "detail": "Follow service health, run state, progress, and the next useful action.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "workflow",
+      "label": "Workflow",
+      "title": "Plan before spending",
+      "summary": "Workflow stages inputs and mission notes, then exposes the dry-run plan before execution.",
+      "poster": {
+        "src": "assets/tui/workflow-poster.webp",
+        "srcset": "assets/tui/workflow-poster.webp",
+        "type": "image/webp",
+        "alt": "OASIS Workflow view showing mission controls and a dry-run plan",
+        "width": 1200,
+        "height": 720
+      },
+      "media": {
+        "webm": "assets/tui/workflow.webm",
+        "mp4": "assets/tui/workflow.mp4",
+        "gif": "assets/tui/workflow.gif",
+        "title": "Workflow demonstration",
+        "caption": "Workflow turns an assessment request into a reviewable command and execution plan."
+      },
+      "placeholder": {
+        "title": "WORKFLOW",
+        "detail": "Review inputs, mission notes, and the dry-run plan before execution.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "results",
+      "label": "Results",
+      "title": "Move from score to evidence",
+      "summary": "Results supports filtering, drill-down, inspection, and provenance without losing run context.",
+      "poster": {
+        "src": "assets/tui/results-poster.webp",
+        "srcset": "assets/tui/results-poster.webp",
+        "type": "image/webp",
+        "alt": "OASIS Results view showing a selected synthetic assessment result and evidence",
+        "width": 1200,
+        "height": 720
+      },
+      "media": {
+        "webm": "assets/tui/results.webm",
+        "mp4": "assets/tui/results.mp4",
+        "gif": "assets/tui/results.gif",
+        "title": "Results demonstration",
+        "caption": "Results keeps scores, rationale, filters, and provenance close enough to support review rather than blind acceptance."
+      },
+      "placeholder": {
+        "title": "RESULTS",
+        "detail": "Keep scores, evidence, rationale, filters, and provenance in context.",
+        "status": "Recorded preview unavailable"
+      }
+    },
+    {
+      "id": "elephant",
+      "label": "Elephant",
+      "title": "Browse the data in context",
+      "summary": "Elephant-backed views move from datasets to encounters and files using the same keyboard-first interaction.",
+      "poster": {
+        "src": "assets/tui/elephant-poster.webp",
+        "srcset": "assets/tui/elephant-poster.webp",
+        "type": "image/webp",
+        "alt": "OASIS Elephant view showing sanitized student records",
+        "width": 1200,
+        "height": 720
+      },
+      "media": {
+        "webm": "assets/tui/elephant.webm",
+        "mp4": "assets/tui/elephant.mp4",
+        "gif": "assets/tui/elephant.gif",
+        "title": "Elephant demonstration",
+        "caption": "Elephant browsing uses sanitized fixture records here; the tour does not contact a live data service."
+      },
+      "placeholder": {
+        "title": "ELEPHANT",
+        "detail": "Browse sanitized datasets, encounters, and files in context.",
+        "status": "Recorded preview unavailable"
+      }
+    }
+  ]
+}
+</script>
 :::
 
 ::: {.tour-notes}
@@ -99,4 +239,4 @@ The CLI and TUI are part of the OASIS software release process; this project pag
 </details>
 :::
 
-<script src="tour.js" defer></script>
+<script src="product-tour.js" defer></script>
