@@ -27,6 +27,8 @@ OASIS grades video, audio, and text against evaluator-defined rubrics, using hos
 Step through the terminal interface, from startup readiness to workflow planning, live run monitoring, results inspection, provenance, and Elephant-backed data browsing. The tour uses sanitized recorded software demonstrations and does not contact a live service.
 
 [Open the CLI & TUI tour](tui.qmd){.tour-cta}
+
+[Follow a complete Candle CLI & MCP run](candle.qmd)
 :::
 
 ::: {.tour-teaser-media aria-hidden="true"}
@@ -49,7 +51,7 @@ Follow three coded synthetic encounters through group confirmation, rubric setup
 :::
 
 ::: {.tour-overview-link}
-[Browse all guided tours](explore.qmd)
+[Browse all guided tours](explore.qmd) · [See files become verifiable evidence](candle.qmd)
 :::
 
 ## Technical report

@@ -50,6 +50,18 @@ Move from startup readiness through workflow planning, run monitoring, results i
 Available now · recorded fixture
 :::
 
+### Take a standalone assessment from files to evidence
+
+Follow three coded synthetic Candle notes through CLI intake checks, strict rubric validation, planning, a bounded sample, a full fixture-backed run, a cache-backed MCP run, and evidence verification.
+
+[Open the Candle CLI & MCP tour](candle.qmd){.tour-cta}
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Available now · recorded fixture
+:::
+
 ### Take selected encounters to reviewed results
 
 Follow a coded synthetic MAPLES fixture from a bounded group and reconstructed rubric through deterministic run states, source-note inspection, and an unsaved human review.
@@ -98,6 +110,7 @@ Explore repeatable batch experiments, side-by-side comparisons, and replayable e
 
 ::: {.diagram-note}
 - **OASIS CLI and TUI** support the operator workflow: planning, execution, monitoring, inspection, and evidence handling.
+- **Standalone CLI and MCP** expose the same validated assessment operations to people at a terminal and agents using typed tools.
 - **MAPLES** is the integrated web experience for orchestration, grading, and human review.
 - **Elephant** provides data transport and storage used by those workflows; it is not the review interface itself.
 - **Wayfinder Rubric Studio** appears in MAPLES, while **Wayfinder Operator** appears in the CLI and TUI. These related sibling profiles should be evaluated in their own user contexts.
@@ -105,4 +118,4 @@ Explore repeatable batch experiments, side-by-side comparisons, and replayable e
 
 ## What these tours represent
 
-Recorded tours replay static captured states and do not connect visitors to live services. The CLI/TUI and MAPLES tours declare their fixture, provider-call, privacy, and capture boundaries separately. No public tour contains real learner data.
+Recorded tours replay captured states and do not connect visitors to live services. The CLI/TUI, standalone Candle, and MAPLES tours declare their fixture, provider-call, privacy, and capture boundaries separately. No public tour contains real learner data.

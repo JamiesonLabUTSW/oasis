@@ -521,6 +521,7 @@ body a:focus {
 }
 
 .tour-note-card {
+  min-width: 0;
   padding: 1.15rem;
   border: 1px solid var(--oasis-border);
   border-radius: 17px;
@@ -538,6 +539,10 @@ body a:focus {
   margin: 0;
   color: var(--oasis-slate);
   line-height: 1.6;
+}
+
+.tour-note-card code {
+  overflow-wrap: anywhere;
 }
 
 .tour-method {
@@ -568,9 +573,24 @@ body a:focus {
   margin-top: 0.55rem;
 }
 
+.tour-transcript-anchor {
+  display: block;
+  scroll-margin-top: 5rem;
+}
+
 .tour-method p {
   color: var(--oasis-slate);
   line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.tour-method table {
+  width: 100%;
+  font-size: 0.88rem;
+}
+
+.tour-method td code {
+  white-space: normal;
   overflow-wrap: anywhere;
 }
 
@@ -858,7 +878,7 @@ table {
   }
 
   .tour-notes {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

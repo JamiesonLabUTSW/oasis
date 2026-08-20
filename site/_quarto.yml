@@ -28,6 +28,8 @@ website:
             text: Tour overview
           - href: tui.qmd
             text: CLI & TUI
+          - href: candle.qmd
+            text: Candle CLI & MCP
           - href: maples.qmd
             text: MAPLES
       - href: paper/paper.html
