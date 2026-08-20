@@ -397,6 +397,27 @@ def check_contract() -> None:
         if stylesheet_links[0] != digest(OUTPUT / "styles.css")[:12]:
             raise SystemExit(f"project stylesheet fingerprint is stale in {page_name}")
 
+    home = (OUTPUT / "index.html").read_text(encoding="utf-8")
+    for marker in (
+        "Explore the CLI &amp; TUI",
+        "Open the CLI &amp; TUI tour",
+        "Explore MAPLES",
+        'href="./maples.html"',
+        'src="assets/maples/maples-01-group.webp"',
+        "contains no real learner data",
+        "displayed scores are fixture values",
+        "no live-service or provider calls",
+        "Browse all guided tours",
+    ):
+        if marker not in home:
+            raise SystemExit(f"homepage tour marker missing: {marker}")
+    teaser_count = sum(
+        "tour-teaser" in class_names.split()
+        for class_names in re.findall(r'class="([^"]*)"', home)
+    )
+    if teaser_count != 2:
+        raise SystemExit("homepage must present exactly two recorded-tour teasers")
+
     for page_name in ("tui.html", "maples.html"):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
         runtime_links = re.findall(
@@ -574,9 +595,9 @@ def check_contract() -> None:
         None,
     )
     if not ratio_rule or not re.search(r"\bheight\s*:\s*auto\s*;", ratio_rule):
-        raise SystemExit("homepage TUI teaser does not preserve its intrinsic aspect ratio")
+        raise SystemExit("homepage tour teasers do not preserve their intrinsic aspect ratio")
     if not re.search(r"\baspect-ratio\s*:\s*5\s*/\s*3\s*;", ratio_rule):
-        raise SystemExit("homepage TUI teaser is missing its 5:3 media contract")
+        raise SystemExit("homepage tour teasers are missing their 5:3 media contract")
 
     publication = json.loads((OUTPUT / "publication.json").read_text(encoding="utf-8"))
     demo = publication.get("software_demonstrations", {})

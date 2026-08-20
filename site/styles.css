@@ -192,6 +192,27 @@ body a:focus {
   aspect-ratio: 5 / 3;
 }
 
+.tour-teaser--reverse {
+  grid-template-columns: minmax(300px, 1.1fr) minmax(0, 0.9fr);
+}
+
+.tour-teaser--reverse .tour-teaser-copy {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.tour-teaser--reverse .tour-teaser-media {
+  grid-column: 1;
+  grid-row: 1;
+  transform: rotate(-0.7deg);
+}
+
+.tour-overview-link {
+  margin: -1rem 0 2.4rem;
+  text-align: center;
+  font-weight: 700;
+}
+
 .tour-cta,
 .tour-button {
   display: inline-flex;
@@ -814,6 +835,16 @@ table {
   }
 
   .tour-teaser-media {
+    transform: none;
+  }
+
+  .tour-teaser--reverse .tour-teaser-copy,
+  .tour-teaser--reverse .tour-teaser-media {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .tour-teaser--reverse .tour-teaser-media {
     transform: none;
   }
 

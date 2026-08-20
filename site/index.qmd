@@ -26,14 +26,30 @@ OASIS grades video, audio, and text against evaluator-defined rubrics, using hos
 
 Step through the terminal interface, from startup readiness to workflow planning, live run monitoring, results inspection, provenance, and Elephant-backed data browsing. The tour uses sanitized recorded software demonstrations and does not contact a live service.
 
-[Open the interactive tour](tui.qmd){.tour-cta}
-
-[Browse all guided tours](explore.qmd){.tour-cta}
+[Open the CLI & TUI tour](tui.qmd){.tour-cta}
 :::
 
 ::: {.tour-teaser-media aria-hidden="true"}
 ![](assets/tui/splash-poster.webp){fig-alt="" loading="lazy" width="1200" height="720"}
 :::
+:::
+
+::: {.tour-teaser .tour-teaser--reverse}
+::: {.tour-teaser-copy}
+### Explore MAPLES
+
+Follow three coded synthetic encounters through group confirmation, rubric setup, station mapping, recorded run states, source-note inspection, and a staged, unsaved human review. The walkthrough contains no real learner data; displayed scores are fixture values, and visitors make no live-service or provider calls.
+
+[Open the MAPLES tour](maples.qmd){.tour-cta}
+:::
+
+::: {.tour-teaser-media aria-hidden="true"}
+![](assets/maples/maples-01-group.webp){fig-alt="" loading="lazy" width="1200" height="720"}
+:::
+:::
+
+::: {.tour-overview-link}
+[Browse all guided tours](explore.qmd)
 :::
 
 ## Technical report
