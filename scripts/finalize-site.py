@@ -96,6 +96,7 @@ def main() -> None:
     demo_roots = {
         "cli-tui": OUTPUT / "assets" / "tui",
         "maples": OUTPUT / "assets" / "maples",
+        "candle-cli-mcp": OUTPUT / "assets" / "candle",
     }
     tours = {
         tour.get("id"): tour

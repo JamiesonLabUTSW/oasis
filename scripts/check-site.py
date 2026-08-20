@@ -362,6 +362,665 @@ def check_maples_media_manifest() -> dict[str, object]:
     return manifest
 
 
+def parse_candle_static_webp(path: Path) -> list[str]:
+    data = path.read_bytes()
+    relative = path.relative_to(OUTPUT)
+    if len(data) < 12 or data[:4] != b"RIFF" or data[8:12] != b"WEBP":
+        raise SystemExit(f"invalid Candle WebP container: {relative}")
+    if struct.unpack_from("<I", data, 4)[0] + 8 != len(data):
+        raise SystemExit(f"Candle WebP RIFF length mismatch: {relative}")
+
+    chunks = []
+    offset = 12
+    while offset < len(data):
+        if offset + 8 > len(data):
+            raise SystemExit(f"truncated Candle WebP chunk header: {relative}")
+        name = data[offset : offset + 4].decode("ascii", errors="strict")
+        size = struct.unpack_from("<I", data, offset + 4)[0]
+        offset += 8
+        if offset + size > len(data):
+            raise SystemExit(f"truncated Candle WebP chunk: {relative}")
+        chunks.append(name)
+        offset += size + (size % 2)
+    if offset != len(data):
+        raise SystemExit(f"trailing Candle WebP data: {relative}")
+
+    forbidden = {"EXIF", "XMP ", "ICCP", "ANIM", "ANMF"}
+    image_chunks = {"VP8 ", "VP8L"}.intersection(chunks)
+    if forbidden.intersection(chunks) or len(image_chunks) != 1:
+        raise SystemExit(
+            f"Candle poster is not a metadata-free static WebP: "
+            f"{relative} chunks={chunks}"
+        )
+    return chunks
+
+
+def check_candle_media_manifest() -> dict[str, object]:
+    manifest_path = OUTPUT / "assets" / "candle" / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    expected_top_level = {
+        "schema_version",
+        "generated_at",
+        "scenario",
+        "application",
+        "execution_boundary",
+        "privacy_review",
+        "content_review",
+        "delivery",
+        "assets",
+    }
+    if set(manifest) != expected_top_level:
+        raise SystemExit(
+            "Candle media manifest top-level contract is invalid: "
+            f"{sorted(manifest)}"
+        )
+    if manifest.get("schema_version") != "oasis.candle-cli-mcp-site-media.v1":
+        raise SystemExit("Candle media manifest schema is invalid")
+    if manifest.get("generated_at") != "2026-08-20T21:32:18Z":
+        raise SystemExit("Candle media manifest timestamp is invalid")
+
+    scenario = manifest.get("scenario", {})
+    if (
+        set(scenario)
+        != {
+            "id",
+            "title",
+            "data_classification",
+            "description",
+            "synthetic_only",
+            "coded_ids",
+            "real_person_data",
+            "station",
+            "rubric_criteria",
+        }
+        or scenario.get("id") != "candle-making-files-to-evidence-v1"
+        or scenario.get("title")
+        != "Candle Making: From files to verified evidence"
+        or scenario.get("data_classification") != "synthetic-coded"
+        or scenario.get("synthetic_only") is not True
+        or scenario.get("coded_ids") != ["DEMO-001", "DEMO-002", "DEMO-003"]
+        or scenario.get("real_person_data") is not False
+        or scenario.get("station") != "CandleMaking"
+        or scenario.get("rubric_criteria") != 3
+        or scenario.get("description")
+        != (
+            "Newly authored public fixture notes exercise standalone OASIS CLI "
+            "and MCP paths without learner, patient, customer, or other "
+            "real-person data."
+        )
+    ):
+        raise SystemExit("Candle scenario provenance or privacy scope is invalid")
+
+    source_sha = "db2861fdc79aa3bddeaed949c1282e068e7f4eb9"
+    application = manifest.get("application", {})
+    binaries = application.get("binaries", [])
+    if (
+        set(application)
+        != {
+            "source_repository_public",
+            "source_revision",
+            "tree_clean",
+            "module_identity",
+            "binaries",
+        }
+        or application.get("source_repository_public") is not False
+        or application.get("source_revision") != source_sha
+        or application.get("tree_clean") is not True
+        or application.get("module_identity")
+        != "github.com/JamiesonLabUTSW/oasis"
+        or not isinstance(binaries, list)
+        or len(binaries) != 2
+    ):
+        raise SystemExit("Candle source or application identity is invalid")
+    binaries_by_name = {
+        row.get("name"): row for row in binaries if isinstance(row, dict)
+    }
+    if set(binaries_by_name) != {"oasis", "oasis-mcp"}:
+        raise SystemExit("Candle binary inventory is invalid")
+    expected_binary_versions = {"oasis": "0.1.0-mvp", "oasis-mcp": None}
+    expected_binary_modules = {
+        "oasis": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/oasis",
+        "oasis-mcp": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/oasis-mcp",
+    }
+    expected_binary_hashes = {
+        "oasis": "c22077c0929a2ab457f72b2e8bf07f0eb58813f7701f906da2622c3e286a56f4",
+        "oasis-mcp": "1fd230309bcb87fee1ed77c73c59dd4f310ad9523e74662e3970d76970f980c4",
+    }
+    for name, row in binaries_by_name.items():
+        expected_keys = {
+            "name",
+            "version",
+            "module",
+            "vcs_revision",
+            "vcs_modified",
+            "sha256",
+        }
+        if name == "oasis-mcp":
+            expected_keys.update({"server_name", "protocol_version"})
+        if (
+            set(row) != expected_keys
+            or row.get("name") != name
+            or row.get("version") != expected_binary_versions[name]
+            or row.get("module") != expected_binary_modules[name]
+            or row.get("vcs_revision") != source_sha
+            or row.get("vcs_modified") is not False
+            or row.get("sha256") != expected_binary_hashes[name]
+            or (
+                name == "oasis-mcp"
+                and (
+                    row.get("server_name") != "oasis-go-mcp"
+                    or row.get("protocol_version") != "2024-11-05"
+                )
+            )
+        ):
+            raise SystemExit(f"Candle binary identity is invalid: {name}")
+
+    boundary = manifest.get("execution_boundary", {})
+    sample = boundary.get("sample", {})
+    full_run = boundary.get("cli_full_run", {})
+    mcp_run = boundary.get("mcp_cache_backed_run", {})
+    campaign = boundary.get("campaign_total", {})
+    cli_integrity = boundary.get("cli_integrity", {})
+    mcp_integrity = boundary.get("mcp_integrity", {})
+    if (
+        set(boundary)
+        != {
+            "provider_adapter",
+            "fixture_model",
+            "loopback_only",
+            "capture_external_provider_calls",
+            "visitor_calls_external_provider",
+            "paid_usd",
+            "plan_provider_requests",
+            "plan_rough_estimated_cost_usd",
+            "sample",
+            "cli_full_run",
+            "mcp_cache_backed_run",
+            "campaign_total",
+            "cli_integrity",
+            "mcp_integrity",
+        }
+        or set(sample)
+        != {
+            "loopback_requests",
+            "results",
+            "item_scores",
+            "fixture_reported_tokens",
+            "oasis_estimated_cost_usd",
+        }
+        or set(full_run)
+        != {
+            "loopback_requests",
+            "cache_hits",
+            "results",
+            "item_scores",
+            "fixture_reported_tokens",
+            "oasis_estimated_cost_usd",
+        }
+        or set(mcp_run)
+        != {
+            "cache_hits",
+            "total_calls",
+            "new_loopback_requests",
+            "new_fixture_reported_tokens",
+            "new_estimated_cost_usd",
+        }
+        or set(campaign)
+        != {
+            "loopback_requests",
+            "results",
+            "item_scores",
+            "fixture_reported_tokens",
+            "oasis_estimated_cost_usd",
+        }
+        or boundary.get("provider_adapter") != "openai-compatible"
+        or boundary.get("fixture_model") != "candle-fixture-v1"
+        or boundary.get("loopback_only") is not True
+        or boundary.get("capture_external_provider_calls") != 0
+        or boundary.get("visitor_calls_external_provider") is not False
+        or boundary.get("paid_usd") != 0
+        or boundary.get("plan_provider_requests") != 0
+        or boundary.get("plan_rough_estimated_cost_usd") != 0.010096
+        or sample.get("loopback_requests") != 1
+        or sample.get("results") != 1
+        or sample.get("item_scores") != 3
+        or sample.get("fixture_reported_tokens") != 360
+        or sample.get("oasis_estimated_cost_usd") != 0.00084
+        or full_run.get("loopback_requests") != 3
+        or full_run.get("cache_hits") != 0
+        or full_run.get("results") != 3
+        or full_run.get("item_scores") != 9
+        or full_run.get("fixture_reported_tokens") != 1080
+        or full_run.get("oasis_estimated_cost_usd") != 0.00252
+        or mcp_run.get("cache_hits") != 3
+        or mcp_run.get("total_calls") != 3
+        or mcp_run.get("new_loopback_requests") != 0
+        or mcp_run.get("new_fixture_reported_tokens") != 0
+        or mcp_run.get("new_estimated_cost_usd") != 0
+        or campaign.get("loopback_requests") != 4
+        or campaign.get("results") != 4
+        or campaign.get("item_scores") != 12
+        or campaign.get("fixture_reported_tokens") != 1440
+        or campaign.get("oasis_estimated_cost_usd") != 0.00336
+        or cli_integrity
+        != {"status": "verified", "verified": 22, "total": 22, "failed": 0}
+        or mcp_integrity
+        != {"status": "verified", "verified": 21, "total": 21, "failed": 0}
+    ):
+        raise SystemExit("Candle execution, accounting, cache, or evidence boundary is invalid")
+    if "encounters_graded" in json.dumps(manifest, sort_keys=True):
+        raise SystemExit("Candle public manifest publishes the known-buggy sample counter")
+
+    privacy = manifest.get("privacy_review", {})
+    path_scan = privacy.get("path_scan", {})
+    ocr = privacy.get("ocr", {})
+    manual = privacy.get("manual_review", {})
+    if (
+        set(privacy)
+        != {"status", "forbidden_patterns", "path_scan", "ocr", "manual_review"}
+        or set(path_scan)
+        != {
+            "asset_files_scanned",
+            "private_path_matches",
+            "credential_matches",
+            "email_matches",
+        }
+        or set(ocr)
+        != {
+            "engine",
+            "poster_files_scanned",
+            "motion_frames_scanned",
+            "files_scanned",
+            "errors",
+            "private_path_matches",
+            "credential_matches",
+            "email_matches",
+            "real_person_data_term_matches",
+        }
+        or set(manual)
+        != {
+            "status",
+            "reviewer",
+            "poster_files_reviewed",
+            "motion_frames_reviewed",
+            "contact_sheets_reviewed",
+            "findings",
+        }
+        or privacy.get("status") != "passed"
+        or privacy.get("forbidden_patterns")
+        != [
+            "mac_user_home_path",
+            "linux_user_home_path",
+            "cluster_storage_path",
+            "local_account_identifier",
+            "api_credential_shape",
+            "email_address_shape",
+            "real_person_data_terms",
+        ]
+        or path_scan
+        != {
+            "asset_files_scanned": 11,
+            "private_path_matches": 0,
+            "credential_matches": 0,
+            "email_matches": 0,
+        }
+        or ocr
+        != {
+            "engine": "Apple Vision VNRecognizeTextRequest",
+            "poster_files_scanned": 8,
+            "motion_frames_scanned": 58,
+            "files_scanned": 66,
+            "errors": 0,
+            "private_path_matches": 0,
+            "credential_matches": 0,
+            "email_matches": 0,
+            "real_person_data_term_matches": 0,
+        }
+        or manual
+        != {
+            "status": "passed",
+            "reviewer": "Codex visual QA",
+            "poster_files_reviewed": 8,
+            "motion_frames_reviewed": 58,
+            "contact_sheets_reviewed": 6,
+            "findings": 0,
+        }
+    ):
+        raise SystemExit("Candle media privacy, OCR, path, or manual review is incomplete")
+
+    content = manifest.get("content_review", {})
+    if (
+        set(content)
+        != {
+            "status",
+            "sample_counter_field_published",
+            "mcp_described_as_replay",
+            "fixture_scores_labeled",
+            "costs_labeled_as_estimates",
+            "mcp_tool_names_exact",
+            "mcp_arguments_rendered_separately",
+            "standalone_intake_described_as_managed_upload",
+            "summary_item_rows_labeled_as_scored_items",
+            "cache_hits_described_without_payload_integrity_claim",
+            "capture_source_hashes_recorded",
+        }
+        or content.get("status") != "passed"
+        or content.get("sample_counter_field_published") is not False
+        or content.get("mcp_described_as_replay") is not False
+        or content.get("fixture_scores_labeled") is not True
+        or content.get("costs_labeled_as_estimates") is not True
+        or content.get("mcp_tool_names_exact") is not True
+        or content.get("mcp_arguments_rendered_separately") is not True
+        or content.get("standalone_intake_described_as_managed_upload") is not False
+        or content.get("summary_item_rows_labeled_as_scored_items") is not True
+        or content.get("cache_hits_described_without_payload_integrity_claim")
+        is not True
+        or content.get("capture_source_hashes_recorded") is not True
+    ):
+        raise SystemExit("Candle media truth-language review is incomplete")
+
+    delivery = manifest.get("delivery", {})
+    codecs = delivery.get("codecs", {})
+    if (
+        set(delivery)
+        != {
+            "capture_tool",
+            "capture_tool_version",
+            "master_width",
+            "master_height",
+            "terminal_columns",
+            "terminal_rows",
+            "source_tape",
+            "motion_duration_seconds",
+            "motion_has_audio",
+            "poster_width",
+            "poster_height",
+            "motion_width",
+            "motion_height",
+            "gif_width",
+            "gif_height",
+            "codecs",
+            "asset_count",
+            "total_bytes",
+            "poster_max_bytes",
+            "webm_max_bytes",
+            "mp4_max_bytes",
+            "gif_max_bytes",
+            "total_max_bytes",
+            "capture_sources",
+        }
+        or delivery.get("capture_tool") != "VHS"
+        or delivery.get("capture_tool_version") != "0.10.0"
+        or delivery.get("master_width") != 1200
+        or delivery.get("master_height") != 720
+        or delivery.get("terminal_columns") != 102
+        or delivery.get("terminal_rows") != 27
+        or delivery.get("source_tape") != "capture/candle-overview.tape"
+        or delivery.get("motion_duration_seconds", 0) <= 0
+        or delivery.get("motion_has_audio") is not False
+        or delivery.get("poster_width") != 1200
+        or delivery.get("poster_height") != 720
+        or delivery.get("motion_width") != 960
+        or delivery.get("motion_height") != 576
+        or delivery.get("gif_width") != 720
+        or delivery.get("gif_height") != 432
+        or abs(delivery.get("motion_duration_seconds", 0) - 58.333) > 0.005
+        or codecs
+        != {
+            "webm": {
+                "container": "matroska,webm",
+                "video_codec": "vp9",
+                "pixel_format": "yuv420p",
+            },
+            "mp4": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "video_codec": "h264",
+                "pixel_format": "yuv420p",
+            },
+            "gif": {
+                "container": "gif",
+                "video_codec": "gif",
+                "pixel_format": "bgra",
+            },
+        }
+        or delivery.get("asset_count") != 11
+        or delivery.get("total_bytes") != 3208781
+        or delivery.get("poster_max_bytes") != 153600
+        or delivery.get("webm_max_bytes") != 2097152
+        or delivery.get("mp4_max_bytes") != 2621440
+        or delivery.get("gif_max_bytes") != 1572864
+        or delivery.get("total_max_bytes") != 6815744
+        or delivery.get("capture_sources")
+        != {
+            "tape": {
+                "name": "candle-overview.tape",
+                "sha256": (
+                    "ccb0b4994dd8f8e7d8ee33f8eecac6be793facd4c9f299b291e89cd6dfbe588c"
+                ),
+                "private_evidence_archived": True,
+            },
+            "mcp_driver": {
+                "name": "candle_mcp_demo.py",
+                "sha256": (
+                    "381cb2f154f00a93ab11980096f9648a91c2e6ec03065296223cea3822a0284e"
+                ),
+                "private_evidence_archived": True,
+            },
+        }
+    ):
+        raise SystemExit("Candle delivery geometry, codec, or capture contract is invalid")
+
+    poster_scenes = [
+        "inputs",
+        "data",
+        "rubric",
+        "plan",
+        "sample",
+        "run",
+        "mcp",
+        "evidence",
+    ]
+    expected_files = [
+        f"candle-{index:02d}-{scene}-poster.webp"
+        for index, scene in enumerate(poster_scenes, start=1)
+    ] + ["candle-overview.webm", "candle-overview.mp4", "candle-overview.gif"]
+    expected_paths = [f"assets/candle/{name}" for name in expected_files]
+    expected_asset_locks = [
+        (
+            "candle-inputs-poster",
+            70524,
+            "5c40e49694aa853f484a637e1376aa6e6265813c15f2702370d14b214671e18e",
+        ),
+        (
+            "candle-data-poster",
+            83472,
+            "15a45c4fca1b9548bd557ed5b795dd31ace3714ad963ec286394009e2e787485",
+        ),
+        (
+            "candle-rubric-poster",
+            43806,
+            "b6bc1af91d3fedc373a6ce9eb4ab484b0a76413a3fa10dcb8f7e61dc8f1c30bf",
+        ),
+        (
+            "candle-plan-poster",
+            57650,
+            "69097357abcd9e0399f1c2271b77aabf18bf28cdb3c96fd8a7e57833fe7e4c72",
+        ),
+        (
+            "candle-sample-poster",
+            70070,
+            "4e01fd08c11b869779dd7e9c48994f1ae4b129c203c5065635de1572d1a781bf",
+        ),
+        (
+            "candle-run-poster",
+            67242,
+            "d2e5d9ae252e6fdee58e006711ea98ef3e158219d7fa42a030fea269cf625ceb",
+        ),
+        (
+            "candle-mcp-poster",
+            63550,
+            "5badc275b173d7ca85c4aab3bf5fad9cef5732c6ba286a0dbd5c8d9223a2ad55",
+        ),
+        (
+            "candle-evidence-poster",
+            102430,
+            "ae3a0a1e567aa05d11bb46bfca4f227574f75ba747ea04b31a06cbbd1a6392bc",
+        ),
+        (
+            "candle-overview-webm",
+            803675,
+            "5697d57ca69a050aa7681ec8c9ee080065adb362b2f86394402667634612b4a2",
+        ),
+        (
+            "candle-overview-mp4",
+            845807,
+            "dafe6db9e7f3b005bfedfe07158148a6b8de6bfc2fd23f876e766c84b8aa3085",
+        ),
+        (
+            "candle-overview-gif",
+            1000555,
+            "43cd4a9b7805c299f18cdc3e3a1ddb068cc64c95072bdada59cd07313288b0c4",
+        ),
+    ]
+    expected_alts = [
+        "Terminal listing three coded synthetic Candle Making notes and the local rubric before OASIS reads them.",
+        "OASIS CLI data validation and scan results for three coded synthetic Candle Making notes.",
+        "OASIS CLI strict rubric check passing for the three-criterion Candle Making rubric.",
+        "OASIS CLI dry-run plan showing three encounters, three criteria, three planned calls, the candle-fixture-v1 model, and $0 paid.",
+        "OASIS CLI sample assessment of one coded synthetic Candle Making note through the loopback fixture.",
+        "Completed OASIS CLI run showing three coded encounters and nine fixture scores.",
+        "Recorded MCP wire transcript showing a fresh cache-backed OASIS run with three cache hits and no new fixture requests.",
+        "OASIS evidence verification reporting 22 of 22 hashes valid for the recorded Candle Making CLI run.",
+        "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+        "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+        "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+    ]
+    assets = manifest.get("assets", [])
+    if (
+        not isinstance(assets, list)
+        or len(assets) != 11
+        or [row.get("order") for row in assets if isinstance(row, dict)]
+        != list(range(1, 12))
+        or [row.get("path") for row in assets if isinstance(row, dict)]
+        != expected_paths
+        or [
+            (row.get("id"), row.get("bytes"), row.get("sha256"))
+            for row in assets
+            if isinstance(row, dict)
+        ]
+        != expected_asset_locks
+        or [row.get("alt") for row in assets if isinstance(row, dict)]
+        != expected_alts
+    ):
+        raise SystemExit("Candle media asset inventory is incomplete or out of order")
+
+    total_bytes = 0
+    expected_asset_keys = {
+        "order",
+        "id",
+        "scene",
+        "role",
+        "path",
+        "alt",
+        "format",
+        "bytes",
+        "sha256",
+        "width",
+        "height",
+        "duration_seconds",
+        "container",
+        "video_codec",
+        "pixel_format",
+        "audio_streams",
+    }
+    for index, row in enumerate(assets):
+        if not isinstance(row, dict):
+            raise SystemExit("Candle media asset row is invalid")
+        path_value = row.get("path", "")
+        path = OUTPUT / path_value
+        if not path.is_file():
+            raise SystemExit(f"Candle media asset is missing: {path_value}")
+        if (
+            set(row) != expected_asset_keys
+            or row.get("bytes") != path.stat().st_size
+            or row.get("sha256") != digest(path)
+            or row.get("audio_streams") != 0
+            or not isinstance(row.get("alt"), str)
+            or not row["alt"].strip()
+        ):
+            raise SystemExit(f"Candle media asset metadata mismatch: {path_value}")
+
+        if index < 8:
+            if (
+                row.get("scene") != poster_scenes[index]
+                or row.get("role") != "poster"
+                or row.get("format") != "webp"
+                or row.get("width") != delivery["poster_width"]
+                or row.get("height") != delivery["poster_height"]
+                or row.get("duration_seconds") is not None
+                or row.get("container") != "webp_pipe"
+                or row.get("video_codec") != "webp"
+                or row.get("pixel_format") != "yuv420p"
+                or path.stat().st_size > delivery["poster_max_bytes"]
+            ):
+                raise SystemExit(f"Candle poster contract is invalid: {path_value}")
+            if parse_candle_static_webp(path) != ["VP8 "]:
+                raise SystemExit(f"Candle poster codec is invalid: {path_value}")
+        else:
+            media_format = expected_files[index].rsplit(".", 1)[1]
+            duration = row.get("duration_seconds")
+            expected_width = (
+                delivery["gif_width"]
+                if media_format == "gif"
+                else delivery["motion_width"]
+            )
+            expected_height = (
+                delivery["gif_height"]
+                if media_format == "gif"
+                else delivery["motion_height"]
+            )
+            expected_containers = {
+                "webm": "matroska,webm",
+                "mp4": "mov,mp4,m4a,3gp,3g2,mj2",
+                "gif": "gif",
+            }
+            expected_pixel_formats = {
+                "webm": "yuv420p",
+                "mp4": "yuv420p",
+                "gif": "bgra",
+            }
+            expected_durations = {
+                "webm": 58.334,
+                "mp4": 58.333333,
+                "gif": 58.34,
+            }
+            codec = codecs[media_format]
+            if (
+                row.get("scene") != "overview"
+                or row.get("role") != "motion"
+                or row.get("format") != media_format
+                or row.get("width") != expected_width
+                or row.get("height") != expected_height
+                or not isinstance(duration, (int, float))
+                or abs(duration - expected_durations[media_format]) > 0.001
+                or row.get("container") != expected_containers[media_format]
+                or row.get("container") != codec["container"]
+                or row.get("video_codec") != codec["video_codec"]
+                or row.get("pixel_format") != expected_pixel_formats[media_format]
+                or row.get("pixel_format") != codec["pixel_format"]
+                or path.stat().st_size > delivery[f"{media_format}_max_bytes"]
+            ):
+                raise SystemExit(f"Candle motion-media contract is invalid: {path_value}")
+        total_bytes += path.stat().st_size
+
+    if (
+        total_bytes != delivery.get("total_bytes")
+        or total_bytes > delivery.get("total_max_bytes", 0)
+    ):
+        raise SystemExit("Candle delivery byte total does not match its assets")
+    return manifest
+
+
 def check_checksums() -> None:
     expected = {
         path.relative_to(OUTPUT).as_posix()
@@ -385,8 +1044,14 @@ def check_checksums() -> None:
             raise SystemExit(f"checksum mismatch: {name}")
 
 
-def check_contract() -> None:
-    for page_name in ("index.html", "explore.html", "tui.html", "maples.html"):
+def check_contract(candle_manifest: dict[str, object]) -> None:
+    for page_name in (
+        "index.html",
+        "explore.html",
+        "tui.html",
+        "candle.html",
+        "maples.html",
+    ):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
         stylesheet_links = re.findall(
             r'href="styles\.css\?v=([0-9a-f]{12})"',
@@ -401,6 +1066,9 @@ def check_contract() -> None:
     for marker in (
         "Explore the CLI &amp; TUI",
         "Open the CLI &amp; TUI tour",
+        "Follow a complete Candle CLI &amp; MCP run",
+        "See files become verifiable evidence",
+        'href="./candle.html"',
         "Explore MAPLES",
         'href="./maples.html"',
         'src="assets/maples/maples-01-group.webp"',
@@ -418,7 +1086,7 @@ def check_contract() -> None:
     if teaser_count != 2:
         raise SystemExit("homepage must present exactly two recorded-tour teasers")
 
-    for page_name in ("tui.html", "maples.html"):
+    for page_name in ("tui.html", "candle.html", "maples.html"):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
         runtime_links = re.findall(
             r'src="product-tour\.js\?v=([0-9a-f]{12})"',
@@ -447,6 +1115,136 @@ def check_contract() -> None:
         "tui.html",
         ["splash", "dashboard", "workflow", "results", "elephant"],
     )
+    if 'href="./candle.html"' not in tui:
+        raise SystemExit("CLI/TUI tour does not link to the Candle walkthrough")
+
+    candle = (OUTPUT / "candle.html").read_text(encoding="utf-8")
+    for marker in (
+        'data-tour-id="candle-cli-mcp"',
+        'id="candle-tab-inputs"',
+        'id="candle-tab-run"',
+        'id="candle-tab-mcp"',
+        'id="candle-tab-evidence"',
+        'src="product-tour.js?v=',
+        "Real CLI &amp; MCP · deterministic loopback fixture · $0 paid",
+        "all three calls are cache hits, adding no new loopback requests to the fixture, fixture-reported tokens, or estimated cost",
+        "22 of 22 evidence hashes",
+        "actual paid spend remain zero",
+        "not provider charges",
+        "conservative rough pre-run estimate of $0.010096",
+        'id="candle-transcript"',
+        'href="#candle-transcript"',
+        'href="assets/candle/manifest.json"',
+        'href="./explore.html"',
+        'href="./tui.html"',
+        'href="./maples.html"',
+        'href="./index.html"',
+        "Complete recorded transcript",
+        "CLI and MCP: the same operator contract",
+        "Explore every tour",
+        "Return home",
+    ):
+        if marker not in candle:
+            raise SystemExit(f"Candle CLI/MCP tour marker missing: {marker}")
+    expected_candle_commands = [
+        "oasis --format json data validate candle-data",
+        "oasis --format json data scan candle-data --rubric rubric/candle-rubric.yaml --hash --summary-only --output evidence/capture/intake-manifest.json",
+        "oasis --format json rubric check rubric/candle-rubric.yaml --strict",
+        "oasis --format json --trace-id candle-plan auto-grade candle-data --rubric rubric/candle-rubric.yaml --provider openai-compatible --output output/capture-plan --max-files 10 --hash --no-transcript --depth shallow",
+        "oasis --format json --trace-id candle-sample auto-grade candle-data --rubric rubric/candle-rubric.yaml --provider openai-compatible --output output/capture-sample --max-files 10 --hash --standalone --sample 1 --concurrency 1 --no-cache --no-transcript --depth shallow",
+        "oasis --format json --trace-id candle-run auto-grade candle-data --rubric rubric/candle-rubric.yaml --provider openai-compatible --output output/capture-run --max-files 10 --hash --standalone --skip-sample --concurrency 1 --no-transcript --depth shallow",
+        "oasis --format json summary output/capture-run --depth prompt",
+        "oasis --format json inspect output/capture-run --verify --provenance",
+        "oasis ledger --limit 10",
+    ]
+    candle_code_values = re.findall(r"<code>([^<]+)</code>", candle)
+    for command in expected_candle_commands:
+        if candle_code_values.count(command) != 1:
+            raise SystemExit(f"Candle recorded command contract changed: {command}")
+    full_run_code = next(
+        (value for value in candle_code_values if "--trace-id candle-run" in value),
+        "",
+    )
+    if "--no-cache" in full_run_code:
+        raise SystemExit("Candle full-run command would bypass the cache used by MCP")
+    candle_steps = [
+        "inputs",
+        "data",
+        "rubric",
+        "plan",
+        "sample",
+        "run",
+        "mcp",
+        "evidence",
+    ]
+    for step_id in candle_steps:
+        no_js_anchor = re.compile(
+            rf'<noscript>\s*<span\s+id="{re.escape(step_id)}"\s+'
+            r'class="tour-transcript-anchor"\s+aria-hidden="true"\s*></span>\s*</noscript>'
+        )
+        if len(no_js_anchor.findall(candle)) != 1:
+            raise SystemExit(
+                f"Candle no-JS transcript anchor is missing or duplicated: {step_id}"
+            )
+        if candle.count(f'id="{step_id}"') != 1:
+            raise SystemExit(
+                f"Candle shared step hash has an ambiguous HTML target: {step_id}"
+            )
+        if f'href="#{step_id}"' not in candle:
+            raise SystemExit(f"Candle no-JS step link is missing: {step_id}")
+    candle_payload = check_tour_structure("candle.html", candle_steps)
+    candle_asset_rows = candle_manifest["assets"]
+    candle_posters = {
+        row["scene"]: row
+        for row in candle_asset_rows
+        if row.get("role") == "poster"
+    }
+    candle_motion = {
+        row["format"]: row
+        for row in candle_asset_rows
+        if row.get("role") == "motion"
+    }
+    for step in candle_payload["steps"]:
+        poster = step.get("poster")
+        poster_asset = candle_posters.get(step.get("id"))
+        if (
+            not isinstance(poster, dict)
+            or not isinstance(poster_asset, dict)
+            or poster.get("src") != poster_asset.get("path")
+            or poster.get("srcset") != poster_asset.get("path")
+            or poster.get("type") != "image/webp"
+            or poster.get("width") != poster_asset.get("width")
+            or poster.get("height") != poster_asset.get("height")
+            or poster.get("alt") != poster_asset.get("alt")
+        ):
+            raise SystemExit(
+                f"Candle tour poster contract is invalid: {step.get('id')}"
+            )
+        media = step.get("media")
+        if step.get("id") == "run":
+            if not isinstance(media, dict) or any(
+                media.get(media_format)
+                != candle_motion.get(media_format, {}).get("path")
+                for media_format in ("webm", "mp4", "gif")
+            ):
+                raise SystemExit("Candle overview media contract is invalid")
+        elif media is not None:
+            raise SystemExit(
+                f"unexpected Candle motion media on step: {step.get('id')}"
+            )
+    for forbidden_claim in (
+        "live model assessment",
+        "live-model output",
+        "MCP replay",
+        "cache replay",
+        "provider bill of $0.00252",
+        "uploaded into Elephant",
+        "uses real student data",
+    ):
+        if forbidden_claim in candle:
+            raise SystemExit(
+                f"Candle fixture copy crosses its truth boundary: {forbidden_claim}"
+            )
 
     maples = (OUTPUT / "maples.html").read_text(encoding="utf-8")
     for marker in (
@@ -513,6 +1311,7 @@ def check_contract() -> None:
     for marker in (
         "Choose a journey",
         "Open the CLI &amp; TUI tour",
+        "Open the Candle CLI &amp; MCP tour",
         "Open the MAPLES tour",
         "Available now · recorded",
         "Available now · recorded fixture",
@@ -588,6 +1387,12 @@ def check_contract() -> None:
             raise SystemExit(
                 f"accessible interaction-state rule is missing: {selector_contract}"
             )
+    if not re.search(
+        r"\.tour-transcript-anchor\s*\{[^}]*display:\s*block;[^}]*scroll-margin-top:\s*5rem;",
+        styles,
+        flags=re.DOTALL,
+    ):
+        raise SystemExit("no-JS transcript anchors lack stable sticky-header spacing")
 
     teaser_rules = re.findall(r"\.tour-teaser-media img\s*\{([^}]*)\}", styles)
     ratio_rule = next(
@@ -605,17 +1410,17 @@ def check_contract() -> None:
         demo.get("recorded")
         and demo.get("live_service") is False
         and demo.get("path") == "explore.html"
-        and demo.get("tour_count") == 2
+        and demo.get("tour_count") == 3
         and demo.get("data_classification") == "declared per tour"
     ):
         raise SystemExit("publication demonstration scope is not explicit")
-    if len(publication.get("demo_media", [])) != 27:
+    if len(publication.get("demo_media", [])) != 27 + len(candle_asset_rows):
         raise SystemExit("publication media inventory is incomplete")
     capture_manifests = publication.get("capture_manifests", [])
     if (
-        len(capture_manifests) != 2
+        len(capture_manifests) != 3
         or {item.get("tour_id") for item in capture_manifests}
-        != {"cli-tui", "maples"}
+        != {"cli-tui", "candle-cli-mcp", "maples"}
     ):
         raise SystemExit("publication capture-manifest inventory is incomplete")
     if publication.get("tour_overview") != "explore.html":
@@ -624,10 +1429,93 @@ def check_contract() -> None:
     tours = {item.get("id"): item for item in tour_rows}
     if len(tours) != len(tour_rows):
         raise SystemExit("publication tour catalog contains duplicate ids")
-    if set(tours) != {"cli-tui", "maples"}:
+    if set(tours) != {"cli-tui", "candle-cli-mcp", "maples"}:
         raise SystemExit("publication tour catalog is incomplete")
     if not tours["cli-tui"].get("recorded") or tours["cli-tui"].get("path") != "tui.html":
         raise SystemExit("publication CLI/TUI tour record is invalid")
+    candle_tour = tours["candle-cli-mcp"]
+    candle_scenario = candle_manifest["scenario"]
+    candle_application = candle_manifest["application"]
+    candle_boundary = candle_manifest["execution_boundary"]
+    sample_boundary = candle_boundary["sample"]
+    full_boundary = candle_boundary["cli_full_run"]
+    mcp_boundary = candle_boundary["mcp_cache_backed_run"]
+    campaign_boundary = candle_boundary["campaign_total"]
+    cli_integrity = candle_boundary["cli_integrity"]
+    mcp_integrity = candle_boundary["mcp_integrity"]
+    if (
+        candle_tour.get("recorded") is not True
+        or candle_tour.get("status") != "recorded"
+        or candle_tour.get("path") != "candle.html"
+        or candle_tour.get("live_service") is not False
+        or candle_tour.get("synthetic_or_sanitized") is not True
+        or candle_tour.get("data_classification") != "synthetic-coded"
+        or candle_tour.get("real_person_data") is not False
+        or candle_tour.get("visitor_network_calls") is not False
+        or candle_tour.get("grading_pipeline_invoked") is not True
+        or candle_tour.get("external_provider_calls")
+        != candle_boundary.get("capture_external_provider_calls")
+        or candle_tour.get("sample_loopback_requests")
+        != sample_boundary.get("loopback_requests")
+        or candle_tour.get("full_run_loopback_requests")
+        != full_boundary.get("loopback_requests")
+        or candle_tour.get("capture_loopback_requests_total")
+        != campaign_boundary.get("loopback_requests")
+        or candle_tour.get("sample_fixture_scores")
+        != sample_boundary.get("item_scores")
+        or candle_tour.get("full_run_fixture_scores")
+        != full_boundary.get("item_scores")
+        or candle_tour.get("capture_fixture_scores_total")
+        != campaign_boundary.get("item_scores")
+        or candle_tour.get("sample_fixture_tokens")
+        != sample_boundary.get("fixture_reported_tokens")
+        or candle_tour.get("full_run_fixture_tokens")
+        != full_boundary.get("fixture_reported_tokens")
+        or candle_tour.get("capture_fixture_tokens_total")
+        != campaign_boundary.get("fixture_reported_tokens")
+        or candle_tour.get("plan_rough_estimated_cost_usd")
+        != candle_boundary.get("plan_rough_estimated_cost_usd")
+        or candle_tour.get("sample_estimated_cost_usd")
+        != sample_boundary.get("oasis_estimated_cost_usd")
+        or candle_tour.get("full_run_estimated_cost_usd")
+        != full_boundary.get("oasis_estimated_cost_usd")
+        or candle_tour.get("capture_estimated_cost_usd")
+        != campaign_boundary.get("oasis_estimated_cost_usd")
+        or candle_tour.get("paid_spend_usd") != candle_boundary.get("paid_usd")
+        or candle_tour.get("mcp_cache_hits") != mcp_boundary.get("cache_hits")
+        or candle_tour.get("mcp_new_loopback_requests")
+        != mcp_boundary.get("new_loopback_requests")
+        or candle_tour.get("mcp_new_fixture_tokens")
+        != mcp_boundary.get("new_fixture_reported_tokens")
+        or candle_tour.get("mcp_incremental_estimated_cost_usd")
+        != mcp_boundary.get("new_estimated_cost_usd")
+        or candle_tour.get("evidence_hashes_verified")
+        != cli_integrity.get("verified")
+        or candle_tour.get("evidence_hashes_total") != cli_integrity.get("total")
+        or candle_tour.get("mcp_evidence_hashes_verified")
+        != mcp_integrity.get("verified")
+        or candle_tour.get("mcp_evidence_hashes_total")
+        != mcp_integrity.get("total")
+        or candle_tour.get("capture_state") != "verified-loopback-fixture"
+        or candle_tour.get("scenario_id") != candle_scenario.get("id")
+        or candle_tour.get("source_head_sha")
+        != candle_application.get("source_revision")
+        or len(candle_tour.get("media_assets", [])) != len(candle_asset_rows)
+    ):
+        raise SystemExit("publication Candle CLI/MCP recorded-tour contract is invalid")
+    publication_candle_media = {
+        row.get("path"): row for row in candle_tour.get("media_assets", [])
+    }
+    for row in candle_asset_rows:
+        published = publication_candle_media.get(row["path"])
+        if (
+            not isinstance(published, dict)
+            or published.get("bytes") != row.get("bytes")
+            or published.get("sha256") != row.get("sha256")
+        ):
+            raise SystemExit(
+                f"publication Candle media mismatch: {row.get('path')}"
+            )
     maples_tour = tours["maples"]
     if (
         maples_tour.get("recorded") is not True
@@ -678,15 +1566,22 @@ def check_contract() -> None:
 
 
 def main() -> None:
-    required_pages = ("index.html", "explore.html", "tui.html", "maples.html")
+    required_pages = (
+        "index.html",
+        "explore.html",
+        "tui.html",
+        "candle.html",
+        "maples.html",
+    )
     missing_pages = [name for name in required_pages if not (OUTPUT / name).is_file()]
     if missing_pages:
         raise SystemExit(f"rendered site is incomplete; missing={missing_pages}")
     check_references()
     check_media_manifest()
     check_maples_media_manifest()
+    candle_manifest = check_candle_media_manifest()
     check_checksums()
-    check_contract()
+    check_contract(candle_manifest)
     print("OASIS project site checks: PASS")
 
 

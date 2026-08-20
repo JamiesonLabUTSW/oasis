@@ -227,6 +227,8 @@ The interface recordings use deterministic or synthetic fixtures with credential
 
 The CLI and TUI are part of the OASIS software release process; this project page currently publishes demonstrations and the technical report only. Release materials will identify their exact contents and version when available.
 
+For a longer operator example, [follow three coded Candle notes from standalone CLI intake through a cache-backed MCP run and verified evidence](candle.qmd). That walkthrough uses the real OASIS command and MCP surfaces against a deterministic loopback fixture, with its execution boundary stated on the page.
+
 <details class="tour-transcript">
 <summary>Read the five flow descriptions</summary>
 

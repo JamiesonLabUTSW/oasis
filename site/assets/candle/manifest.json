@@ -1,0 +1,399 @@
+{
+  "schema_version": "oasis.candle-cli-mcp-site-media.v1",
+  "generated_at": "2026-08-20T21:32:18Z",
+  "scenario": {
+    "id": "candle-making-files-to-evidence-v1",
+    "title": "Candle Making: From files to verified evidence",
+    "data_classification": "synthetic-coded",
+    "synthetic_only": true,
+    "real_person_data": false,
+    "coded_ids": [
+      "DEMO-001",
+      "DEMO-002",
+      "DEMO-003"
+    ],
+    "station": "CandleMaking",
+    "rubric_criteria": 3,
+    "description": "Newly authored public fixture notes exercise standalone OASIS CLI and MCP paths without learner, patient, customer, or other real-person data."
+  },
+  "application": {
+    "source_repository_public": false,
+    "source_revision": "db2861fdc79aa3bddeaed949c1282e068e7f4eb9",
+    "tree_clean": true,
+    "module_identity": "github.com/JamiesonLabUTSW/oasis",
+    "binaries": [
+      {
+        "name": "oasis",
+        "version": "0.1.0-mvp",
+        "module": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/oasis",
+        "vcs_revision": "db2861fdc79aa3bddeaed949c1282e068e7f4eb9",
+        "vcs_modified": false,
+        "sha256": "c22077c0929a2ab457f72b2e8bf07f0eb58813f7701f906da2622c3e286a56f4"
+      },
+      {
+        "name": "oasis-mcp",
+        "version": null,
+        "server_name": "oasis-go-mcp",
+        "protocol_version": "2024-11-05",
+        "module": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/oasis-mcp",
+        "vcs_revision": "db2861fdc79aa3bddeaed949c1282e068e7f4eb9",
+        "vcs_modified": false,
+        "sha256": "1fd230309bcb87fee1ed77c73c59dd4f310ad9523e74662e3970d76970f980c4"
+      }
+    ]
+  },
+  "execution_boundary": {
+    "provider_adapter": "openai-compatible",
+    "fixture_model": "candle-fixture-v1",
+    "loopback_only": true,
+    "capture_external_provider_calls": 0,
+    "visitor_calls_external_provider": false,
+    "paid_usd": 0,
+    "plan_provider_requests": 0,
+    "plan_rough_estimated_cost_usd": 0.010096,
+    "sample": {
+      "loopback_requests": 1,
+      "results": 1,
+      "item_scores": 3,
+      "fixture_reported_tokens": 360,
+      "oasis_estimated_cost_usd": 0.00084
+    },
+    "cli_full_run": {
+      "loopback_requests": 3,
+      "cache_hits": 0,
+      "results": 3,
+      "item_scores": 9,
+      "fixture_reported_tokens": 1080,
+      "oasis_estimated_cost_usd": 0.00252
+    },
+    "campaign_total": {
+      "loopback_requests": 4,
+      "results": 4,
+      "item_scores": 12,
+      "fixture_reported_tokens": 1440,
+      "oasis_estimated_cost_usd": 0.00336
+    },
+    "mcp_cache_backed_run": {
+      "cache_hits": 3,
+      "total_calls": 3,
+      "new_loopback_requests": 0,
+      "new_fixture_reported_tokens": 0,
+      "new_estimated_cost_usd": 0
+    },
+    "cli_integrity": {
+      "status": "verified",
+      "verified": 22,
+      "total": 22,
+      "failed": 0
+    },
+    "mcp_integrity": {
+      "status": "verified",
+      "verified": 21,
+      "total": 21,
+      "failed": 0
+    }
+  },
+  "privacy_review": {
+    "status": "passed",
+    "forbidden_patterns": [
+      "mac_user_home_path",
+      "linux_user_home_path",
+      "cluster_storage_path",
+      "local_account_identifier",
+      "api_credential_shape",
+      "email_address_shape",
+      "real_person_data_terms"
+    ],
+    "path_scan": {
+      "asset_files_scanned": 11,
+      "private_path_matches": 0,
+      "credential_matches": 0,
+      "email_matches": 0
+    },
+    "ocr": {
+      "engine": "Apple Vision VNRecognizeTextRequest",
+      "poster_files_scanned": 8,
+      "motion_frames_scanned": 58,
+      "files_scanned": 66,
+      "errors": 0,
+      "private_path_matches": 0,
+      "credential_matches": 0,
+      "email_matches": 0,
+      "real_person_data_term_matches": 0
+    },
+    "manual_review": {
+      "status": "passed",
+      "reviewer": "Codex visual QA",
+      "poster_files_reviewed": 8,
+      "motion_frames_reviewed": 58,
+      "contact_sheets_reviewed": 6,
+      "findings": 0
+    }
+  },
+  "content_review": {
+    "status": "passed",
+    "sample_counter_field_published": false,
+    "mcp_described_as_replay": false,
+    "fixture_scores_labeled": true,
+    "costs_labeled_as_estimates": true,
+    "mcp_tool_names_exact": true,
+    "mcp_arguments_rendered_separately": true,
+    "standalone_intake_described_as_managed_upload": false,
+    "summary_item_rows_labeled_as_scored_items": true,
+    "cache_hits_described_without_payload_integrity_claim": true,
+    "capture_source_hashes_recorded": true
+  },
+  "delivery": {
+    "capture_tool": "VHS",
+    "capture_tool_version": "0.10.0",
+    "master_width": 1200,
+    "master_height": 720,
+    "terminal_columns": 102,
+    "terminal_rows": 27,
+    "source_tape": "capture/candle-overview.tape",
+    "motion_duration_seconds": 58.333,
+    "motion_has_audio": false,
+    "poster_width": 1200,
+    "poster_height": 720,
+    "motion_width": 960,
+    "motion_height": 576,
+    "gif_width": 720,
+    "gif_height": 432,
+    "codecs": {
+      "webm": {
+        "container": "matroska,webm",
+        "video_codec": "vp9",
+        "pixel_format": "yuv420p"
+      },
+      "mp4": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "video_codec": "h264",
+        "pixel_format": "yuv420p"
+      },
+      "gif": {
+        "container": "gif",
+        "video_codec": "gif",
+        "pixel_format": "bgra"
+      }
+    },
+    "poster_max_bytes": 153600,
+    "webm_max_bytes": 2097152,
+    "mp4_max_bytes": 2621440,
+    "gif_max_bytes": 1572864,
+    "total_max_bytes": 6815744,
+    "asset_count": 11,
+    "total_bytes": 3208781,
+    "capture_sources": {
+      "tape": {
+        "name": "candle-overview.tape",
+        "sha256": "ccb0b4994dd8f8e7d8ee33f8eecac6be793facd4c9f299b291e89cd6dfbe588c",
+        "private_evidence_archived": true
+      },
+      "mcp_driver": {
+        "name": "candle_mcp_demo.py",
+        "sha256": "381cb2f154f00a93ab11980096f9648a91c2e6ec03065296223cea3822a0284e",
+        "private_evidence_archived": true
+      }
+    }
+  },
+  "assets": [
+    {
+      "order": 1,
+      "id": "candle-inputs-poster",
+      "scene": "inputs",
+      "role": "poster",
+      "path": "assets/candle/candle-01-inputs-poster.webp",
+      "alt": "Terminal listing three coded synthetic Candle Making notes and the local rubric before OASIS reads them.",
+      "format": "webp",
+      "bytes": 70524,
+      "sha256": "5c40e49694aa853f484a637e1376aa6e6265813c15f2702370d14b214671e18e",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 2,
+      "id": "candle-data-poster",
+      "scene": "data",
+      "role": "poster",
+      "path": "assets/candle/candle-02-data-poster.webp",
+      "alt": "OASIS CLI data validation and scan results for three coded synthetic Candle Making notes.",
+      "format": "webp",
+      "bytes": 83472,
+      "sha256": "15a45c4fca1b9548bd557ed5b795dd31ace3714ad963ec286394009e2e787485",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 3,
+      "id": "candle-rubric-poster",
+      "scene": "rubric",
+      "role": "poster",
+      "path": "assets/candle/candle-03-rubric-poster.webp",
+      "alt": "OASIS CLI strict rubric check passing for the three-criterion Candle Making rubric.",
+      "format": "webp",
+      "bytes": 43806,
+      "sha256": "b6bc1af91d3fedc373a6ce9eb4ab484b0a76413a3fa10dcb8f7e61dc8f1c30bf",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 4,
+      "id": "candle-plan-poster",
+      "scene": "plan",
+      "role": "poster",
+      "path": "assets/candle/candle-04-plan-poster.webp",
+      "alt": "OASIS CLI dry-run plan showing three encounters, three criteria, three planned calls, the candle-fixture-v1 model, and $0 paid.",
+      "format": "webp",
+      "bytes": 57650,
+      "sha256": "69097357abcd9e0399f1c2271b77aabf18bf28cdb3c96fd8a7e57833fe7e4c72",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 5,
+      "id": "candle-sample-poster",
+      "scene": "sample",
+      "role": "poster",
+      "path": "assets/candle/candle-05-sample-poster.webp",
+      "alt": "OASIS CLI sample assessment of one coded synthetic Candle Making note through the loopback fixture.",
+      "format": "webp",
+      "bytes": 70070,
+      "sha256": "4e01fd08c11b869779dd7e9c48994f1ae4b129c203c5065635de1572d1a781bf",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 6,
+      "id": "candle-run-poster",
+      "scene": "run",
+      "role": "poster",
+      "path": "assets/candle/candle-06-run-poster.webp",
+      "alt": "Completed OASIS CLI run showing three coded encounters and nine fixture scores.",
+      "format": "webp",
+      "bytes": 67242,
+      "sha256": "d2e5d9ae252e6fdee58e006711ea98ef3e158219d7fa42a030fea269cf625ceb",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 7,
+      "id": "candle-mcp-poster",
+      "scene": "mcp",
+      "role": "poster",
+      "path": "assets/candle/candle-07-mcp-poster.webp",
+      "alt": "Recorded MCP wire transcript showing a fresh cache-backed OASIS run with three cache hits and no new fixture requests.",
+      "format": "webp",
+      "bytes": 63550,
+      "sha256": "5badc275b173d7ca85c4aab3bf5fad9cef5732c6ba286a0dbd5c8d9223a2ad55",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 8,
+      "id": "candle-evidence-poster",
+      "scene": "evidence",
+      "role": "poster",
+      "path": "assets/candle/candle-08-evidence-poster.webp",
+      "alt": "OASIS evidence verification reporting 22 of 22 hashes valid for the recorded Candle Making CLI run.",
+      "format": "webp",
+      "bytes": 102430,
+      "sha256": "ae3a0a1e567aa05d11bb46bfca4f227574f75ba747ea04b31a06cbbd1a6392bc",
+      "width": 1200,
+      "height": 720,
+      "duration_seconds": null,
+      "container": "webp_pipe",
+      "video_codec": "webp",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 9,
+      "id": "candle-overview-webm",
+      "scene": "overview",
+      "role": "motion",
+      "path": "assets/candle/candle-overview.webm",
+      "alt": "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+      "format": "webm",
+      "bytes": 803675,
+      "sha256": "5697d57ca69a050aa7681ec8c9ee080065adb362b2f86394402667634612b4a2",
+      "width": 960,
+      "height": 576,
+      "duration_seconds": 58.334,
+      "container": "matroska,webm",
+      "video_codec": "vp9",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 10,
+      "id": "candle-overview-mp4",
+      "scene": "overview",
+      "role": "motion",
+      "path": "assets/candle/candle-overview.mp4",
+      "alt": "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+      "format": "mp4",
+      "bytes": 845807,
+      "sha256": "dafe6db9e7f3b005bfedfe07158148a6b8de6bfc2fd23f876e766c84b8aa3085",
+      "width": 960,
+      "height": 576,
+      "duration_seconds": 58.333333,
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "video_codec": "h264",
+      "pixel_format": "yuv420p",
+      "audio_streams": 0
+    },
+    {
+      "order": 11,
+      "id": "candle-overview-gif",
+      "scene": "overview",
+      "role": "motion",
+      "path": "assets/candle/candle-overview.gif",
+      "alt": "Recorded terminal overview of the OASIS Candle Making CLI and MCP workflow from synthetic files through verified evidence.",
+      "format": "gif",
+      "bytes": 1000555,
+      "sha256": "43cd4a9b7805c299f18cdc3e3a1ddb068cc64c95072bdada59cd07313288b0c4",
+      "width": 720,
+      "height": 432,
+      "duration_seconds": 58.34,
+      "container": "gif",
+      "video_codec": "gif",
+      "pixel_format": "bgra",
+      "audio_streams": 0
+    }
+  ]
+}
