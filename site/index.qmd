@@ -59,8 +59,18 @@ See OASIS take three coded synthetic Candle Making notes through local intake, f
 [Download the overview GIF](assets/candle/candle-overview.gif){download="candle-overview.gif"}
 :::
 
-::: {.tour-teaser-media aria-hidden="true"}
-![](assets/candle/candle-06-run-poster.webp){fig-alt="" loading="lazy" width="1200" height="720"}
+::: {.tour-teaser-media .tour-teaser-media--ambient}
+```{=html}
+<div class="ambient-terminal" data-ambient-terminal>
+  <img data-ambient-terminal-poster src="assets/candle/candle-06-run-poster.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1200" height="720">
+  <video id="homepage-candle-terminal" data-ambient-terminal-video autoplay muted loop playsinline preload="none" tabindex="-1" aria-hidden="true">
+    <source data-src="assets/candle/candle-overview.webm" type="video/webm">
+    <source data-src="assets/candle/candle-overview.mp4" type="video/mp4">
+  </video>
+  <span class="ambient-terminal-badge" aria-hidden="true">Recorded terminal · silent</span>
+  <button type="button" class="ambient-terminal-toggle" data-ambient-terminal-toggle aria-controls="homepage-candle-terminal" aria-label="Play preview — recorded terminal" hidden>Play preview</button>
+</div>
+```
 :::
 :::
 
@@ -86,3 +96,5 @@ MAPLES is the platform's grading and review application. Wayfinder Rubric Studio
 ## Publication scope
 
 Project information, guided product tours, recorded software demonstrations, and this technical report are available at [github.com/JamiesonLabUTSW/oasis](https://github.com/JamiesonLabUTSW/oasis) and [jamiesonlabutsw.github.io/oasis](https://jamiesonlabutsw.github.io/oasis/). Each tour declares its synthetic or sanitized fixture and its live-service boundary. Application and component source code, binaries, installation materials, sample data, and tagged software releases are not part of this publication. Any future software release will identify its exact contents, version, and terms.
+
+<script src="homepage-terminal.js" defer></script>

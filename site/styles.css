@@ -192,6 +192,96 @@ body a:focus {
   aspect-ratio: 5 / 3;
 }
 
+.ambient-terminal {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 5 / 3;
+  background: var(--oasis-night);
+}
+
+.ambient-terminal img,
+.ambient-terminal video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ambient-terminal video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.ambient-terminal img {
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.ambient-terminal.is-playing video {
+  opacity: 1;
+}
+
+.ambient-terminal.is-playing img {
+  opacity: 0;
+}
+
+.ambient-terminal-badge {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.65rem;
+  z-index: 2;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(215, 230, 233, 0.42);
+  border-radius: 999px;
+  background: rgba(6, 20, 27, 0.9);
+  color: #fff8dc;
+  font-family: var(--bs-font-monospace);
+  font-size: clamp(0.62rem, 1.35vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.ambient-terminal-toggle {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.7rem;
+  z-index: 2;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.48rem 0.72rem;
+  border: 1px solid rgba(215, 230, 233, 0.62);
+  border-radius: 999px;
+  background: rgba(6, 20, 27, 0.92);
+  color: #fff8dc;
+  font-family: var(--bs-font-monospace);
+  font-size: clamp(0.68rem, 1.35vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.ambient-terminal-toggle[hidden] {
+  display: none;
+}
+
+.ambient-terminal-toggle:hover,
+.ambient-terminal-toggle:focus {
+  border-color: #fff8dc;
+  background: #10272f;
+  color: #ffffff;
+}
+
+.ambient-terminal-toggle:focus-visible {
+  outline: 3px solid #79cfff;
+  outline-offset: 3px;
+}
+
 .tour-teaser--reverse {
   grid-template-columns: minmax(300px, 1.1fr) minmax(0, 0.9fr);
 }
@@ -944,6 +1034,14 @@ table {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .ambient-terminal:not(.motion-enabled) video {
+    display: none;
+  }
+
+  .ambient-terminal img {
+    opacity: 1 !important;
   }
 }
 
