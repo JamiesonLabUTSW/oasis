@@ -62,6 +62,18 @@ Follow three synthetic Candle Making notes through file checks, rubric validatio
 Available now · recorded demo
 :::
 
+### Load and inspect data in Elephant
+
+See an agent prepare a three-record manifest, let OASIS check it locally, review a zero-write preview, approve the exact file set, and then browse the imported group, encounters, and files in the TUI and CLI.
+
+[Open the Elephant ingestion tour](elephant.qmd){.tour-cta}
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Available now · recorded demo
+:::
+
 ### Review results in MAPLES
 
 Open a three-record demo group, inspect its rubric and station match, compare recorded run states, read a result beside its source note, and try a human review without saving it.
@@ -111,8 +123,8 @@ See how to run repeatable batch experiments, compare results side by side, and k
 ::: {.diagram-note}
 - **OASIS CLI and TUI** are where operators plan work, start and monitor runs, inspect results, and verify evidence.
 - **Standalone CLI and MCP** offer the same checked assessment workflow to people at a terminal and to agents using typed tools.
-- **MAPLES** is the web application for organizing grading work and completing human review.
 - **Elephant** stores and moves the data those workflows use; it is not itself the review screen.
+- **MAPLES** is the web application for organizing grading work and completing human review.
 - **Wayfinder Rubric Studio** lives in MAPLES, while **Wayfinder Operator** lives in the CLI and TUI. They share a family name, but each is designed for its own setting.
 :::
 

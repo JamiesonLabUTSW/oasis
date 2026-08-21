@@ -74,6 +74,20 @@ Watch OASIS check three synthetic Candle Making notes, validate the rubric, prev
 :::
 :::
 
+::: {.tour-teaser .tour-teaser--reverse}
+::: {.tour-teaser-copy}
+### Load and check data in Elephant
+
+Start with an agent-prepared manifest, let OASIS validate and preview it, pause for explicit approval, then open the imported group in the TUI and drill down through encounters and file counts. A final read-only CLI query confirms the stored file types, byte counts, and fingerprints.
+
+[Open the Elephant ingestion tour](elephant.qmd){.tour-cta}
+:::
+
+::: {.tour-teaser-media aria-hidden="true"}
+![](assets/elephant/elephant-06-dataset-poster.webp){fig-alt="" loading="lazy" width="1200" height="720"}
+:::
+:::
+
 ::: {.tour-overview-link}
 [Browse all guided tours](explore.qmd)
 :::

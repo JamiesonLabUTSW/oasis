@@ -1021,6 +1021,669 @@ def check_candle_media_manifest() -> dict[str, object]:
     return manifest
 
 
+def check_elephant_media_manifest() -> dict[str, object]:
+    manifest_path = OUTPUT / "assets" / "elephant" / "manifest.json"
+    if not manifest_path.is_file():
+        raise SystemExit(
+            "Elephant capture is not ready: verified assets/elephant/manifest.json is missing"
+        )
+    expected_manifest_sha256 = (
+        "2905676b62e5930d2a73a4e612a6673cc36d82aaa418a1edee39681c9041d249"
+    )
+    if digest(manifest_path) != expected_manifest_sha256:
+        raise SystemExit("Elephant capture manifest does not match the sealed review")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    expected_top_level = {
+        "schema_version",
+        "generated_at",
+        "scenario",
+        "fixture",
+        "application",
+        "execution_boundary",
+        "evidence",
+        "privacy_review",
+        "content_review",
+        "delivery",
+        "assets",
+    }
+    if set(manifest) != expected_top_level:
+        raise SystemExit(
+            "Elephant media manifest top-level contract is invalid: "
+            f"{sorted(manifest)}"
+        )
+    if manifest.get("schema_version") != "oasis.elephant-ingestion-site-media.v1":
+        raise SystemExit("Elephant media manifest schema is invalid")
+    generated_at = manifest.get("generated_at")
+    if not isinstance(generated_at, str) or not re.fullmatch(
+        r"2026-08-20T\d{2}:\d{2}:\d{2}Z", generated_at
+    ):
+        raise SystemExit("Elephant media manifest timestamp is invalid")
+
+    scenario = manifest.get("scenario", {})
+    if (
+        set(scenario)
+        != {
+            "id",
+            "title",
+            "data_classification",
+            "description",
+            "synthetic_only",
+            "real_person_data",
+            "coded_ids",
+            "reserved_email_domain",
+            "cohort",
+            "record_count",
+            "file_count",
+            "file_type",
+        }
+        or scenario.get("id") != "elephant-agent-assisted-candle-v1"
+        or scenario.get("title")
+        != "Elephant ingestion: From a folder to verified records"
+        or scenario.get("data_classification") != "synthetic-coded"
+        or not isinstance(scenario.get("description"), str)
+        or not scenario["description"].strip()
+        or scenario.get("synthetic_only") is not True
+        or scenario.get("real_person_data") is not False
+        or scenario.get("coded_ids") != ["DEMO-001", "DEMO-002", "DEMO-003"]
+        or scenario.get("reserved_email_domain") != "example.com"
+        or scenario.get("cohort") != "OASIS Candle Demo"
+        or scenario.get("record_count") != 3
+        or scenario.get("file_count") != 3
+        or scenario.get("file_type") != "notes_txt"
+    ):
+        raise SystemExit("Elephant scenario provenance or privacy scope is invalid")
+
+    fixture = manifest.get("fixture", {})
+    fixture_manifest = fixture.get("manifest", {})
+    fixture_files = fixture.get("files", [])
+    if (
+        set(fixture)
+        != {
+            "manifest",
+            "files",
+            "file_set_digest_algorithm",
+            "file_set_canonicalization",
+            "file_set_sha256",
+        }
+        or set(fixture_manifest)
+        != {"name", "bytes", "sha256", "columns", "row_count"}
+        or fixture_manifest.get("name") != "manifest.csv"
+        or not isinstance(fixture_manifest.get("bytes"), int)
+        or fixture_manifest["bytes"] <= 0
+        or not re.fullmatch(
+            r"[0-9a-f]{64}", str(fixture_manifest.get("sha256", ""))
+        )
+        or fixture_manifest.get("columns")
+        != [
+            "cohort_name",
+            "learner_name",
+            "learner_email",
+            "activity",
+            "case_name",
+            "date",
+            "room",
+            "file_path",
+            "file_type",
+        ]
+        or fixture_manifest.get("row_count") != 3
+        or fixture.get("file_set_digest_algorithm") != "sha256"
+        or fixture.get("file_set_canonicalization")
+        != "relative-path-tab-bytes-tab-sha256-lf"
+        or not re.fullmatch(r"[0-9a-f]{64}", str(fixture.get("file_set_sha256", "")))
+    ):
+        raise SystemExit("Elephant fixture manifest or file-set identity is invalid")
+    expected_fixture_paths = [
+        "DEMO-001/note.txt",
+        "DEMO-002/note.txt",
+        "DEMO-003/note.txt",
+    ]
+    if (
+        not isinstance(fixture_files, list)
+        or len(fixture_files) != 3
+        or [item.get("relative_path") for item in fixture_files if isinstance(item, dict)]
+        != expected_fixture_paths
+    ):
+        raise SystemExit("Elephant fixture file inventory is incomplete or out of order")
+    for item in fixture_files:
+        if (
+            not isinstance(item, dict)
+            or set(item) != {"relative_path", "bytes", "sha256"}
+            or not isinstance(item.get("bytes"), int)
+            or item["bytes"] <= 0
+            or not re.fullmatch(r"[0-9a-f]{64}", str(item.get("sha256", "")))
+        ):
+            raise SystemExit("Elephant fixture file identity is invalid")
+
+    source_sha = "43b195ac9bf378b7d8a49af3aa9690e78d1d4b8d"
+    application = manifest.get("application", {})
+    binaries = application.get("binaries", [])
+    elephant_runtime = application.get("elephant_runtime", {})
+    if (
+        set(application)
+        != {
+            "source_repository_public",
+            "source_revision",
+            "tree_clean",
+            "module_identity",
+            "binaries",
+            "elephant_runtime",
+        }
+        or application.get("source_repository_public") is not False
+        or application.get("source_revision") != source_sha
+        or application.get("tree_clean") is not True
+        or application.get("module_identity") != "github.com/JamiesonLabUTSW/oasis"
+        or not isinstance(binaries, list)
+        or len(binaries) != 2
+        or [item.get("name") for item in binaries if isinstance(item, dict)]
+        != ["oasis", "oasis-tui"]
+        or set(elephant_runtime)
+        != {"api_scope", "fresh_storage", "database", "object_storage"}
+        or elephant_runtime.get("api_scope") != "local-loopback"
+        or elephant_runtime.get("fresh_storage") is not True
+        or elephant_runtime.get("database") != "isolated-postgres"
+        or elephant_runtime.get("object_storage") != "isolated-minio"
+    ):
+        raise SystemExit("Elephant capture source or local runtime identity is invalid")
+    binary_keys = {
+        "name",
+        "version",
+        "module",
+        "sha256",
+    }
+    for binary in binaries:
+        binary_version = binary.get("version") if isinstance(binary, dict) else None
+        if (
+            not isinstance(binary, dict)
+            or set(binary) != binary_keys
+            or (
+                binary.get("name") == "oasis"
+                and (
+                    not isinstance(binary_version, str)
+                    or not binary_version.strip()
+                )
+            )
+            or (
+                binary.get("name") == "oasis-tui"
+                and binary_version is not None
+                and (
+                    not isinstance(binary_version, str)
+                    or not binary_version.strip()
+                )
+            )
+            or not isinstance(binary.get("module"), str)
+            or not binary["module"].strip()
+            or not isinstance(binary.get("sha256"), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", binary["sha256"])
+        ):
+            raise SystemExit("Elephant binary identity is invalid")
+
+    execution = manifest.get("execution_boundary", {})
+    if set(execution) != {
+        "agent_exchange",
+        "local_checks",
+        "approval",
+        "import",
+        "readback",
+        "credentials",
+        "visitor_boundary",
+    }:
+        raise SystemExit("Elephant execution-boundary sections are invalid")
+    agent_exchange = execution.get("agent_exchange", {})
+    if agent_exchange != {
+        "illustrated": True,
+        "live": False,
+        "named_model_claim": False,
+        "external_model_provider_calls": 0,
+        "private_reasoning_published": False,
+    }:
+        raise SystemExit("Elephant agent-exchange truth boundary is invalid")
+    local_checks = execution.get("local_checks", {})
+    if local_checks != {
+        "validation_command": "oasis data validate candle-data",
+        "scan_command": (
+            "oasis data scan candle-data --hash --summary-only "
+            "--fail-on-clarifications --output evidence/scan.json"
+        ),
+        "scan_json_used_as_import_manifest": False,
+        "elephant_api_calls": 0,
+    }:
+        raise SystemExit("Elephant local-check execution boundary is invalid")
+    approval = execution.get("approval", {})
+    if approval != {
+        "gate_type": "capture-harness",
+        "native_cli_prompt": False,
+        "target_reviewed": True,
+        "manifest_digest_bound": True,
+        "file_set_digest_bound": True,
+        "changed_input_expires_approval": True,
+    }:
+        raise SystemExit("Elephant approval boundary is invalid")
+    import_boundary = execution.get("import", {})
+    if import_boundary != {
+        "dry_run_command": (
+            "oasis data import manifest.csv --data-dir candle-data --dry-run"
+        ),
+        "import_command": "oasis data import manifest.csv --data-dir candle-data",
+        "idempotency_key_used": False,
+        "dry_run_api_calls": 0,
+        "rows_total": 3,
+        "rows_failed": 0,
+        "groups_expected": 1,
+        "records_expected": 3,
+        "files_expected": 3,
+        "atomic": False,
+        "resumable": False,
+        "durable_row_receipt": False,
+        "unchanged_input_safe_to_retry": True,
+        "changed_input_requires_review": True,
+    }:
+        raise SystemExit("Elephant import execution boundary is invalid")
+    readback = execution.get("readback", {})
+    if readback != {
+        "cli_json_used": True,
+        "tui_groups_view": True,
+        "tui_encounters_view": True,
+        "tui_files_is_grouped_summary": True,
+        "original_filenames_returned": False,
+        "stored_file_metadata_verified_via_cli": True,
+    }:
+        raise SystemExit("Elephant read-back boundary is invalid")
+    credentials = execution.get("credentials", {})
+    if credentials != {
+        "write_key_scope": "scoped-write",
+        "write_key_source": "private-environment-file",
+        "write_key_in_argv": False,
+        "write_key_published": False,
+        "readback_key_scope": "read-only",
+        "separate_keys": True,
+    }:
+        raise SystemExit("Elephant credential boundary is invalid")
+    visitor_boundary = execution.get("visitor_boundary", {})
+    if visitor_boundary != {
+        "live_service": False,
+        "visitor_elephant_calls": False,
+        "visitor_model_calls": False,
+    }:
+        raise SystemExit("Elephant visitor execution boundary is invalid")
+
+    evidence = manifest.get("evidence", {})
+    evidence_items = evidence.get("items", [])
+    evidence_counts = evidence.get("counts", {})
+    if (
+        set(evidence)
+        != {
+            "status",
+            "raw_logs_published",
+            "credentials_present",
+            "private_paths_present",
+            "item_count",
+            "items",
+            "counts",
+        }
+        or evidence.get("status") != "archived-private"
+        or evidence.get("raw_logs_published") is not False
+        or evidence.get("credentials_present") is not False
+        or evidence.get("private_paths_present") is not False
+        or evidence.get("item_count") != 5
+        or evidence_counts
+        != {
+            "validated_files": 3,
+            "scan_records": 3,
+            "dry_run_rows": 3,
+            "import_rows": 3,
+            "import_failed_rows": 0,
+            "readback_file_groups": 3,
+            "readback_files": 3,
+        }
+    ):
+        raise SystemExit("Elephant archived evidence summary is invalid")
+    expected_evidence_ids = [
+        "local-validate",
+        "local-scan",
+        "import-preview",
+        "import-run",
+        "file-readback",
+    ]
+    if (
+        not isinstance(evidence_items, list)
+        or len(evidence_items) != 5
+        or [item.get("id") for item in evidence_items if isinstance(item, dict)]
+        != expected_evidence_ids
+    ):
+        raise SystemExit("Elephant archived evidence inventory is incomplete or out of order")
+    for item in evidence_items:
+        name = item.get("name") if isinstance(item, dict) else None
+        if (
+            not isinstance(item, dict)
+            or set(item)
+            != {
+                "id",
+                "name",
+                "bytes",
+                "sha256",
+                "sanitized",
+                "archived_private",
+                "published",
+            }
+            or not isinstance(name, str)
+            or not name
+            or "/" in name
+            or "\\" in name
+            or not isinstance(item.get("bytes"), int)
+            or item["bytes"] <= 0
+            or not re.fullmatch(r"[0-9a-f]{64}", str(item.get("sha256", "")))
+            or item.get("sanitized") is not True
+            or item.get("archived_private") is not True
+            or item.get("published") is not False
+        ):
+            raise SystemExit("Elephant archived evidence identity is invalid")
+
+    privacy = manifest.get("privacy_review", {})
+    if (
+        set(privacy)
+        != {
+            "status",
+            "asset_files_scanned",
+            "posters_ocr_reviewed",
+            "motion_frames_ocr_reviewed",
+            "posters_manual_reviewed",
+            "motion_frames_manual_reviewed",
+            "ocr_errors",
+            "sensitive_hits",
+            "real_person_data_visible",
+            "allowed_emails",
+            "all_passed",
+        }
+        or privacy.get("status") != "passed"
+        or privacy.get("asset_files_scanned") != 11
+        or privacy.get("posters_ocr_reviewed") != 9
+        or not isinstance(privacy.get("motion_frames_ocr_reviewed"), int)
+        or privacy["motion_frames_ocr_reviewed"] <= 0
+        or privacy.get("posters_manual_reviewed") != 9
+        or not isinstance(privacy.get("motion_frames_manual_reviewed"), int)
+        or privacy["motion_frames_manual_reviewed"] <= 0
+        or privacy.get("ocr_errors") != 0
+        or privacy.get("sensitive_hits") != 0
+        or privacy.get("real_person_data_visible") is not False
+        or privacy.get("allowed_emails")
+        != [
+            "demo-001@example.com",
+            "demo-002@example.com",
+            "demo-003@example.com",
+        ]
+        or privacy.get("all_passed") is not True
+    ):
+        raise SystemExit("Elephant media privacy review is incomplete")
+
+    content_review = manifest.get("content_review", {})
+    if content_review != {
+        "agent_exchange_labeled_illustrated": True,
+        "scan_json_called_import_manifest": False,
+        "native_cli_approval_claimed": False,
+        "native_resume_claimed": False,
+        "atomic_import_claimed": False,
+        "tui_groups_called_datasets": False,
+        "tui_files_called_individual_file_rows": False,
+        "original_filenames_claimed": False,
+        "secrets_published": False,
+        "private_paths_published": False,
+        "visitor_network_calls": False,
+        "source_hashes_recorded": True,
+        "fixture_digests_recorded": True,
+        "private_evidence_hashes_recorded": True,
+    }:
+        raise SystemExit("Elephant media content review is incomplete")
+
+    delivery = manifest.get("delivery", {})
+    delivery_keys = {
+        "capture_tool",
+        "capture_tool_version",
+        "poster_width",
+        "poster_height",
+        "motion_width",
+        "motion_height",
+        "motion_duration_seconds",
+        "motion_has_audio",
+        "codecs",
+        "poster_max_bytes",
+        "webm_max_bytes",
+        "mp4_max_bytes",
+        "total_max_bytes",
+        "asset_count",
+        "total_bytes",
+        "capture_sources",
+    }
+    codecs = delivery.get("codecs", {})
+    capture_sources = delivery.get("capture_sources", {})
+    duration = delivery.get("motion_duration_seconds")
+    if (
+        set(delivery) != delivery_keys
+        or delivery.get("capture_tool") != "VHS"
+        or not isinstance(delivery.get("capture_tool_version"), str)
+        or not delivery["capture_tool_version"].strip()
+        or delivery.get("poster_width") != 1200
+        or delivery.get("poster_height") != 720
+        or delivery.get("motion_width") != 960
+        or delivery.get("motion_height") != 576
+        or not isinstance(duration, (int, float))
+        or not 10 <= duration <= 120
+        or delivery.get("motion_has_audio") is not False
+        or codecs
+        != {
+            "webm": {
+                "container": "matroska,webm",
+                "video_codec": "vp9",
+                "pixel_format": "yuv420p",
+            },
+            "mp4": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "video_codec": "h264",
+                "pixel_format": "yuv420p",
+            },
+        }
+        or delivery.get("poster_max_bytes") != 153600
+        or delivery.get("webm_max_bytes") != 2097152
+        or delivery.get("mp4_max_bytes") != 2621440
+        or delivery.get("total_max_bytes") != 6291456
+        or delivery.get("asset_count") != 11
+        or set(capture_sources) != {"tape"}
+        or set(capture_sources.get("tape", {}))
+        != {"name", "sha256", "private_evidence_archived"}
+        or capture_sources["tape"].get("name") != "elephant-overview.tape"
+        or not re.fullmatch(
+            r"[0-9a-f]{64}", str(capture_sources["tape"].get("sha256", ""))
+        )
+        or capture_sources["tape"].get("private_evidence_archived") is not True
+    ):
+        raise SystemExit("Elephant delivery geometry, codec, or capture contract is invalid")
+
+    poster_scenes = [
+        "agent-brief",
+        "local-checks",
+        "import-preview",
+        "human-approval",
+        "import-run",
+        "dataset",
+        "encounters",
+        "files",
+        "file-details",
+    ]
+    expected_files = [
+        f"elephant-{index:02d}-{scene}-poster.webp"
+        for index, scene in enumerate(poster_scenes, start=1)
+    ] + ["elephant-overview.webm", "elephant-overview.mp4"]
+    expected_paths = [f"assets/elephant/{name}" for name in expected_files]
+    expected_ids = [
+        f"elephant-{scene}-poster" for scene in poster_scenes
+    ] + ["elephant-overview-webm", "elephant-overview-mp4"]
+    expected_asset_locks = [
+        (
+            "elephant-agent-brief-poster",
+            43964,
+            "bfd4a972b3c6c6ff7345372abbf4743c8fb2c4cec31867e01c7469f7b7fbf3ac",
+        ),
+        (
+            "elephant-local-checks-poster",
+            53120,
+            "65d8cf86a4d1b1bd48c0cdf76af47380565c23c01ecbe94edc37f9e35fe37739",
+        ),
+        (
+            "elephant-import-preview-poster",
+            41976,
+            "430954f02f75876d7a54b94e0df231c44b033554692a44301d94bc64e0bc9692",
+        ),
+        (
+            "elephant-human-approval-poster",
+            42648,
+            "358d6dfb9262fd0ab978a79383c04323d168c6b4e05b905458219bdad6d9a69e",
+        ),
+        (
+            "elephant-import-run-poster",
+            59932,
+            "8e41632fe3aef0a6da6b7d61453f19a619d965cc3ef270b4d3beb01d5dff60c1",
+        ),
+        (
+            "elephant-dataset-poster",
+            36408,
+            "a66bc207b47ea52f9d7718cb010dea47c2914d8178865f3ad4834502a8ee54fc",
+        ),
+        (
+            "elephant-encounters-poster",
+            56720,
+            "721ccc878ae7915ba6987b63ccc4bab79f231708109782f3caebbf91af39278d",
+        ),
+        (
+            "elephant-files-poster",
+            48426,
+            "6bfc3de697415159d66cd3ae78d0981cba87203009ee7ac97a1d2ad146b2b14b",
+        ),
+        (
+            "elephant-file-details-poster",
+            38594,
+            "c640b730cb90427405c3690b415cdb1b7f3dbd0280a66b97ca39aee19f297c6a",
+        ),
+        (
+            "elephant-overview-webm",
+            844558,
+            "51543dfc0638d249b5a90edc3a5dad3495404860bc742b4b58b7ea5012a52188",
+        ),
+        (
+            "elephant-overview-mp4",
+            538152,
+            "755565876e063e3f65507f98c4031cbd2fc754d8d2f14344e16df4219fb7c10b",
+        ),
+    ]
+    expected_alts = [
+        "Illustrated model-neutral agent exchange proposing a three-record Elephant import and stopping before any upload.",
+        "OASIS terminal showing local validation and a hashed scan of three synthetic Candle Making notes.",
+        "OASIS data import dry run previewing one group, three coded records, and three text-note files with zero API calls.",
+        "Terminal approval gate binding the local Elephant target and three-record import to reviewed manifest and file-set fingerprints.",
+        "Completed OASIS import into a local Elephant service showing the reviewed synthetic records and zero failed rows.",
+        "OASIS TUI Elephant Groups view with the synthetic OASIS Candle Demo group selected.",
+        "OASIS TUI Elephant Encounters view listing the three coded Candle Making demo encounters.",
+        "OASIS TUI Elephant Files view showing the selected demo encounter and its text-note file count.",
+        "Read-only OASIS Elephant JSON output showing coded learners, encounter and file IDs, file types, byte counts, and stored fingerprints.",
+        "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
+        "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
+    ]
+    assets = manifest.get("assets", [])
+    if (
+        not isinstance(assets, list)
+        or len(assets) != 11
+        or [row.get("order") for row in assets if isinstance(row, dict)]
+        != list(range(1, 12))
+        or [row.get("id") for row in assets if isinstance(row, dict)] != expected_ids
+        or [
+            (row.get("id"), row.get("bytes"), row.get("sha256"))
+            for row in assets
+            if isinstance(row, dict)
+        ]
+        != expected_asset_locks
+        or [row.get("path") for row in assets if isinstance(row, dict)]
+        != expected_paths
+        or [row.get("alt") for row in assets if isinstance(row, dict)]
+        != expected_alts
+    ):
+        raise SystemExit("Elephant media asset inventory is incomplete or out of order")
+
+    expected_asset_keys = {
+        "order",
+        "id",
+        "scene",
+        "role",
+        "path",
+        "alt",
+        "format",
+        "bytes",
+        "sha256",
+        "width",
+        "height",
+        "duration_seconds",
+        "container",
+        "video_codec",
+        "pixel_format",
+        "audio_streams",
+    }
+    total_bytes = 0
+    for index, row in enumerate(assets):
+        if not isinstance(row, dict):
+            raise SystemExit("Elephant media asset row is invalid")
+        path_value = row.get("path", "")
+        path = OUTPUT / path_value
+        if not path.is_file():
+            raise SystemExit(f"Elephant media asset is missing: {path_value}")
+        if (
+            set(row) != expected_asset_keys
+            or row.get("bytes") != path.stat().st_size
+            or row.get("sha256") != digest(path)
+            or row.get("audio_streams") != 0
+            or not isinstance(row.get("sha256"), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", row["sha256"])
+        ):
+            raise SystemExit(f"Elephant media asset metadata mismatch: {path_value}")
+        if index < 9:
+            if (
+                row.get("scene") != poster_scenes[index]
+                or row.get("role") != "poster"
+                or row.get("format") != "webp"
+                or row.get("width") != 1200
+                or row.get("height") != 720
+                or row.get("duration_seconds") is not None
+                or row.get("container") != "webp_pipe"
+                or row.get("video_codec") != "webp"
+                or row.get("pixel_format") not in {"yuv420p", "yuva420p"}
+                or path.stat().st_size > delivery["poster_max_bytes"]
+            ):
+                raise SystemExit(f"Elephant poster contract is invalid: {path_value}")
+            if parse_candle_static_webp(path) != ["VP8 "]:
+                raise SystemExit(f"Elephant poster codec is invalid: {path_value}")
+        else:
+            media_format = expected_files[index].rsplit(".", 1)[1]
+            row_duration = row.get("duration_seconds")
+            codec = codecs[media_format]
+            if (
+                row.get("scene") != "overview"
+                or row.get("role") != "motion"
+                or row.get("format") != media_format
+                or row.get("width") != 960
+                or row.get("height") != 576
+                or not isinstance(row_duration, (int, float))
+                or abs(row_duration - duration) > 0.1
+                or row.get("container") != codec["container"]
+                or row.get("video_codec") != codec["video_codec"]
+                or row.get("pixel_format") != codec["pixel_format"]
+                or path.stat().st_size > delivery[f"{media_format}_max_bytes"]
+            ):
+                raise SystemExit(f"Elephant motion-media contract is invalid: {path_value}")
+        total_bytes += path.stat().st_size
+    if (
+        delivery.get("total_bytes") != total_bytes
+        or total_bytes > delivery.get("total_max_bytes", 0)
+    ):
+        raise SystemExit("Elephant delivery byte total does not match its assets")
+    return manifest
+
+
 def check_checksums() -> None:
     expected = {
         path.relative_to(OUTPUT).as_posix()
@@ -1044,12 +1707,16 @@ def check_checksums() -> None:
             raise SystemExit(f"checksum mismatch: {name}")
 
 
-def check_contract(candle_manifest: dict[str, object]) -> None:
+def check_contract(
+    candle_manifest: dict[str, object],
+    elephant_manifest: dict[str, object],
+) -> None:
     for page_name in (
         "index.html",
         "explore.html",
         "tui.html",
         "candle.html",
+        "elephant.html",
         "maples.html",
     ):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
@@ -1061,6 +1728,10 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
             raise SystemExit(f"project stylesheet is not fingerprinted in {page_name}")
         if stylesheet_links[0] != digest(OUTPUT / "styles.css")[:12]:
             raise SystemExit(f"project stylesheet fingerprint is stale in {page_name}")
+        if 'href="./elephant.html"' not in page or "Elephant ingestion" not in page:
+            raise SystemExit(
+                f"Elephant ingestion is missing from the project navigation in {page_name}"
+            )
 
     home = (OUTPUT / "index.html").read_text(encoding="utf-8")
     for marker in (
@@ -1088,6 +1759,11 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         "There is no real learner data here",
         "the scores are fixture values",
         "viewing the tour makes no service or model calls",
+        "Load and check data in Elephant",
+        'href="./elephant.html"',
+        'src="assets/elephant/elephant-06-dataset-poster.webp"',
+        "pause for explicit approval",
+        "stored file types, byte counts, and fingerprints",
         "Browse all guided tours",
     ):
         if marker not in home:
@@ -1096,8 +1772,8 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         "tour-teaser" in class_names.split()
         for class_names in re.findall(r'class="([^"]*)"', home)
     )
-    if teaser_count != 3:
-        raise SystemExit("homepage must present exactly three recorded-tour teasers")
+    if teaser_count != 4:
+        raise SystemExit("homepage must present exactly four recorded-tour teasers")
 
     homepage_runtime_links = re.findall(
         r'src="homepage-terminal\.js\?v=([0-9a-f]{12})"',
@@ -1171,7 +1847,7 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
     if home.count('id="homepage-candle-terminal"') != 1:
         raise SystemExit("homepage terminal control target must be unique")
 
-    for page_name in ("tui.html", "candle.html", "maples.html"):
+    for page_name in ("tui.html", "candle.html", "elephant.html", "maples.html"):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
         runtime_links = re.findall(
             r'src="product-tour\.js\?v=([0-9a-f]{12})"',
@@ -1336,6 +2012,149 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
                 f"Candle fixture copy crosses its truth boundary: {forbidden_claim}"
             )
 
+    elephant = (OUTPUT / "elephant.html").read_text(encoding="utf-8")
+    for marker in (
+        'data-tour-id="elephant-ingestion"',
+        'id="elephant-tab-agent-brief"',
+        'id="elephant-tab-import-run"',
+        'id="elephant-tab-dataset"',
+        'id="elephant-tab-file-details"',
+        'src="product-tour.js?v=',
+        "Recorded locally · made-up Candle records · checked and loaded with OASIS",
+        "model-neutral illustration",
+        "not a transcript from Claude, Codex, Grok",
+        "Visitors see an offline replay",
+        "contacts neither Elephant nor a model provider",
+        "The approval gate shown here is a capture-harness policy",
+        "not a hidden prompt built into",
+        "the import runner reads a scoped write key from a private environment file",
+        "the key never appears in a command or on this page",
+        "use a separate read-only key",
+        "That JSON is not transformed into the import CSV",
+        "not make the whole command atomic or resumable",
+        "does not write a durable per-row resume receipt",
+        "changed inputs must go back through preview and approval",
+        "Minhan Park and Licheng Yi’s public Wayfinder rubric-authoring walkthrough",
+        "none of the interns’ data, prompts, or outputs were reused",
+        "The interface calls this a group",
+        "groups files by encounter and reports a count",
+        "The current read-back did not return an original filename",
+        "the tour does not claim to verify one",
+        'id="elephant-transcript"',
+        'href="#elephant-transcript"',
+        'href="assets/elephant/manifest.json"',
+        'href="./explore.html"',
+        'href="./tui.html"',
+        'href="./candle.html"',
+        'href="./maples.html"',
+        'href="./index.html"',
+        "Equivalent commands for reproducing the workflow",
+        "capture wrapper requested JSON output",
+        "equivalent, operator-friendly command forms",
+        "final screen used a small private read-back helper",
+        "An equivalent direct CLI form is",
+        "Complete recorded transcript",
+    ):
+        if marker not in elephant:
+            raise SystemExit(f"Elephant ingestion tour marker missing: {marker}")
+    if "--idempotency-key" in elephant:
+        raise SystemExit("Elephant public capture must not recommend the unsafe import idempotency key")
+    if "og_file_name" in elephant:
+        raise SystemExit("Elephant public read-back must not imply that an original filename was returned")
+    for command in (
+        "oasis data validate candle-data",
+        (
+            "oasis data scan candle-data --hash --summary-only "
+            "--fail-on-clarifications --output evidence/scan.json"
+        ),
+        "oasis data import manifest.csv --data-dir candle-data --dry-run",
+        "oasis data import manifest.csv --data-dir candle-data",
+        "oasis interactive",
+    ):
+        rendered_command = command.replace('"', "&quot;")
+        if command not in elephant and rendered_command not in elephant:
+            raise SystemExit(f"Elephant recorded command contract changed: {command}")
+    elephant_steps = [
+        "agent-brief",
+        "local-checks",
+        "import-preview",
+        "human-approval",
+        "import-run",
+        "dataset",
+        "encounters",
+        "files",
+        "file-details",
+    ]
+    for step_id in elephant_steps:
+        no_js_anchor = re.compile(
+            rf'<noscript>\s*<span\s+id="{re.escape(step_id)}"\s+'
+            r'class="tour-transcript-anchor"\s+aria-hidden="true"\s*></span>\s*</noscript>'
+        )
+        if len(no_js_anchor.findall(elephant)) != 1:
+            raise SystemExit(
+                f"Elephant no-JS transcript anchor is missing or duplicated: {step_id}"
+            )
+        if elephant.count(f'id="{step_id}"') != 1:
+            raise SystemExit(
+                f"Elephant shared step hash has an ambiguous HTML target: {step_id}"
+            )
+        if f'href="#{step_id}"' not in elephant:
+            raise SystemExit(f"Elephant no-JS step link is missing: {step_id}")
+    elephant_payload = check_tour_structure("elephant.html", elephant_steps)
+    elephant_assets = elephant_manifest["assets"]
+    elephant_posters = {
+        row["scene"]: row
+        for row in elephant_assets
+        if row.get("role") == "poster"
+    }
+    elephant_motion = {
+        row["format"]: row
+        for row in elephant_assets
+        if row.get("role") == "motion"
+    }
+    for step in elephant_payload["steps"]:
+        poster = step.get("poster")
+        poster_asset = elephant_posters.get(step.get("id"))
+        if (
+            not isinstance(poster, dict)
+            or not isinstance(poster_asset, dict)
+            or poster.get("src") != poster_asset.get("path")
+            or poster.get("srcset") != poster_asset.get("path")
+            or poster.get("type") != "image/webp"
+            or poster.get("width") != poster_asset.get("width")
+            or poster.get("height") != poster_asset.get("height")
+            or poster.get("alt") != poster_asset.get("alt")
+        ):
+            raise SystemExit(
+                f"Elephant tour poster contract is invalid: {step.get('id')}"
+            )
+        media = step.get("media")
+        if step.get("id") == "import-run":
+            if (
+                not isinstance(media, dict)
+                or media.get("webm") != elephant_motion.get("webm", {}).get("path")
+                or media.get("mp4") != elephant_motion.get("mp4", {}).get("path")
+                or media.get("gif") is not None
+            ):
+                raise SystemExit("Elephant overview media contract is invalid")
+        elif media is not None:
+            raise SystemExit(
+                f"unexpected Elephant motion media on step: {step.get('id')}"
+            )
+    for forbidden_claim in (
+        "live agent transcript",
+        "built-in approval prompt",
+        "atomic import",
+        "resumable import",
+        "scan JSON import manifest",
+        "TUI dataset object",
+        "real student data",
+    ):
+        if forbidden_claim in elephant:
+            raise SystemExit(
+                f"Elephant tour copy crosses its truth boundary: {forbidden_claim}"
+            )
+
     maples = (OUTPUT / "maples.html").read_text(encoding="utf-8")
     for marker in (
         'data-tour-id="maples"',
@@ -1404,6 +2223,7 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         "Choose a journey",
         "Open the CLI &amp; TUI tour",
         "Open the Candle CLI &amp; MCP tour",
+        "Open the Elephant ingestion tour",
         "Open the MAPLES tour",
         "Available now · recorded",
         "Available now · recorded demo",
@@ -1512,17 +2332,19 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
         demo.get("recorded")
         and demo.get("live_service") is False
         and demo.get("path") == "explore.html"
-        and demo.get("tour_count") == 3
+        and demo.get("tour_count") == 4
         and demo.get("data_classification") == "declared per tour"
     ):
         raise SystemExit("publication demonstration scope is not explicit")
-    if len(publication.get("demo_media", [])) != 27 + len(candle_asset_rows):
+    if len(publication.get("demo_media", [])) != (
+        27 + len(candle_asset_rows) + len(elephant_assets)
+    ):
         raise SystemExit("publication media inventory is incomplete")
     capture_manifests = publication.get("capture_manifests", [])
     if (
-        len(capture_manifests) != 3
+        len(capture_manifests) != 4
         or {item.get("tour_id") for item in capture_manifests}
-        != {"cli-tui", "candle-cli-mcp", "maples"}
+        != {"cli-tui", "candle-cli-mcp", "elephant-ingestion", "maples"}
     ):
         raise SystemExit("publication capture-manifest inventory is incomplete")
     if publication.get("tour_overview") != "explore.html":
@@ -1531,7 +2353,12 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
     tours = {item.get("id"): item for item in tour_rows}
     if len(tours) != len(tour_rows):
         raise SystemExit("publication tour catalog contains duplicate ids")
-    if set(tours) != {"cli-tui", "candle-cli-mcp", "maples"}:
+    if set(tours) != {
+        "cli-tui",
+        "candle-cli-mcp",
+        "elephant-ingestion",
+        "maples",
+    }:
         raise SystemExit("publication tour catalog is incomplete")
     if not tours["cli-tui"].get("recorded") or tours["cli-tui"].get("path") != "tui.html":
         raise SystemExit("publication CLI/TUI tour record is invalid")
@@ -1618,6 +2445,59 @@ def check_contract(candle_manifest: dict[str, object]) -> None:
             raise SystemExit(
                 f"publication Candle media mismatch: {row.get('path')}"
             )
+    elephant_tour = tours["elephant-ingestion"]
+    elephant_scenario = elephant_manifest["scenario"]
+    elephant_application = elephant_manifest["application"]
+    elephant_execution = elephant_manifest["execution_boundary"]
+    elephant_agent = elephant_execution["agent_exchange"]
+    elephant_import = elephant_execution["import"]
+    if (
+        elephant_tour.get("recorded") is not True
+        or elephant_tour.get("status") != "recorded"
+        or elephant_tour.get("path") != "elephant.html"
+        or elephant_tour.get("live_service") is not False
+        or elephant_tour.get("synthetic_or_sanitized") is not True
+        or elephant_tour.get("data_classification") != "synthetic-coded"
+        or elephant_tour.get("real_person_data") is not False
+        or elephant_tour.get("capture_elephant_service") != "local-loopback"
+        or elephant_tour.get("visitor_network_calls") is not False
+        or elephant_tour.get("external_model_provider_calls")
+        != elephant_agent.get("external_model_provider_calls")
+        or elephant_tour.get("dry_run_api_calls")
+        != elephant_import.get("dry_run_api_calls")
+        or elephant_tour.get("agent_exchange_live")
+        != elephant_agent.get("live")
+        or elephant_tour.get("agent_exchange_illustrated")
+        != elephant_agent.get("illustrated")
+        or elephant_tour.get("approval_gate") != "capture-harness"
+        or elephant_tour.get("import_atomic") != elephant_import.get("atomic")
+        or elephant_tour.get("import_resumable")
+        != elephant_import.get("resumable")
+        or elephant_tour.get("records_imported")
+        != elephant_import.get("records_expected")
+        or elephant_tour.get("files_imported")
+        != elephant_import.get("files_expected")
+        or elephant_tour.get("failed_rows") != elephant_import.get("rows_failed")
+        or elephant_tour.get("capture_state") != "verified-local-elephant"
+        or elephant_tour.get("scenario_id") != elephant_scenario.get("id")
+        or elephant_tour.get("source_head_sha")
+        != elephant_application.get("source_revision")
+        or len(elephant_tour.get("media_assets", [])) != len(elephant_assets)
+    ):
+        raise SystemExit("publication Elephant recorded-tour contract is invalid")
+    publication_elephant_media = {
+        row.get("path"): row for row in elephant_tour.get("media_assets", [])
+    }
+    for row in elephant_assets:
+        published = publication_elephant_media.get(row["path"])
+        if (
+            not isinstance(published, dict)
+            or published.get("bytes") != row.get("bytes")
+            or published.get("sha256") != row.get("sha256")
+        ):
+            raise SystemExit(
+                f"publication Elephant media mismatch: {row.get('path')}"
+            )
     maples_tour = tours["maples"]
     if (
         maples_tour.get("recorded") is not True
@@ -1673,6 +2553,7 @@ def main() -> None:
         "explore.html",
         "tui.html",
         "candle.html",
+        "elephant.html",
         "maples.html",
     )
     missing_pages = [name for name in required_pages if not (OUTPUT / name).is_file()]
@@ -1682,8 +2563,9 @@ def main() -> None:
     check_media_manifest()
     check_maples_media_manifest()
     candle_manifest = check_candle_media_manifest()
+    elephant_manifest = check_elephant_media_manifest()
     check_checksums()
-    check_contract(candle_manifest)
+    check_contract(candle_manifest, elephant_manifest)
     print("OASIS project site checks: PASS")
 
 
