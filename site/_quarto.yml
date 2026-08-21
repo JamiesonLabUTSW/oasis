@@ -50,6 +50,10 @@ website:
     right:
       - text: Technical report
         href: paper/paper.html
+      - text: Jamieson Lab at UT Southwestern
+        href: https://labs.utsouthwestern.edu/jamieson-lab
+      - text: Andrew Jamieson faculty profile
+        href: https://profiles.utsouthwestern.edu/profile/170480/andrew-jamieson.html
 
 format:
   html:

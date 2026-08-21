@@ -61,6 +61,52 @@ class ReferenceParser(HTMLParser):
                 self.references.append(raw.split()[0])
 
 
+class FooterLinkParser(HTMLParser):
+    """Collect links from the rendered global page footer only."""
+
+    VOID_ELEMENTS = {
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
+    }
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.footer_count = 0
+        self.depth = 0
+        self.links: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {key: value or "" for key, value in attrs}
+        starts_footer = tag == "footer" and "footer" in values.get("class", "").split()
+        inside = self.depth > 0 or starts_footer
+        if starts_footer:
+            self.footer_count += 1
+            self.depth = 1
+        elif self.depth > 0 and tag not in self.VOID_ELEMENTS:
+            self.depth += 1
+        if inside and tag == "a" and values.get("href"):
+            self.links.append(values["href"])
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+    def handle_endtag(self, _tag: str) -> None:
+        if self.depth > 0:
+            self.depth -= 1
+
+
 class TourStructureParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -1807,6 +1853,23 @@ def check_contract(
     ):
         raise SystemExit("product-tour preview frame does not preserve its 5:3 layout")
 
+    for footer_style_contract in (
+        r"\.nav-footer-right \.footer-items\s*\{[^}]*flex-wrap:\s*wrap;[^}]*justify-content:\s*flex-end;[^}]*gap:\s*0\.75rem 1rem;",
+        r"\.nav-footer \.nav-link:focus-visible\s*\{[^}]*outline:\s*3px solid var\(--oasis-focus\);[^}]*outline-offset:\s*3px;",
+        r"@media \(max-width:\s*560px\)[\s\S]*?\.nav-footer,[\s\S]*?\.nav-footer-left,[\s\S]*?\.nav-footer-right\s*\{[^}]*justify-content:\s*center;[^}]*text-align:\s*center;",
+        r"@media \(max-width:\s*560px\)[\s\S]*?\.nav-footer-right \.footer-items\s*\{[^}]*justify-content:\s*center;",
+    ):
+        if not re.search(footer_style_contract, styles, flags=re.DOTALL):
+            raise SystemExit(
+                f"global footer responsive or focus style is missing: {footer_style_contract}"
+            )
+
+    footer_links = (
+        "./paper/paper.html",
+        "https://labs.utsouthwestern.edu/jamieson-lab",
+        "https://profiles.utsouthwestern.edu/profile/170480/andrew-jamieson.html",
+    )
+
     for page_name in (
         "index.html",
         "explore.html",
@@ -1817,6 +1880,17 @@ def check_contract(
         "rubric.html",
     ):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
+        footer = FooterLinkParser()
+        footer.feed(page)
+        if footer.footer_count != 1:
+            raise SystemExit(f"expected one global footer in {page_name}")
+        for footer_link in footer_links:
+            link_count = footer.links.count(footer_link)
+            if link_count != 1:
+                raise SystemExit(
+                    f"expected footer link exactly once in {page_name}: "
+                    f"{footer_link} (found {link_count})"
+                )
         stylesheet_links = re.findall(
             r'href="styles\.css\?v=([0-9a-f]{12})"',
             page,
