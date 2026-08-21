@@ -96,6 +96,18 @@ body a:focus {
   width: auto;
 }
 
+.nav-footer-right .footer-items {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem 1rem;
+}
+
+.nav-footer .nav-link:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid var(--oasis-focus);
+  outline-offset: 3px;
+}
+
 .hero-panel {
   margin: 0 0 2rem;
   padding: 2.2rem 1.5rem 1.8rem;
@@ -1995,6 +2007,17 @@ table {
 }
 
 @media (max-width: 560px) {
+  .nav-footer,
+  .nav-footer-left,
+  .nav-footer-right {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav-footer-right .footer-items {
+    justify-content: center;
+  }
+
   .hero-panel {
     padding: 1.5rem 0.9rem 1.25rem;
     border-radius: 18px;
