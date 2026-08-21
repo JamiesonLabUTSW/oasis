@@ -2250,9 +2250,22 @@ def check_contract(
         "Open the MAPLES tour",
         "Available now · recorded",
         "Available now · recorded demo",
+        "Watch the team demonstrate OASIS",
+        "separate from the privacy-reviewed recordings on this site",
+        'href="https://www.youtube.com/watch?v=tHvS2kqRc2Q"',
+        'href="https://www.youtube.com/watch?v=MKwseFKuFLs"',
+        'href="https://www.youtube.com/watch?v=GVAy3FPe8nI"',
+        'href="https://www.youtube.com/watch?v=tZwhtWPLz1s"',
+        'href="https://www.youtube.com/@JamiesonLabUTSW"',
+        'href="https://ut-real-ai-project-maples.com/maples-demo-rubric-to-review/"',
+        'href="https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo/"',
+        'href="https://ut-real-ai-project-maples.com/wayfinder-grading-run-demo/"',
+        'href="https://ut-real-ai-project-maples.com/sail-2026-maples-poster-walkthrough/"',
     ):
         if marker not in explore:
             raise SystemExit(f"Explore overview marker missing: {marker}")
+    if "youtube.com/embed" in explore or "youtube-nocookie.com/embed" in explore:
+        raise SystemExit("Explore must link to YouTube without loading an embedded player")
 
     styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
     for motion_style_contract in (

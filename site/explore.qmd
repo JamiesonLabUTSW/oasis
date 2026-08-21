@@ -118,6 +118,70 @@ See how to run repeatable batch experiments, compare results side by side, and k
 :::
 :::
 
+## Watch the team demonstrate OASIS
+
+These official public videos add narration and context to the recorded tours above. They are separate from the privacy-reviewed recordings on this site. This page does not embed or load a YouTube player; YouTube opens when you follow a video link.
+
+::: {.insight-grid}
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Official video · YouTube
+:::
+
+### MAPLES: rubric to faculty review
+
+Ameer Hamza Shakur walks from rubric upload and encounter grouping through AI-assisted grading, cited evidence, faculty decisions, and export.
+
+[Watch the MAPLES walkthrough (15:45 on YouTube)](https://www.youtube.com/watch?v=tHvS2kqRc2Q){.tour-cta}
+
+[Read the MAPLES companion walkthrough](https://ut-real-ai-project-maples.com/maples-demo-rubric-to-review/)
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Official video · YouTube
+:::
+
+### Wayfinder: create and refine a rubric
+
+Minhan Park and Licheng Yi create, inspect, enhance, and transform a rubric in MAPLES while keeping every proposed change under human control.
+
+[Watch the rubric-authoring demo (4:07 on YouTube)](https://www.youtube.com/watch?v=MKwseFKuFLs){.tour-cta}
+
+[Read the rubric-authoring companion walkthrough](https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo/)
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Official video · YouTube
+:::
+
+### Wayfinder: load encounters and run grading
+
+Minhan Park and Licheng Yi use a synthetic encounter to demonstrate upload, grouping, run launch, status checks, and a results summary from Wayfinder chat.
+
+[Watch the encounter-to-grading demo (3:11 on YouTube)](https://www.youtube.com/watch?v=GVAy3FPe8nI){.tour-cta}
+
+[Read the encounter-to-grading companion walkthrough](https://ut-real-ai-project-maples.com/wayfinder-grading-run-demo/)
+:::
+
+::: {.insight-card}
+::: {.explore-status data-status="available"}
+Official video · YouTube
+:::
+
+### SAIL 2026: the larger platform story
+
+Tra Ngo presents the MAPLES multimodal OSCE grading poster, connecting structured data, rubric-driven assessment, cited evidence, and human oversight.
+
+[Watch the SAIL 2026 overview (6:37 on YouTube)](https://www.youtube.com/watch?v=tZwhtWPLz1s){.tour-cta}
+
+[Read the poster walkthrough](https://ut-real-ai-project-maples.com/sail-2026-maples-poster-walkthrough/)
+:::
+:::
+
+[Browse all public videos from the Jamieson Lab on YouTube](https://www.youtube.com/@JamiesonLabUTSW)
+
 ## How the pieces fit together
 
 ::: {.diagram-note}
