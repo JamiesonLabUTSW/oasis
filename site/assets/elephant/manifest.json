@@ -119,7 +119,7 @@
     {
       "alt": "OASIS TUI Elephant Groups view with the synthetic OASIS Candle Demo group selected.",
       "audio_streams": 0,
-      "bytes": 36408,
+      "bytes": 31832,
       "container": "webp_pipe",
       "duration_seconds": null,
       "format": "webp",
@@ -130,14 +130,14 @@
       "pixel_format": "yuv420p",
       "role": "poster",
       "scene": "dataset",
-      "sha256": "a66bc207b47ea52f9d7718cb010dea47c2914d8178865f3ad4834502a8ee54fc",
+      "sha256": "40d6bae541bb06e72bf5a3461d18ca28284f412f6ebc4b8f05a497362e36cde0",
       "video_codec": "webp",
       "width": 1200
     },
     {
       "alt": "OASIS TUI Elephant Encounters view listing the three coded Candle Making demo encounters.",
       "audio_streams": 0,
-      "bytes": 56720,
+      "bytes": 54876,
       "container": "webp_pipe",
       "duration_seconds": null,
       "format": "webp",
@@ -148,14 +148,14 @@
       "pixel_format": "yuv420p",
       "role": "poster",
       "scene": "encounters",
-      "sha256": "721ccc878ae7915ba6987b63ccc4bab79f231708109782f3caebbf91af39278d",
+      "sha256": "19bd8ba365e3638de5e60eb6ddc55bc9f67a2611aea9827c78d40e3a1e62394c",
       "video_codec": "webp",
       "width": 1200
     },
     {
       "alt": "OASIS TUI Elephant Files view showing the selected demo encounter and its text-note file count.",
       "audio_streams": 0,
-      "bytes": 48426,
+      "bytes": 43846,
       "container": "webp_pipe",
       "duration_seconds": null,
       "format": "webp",
@@ -166,7 +166,7 @@
       "pixel_format": "yuv420p",
       "role": "poster",
       "scene": "files",
-      "sha256": "6bfc3de697415159d66cd3ae78d0981cba87203009ee7ac97a1d2ad146b2b14b",
+      "sha256": "77638ef597cf3071999cddd35694ed7362b377258fe4e760196df25e638dead5",
       "video_codec": "webp",
       "width": 1200
     },
@@ -191,7 +191,7 @@
     {
       "alt": "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
       "audio_streams": 0,
-      "bytes": 844558,
+      "bytes": 868134,
       "container": "matroska,webm",
       "duration_seconds": 67.166,
       "format": "webm",
@@ -202,14 +202,14 @@
       "pixel_format": "yuv420p",
       "role": "motion",
       "scene": "overview",
-      "sha256": "51543dfc0638d249b5a90edc3a5dad3495404860bc742b4b58b7ea5012a52188",
+      "sha256": "d74d5004e05e26cd9977d74ffcc703cd4ad3e9d41ab30d2c7b58f35b897e3bb6",
       "video_codec": "vp9",
       "width": 960
     },
     {
       "alt": "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
       "audio_streams": 0,
-      "bytes": 538152,
+      "bytes": 498160,
       "container": "mov,mp4,m4a,3gp,3g2,mj2",
       "duration_seconds": 67.167,
       "format": "mp4",
@@ -220,7 +220,7 @@
       "pixel_format": "yuv420p",
       "role": "motion",
       "scene": "overview",
-      "sha256": "755565876e063e3f65507f98c4031cbd2fc754d8d2f14344e16df4219fb7c10b",
+      "sha256": "f6cd30b6d5be18839522d8b93c9538e4876fc5983cd7fe867cdbbae9fb18143f",
       "video_codec": "h264",
       "width": 960
     }
@@ -247,7 +247,7 @@
       "tape": {
         "name": "elephant-overview.tape",
         "private_evidence_archived": true,
-        "sha256": "78c14b85cd2f1b8dae6b126fc53472c6c86e34fc59c6d3451aa1e8ff21091550"
+        "sha256": "fedb9e34bb4fcb0d29596ef986ec7957571bcccef3b3fc879ed1132ef47f3553"
       }
     },
     "capture_tool": "VHS",
@@ -272,7 +272,7 @@
     "poster_height": 720,
     "poster_max_bytes": 153600,
     "poster_width": 1200,
-    "total_bytes": 1804498,
+    "total_bytes": 1777082,
     "total_max_bytes": 6291456,
     "webm_max_bytes": 2097152
   },
@@ -438,7 +438,7 @@
       "sha256": "9fd3f79b756a4f571946a564f23f0c7204c79b4b1db6a2a0728b8b4b57df2ecd"
     }
   },
-  "generated_at": "2026-08-20T23:18:29Z",
+  "generated_at": "2026-08-21T01:34:03Z",
   "privacy_review": {
     "all_passed": true,
     "allowed_emails": [

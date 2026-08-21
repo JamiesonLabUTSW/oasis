@@ -1028,7 +1028,7 @@ def check_elephant_media_manifest() -> dict[str, object]:
             "Elephant capture is not ready: verified assets/elephant/manifest.json is missing"
         )
     expected_manifest_sha256 = (
-        "2905676b62e5930d2a73a4e612a6673cc36d82aaa418a1edee39681c9041d249"
+        "4ca212bb6290593603459f345c3344d398963a90e9c81dc37ed3d80e5cee6504"
     )
     if digest(manifest_path) != expected_manifest_sha256:
         raise SystemExit("Elephant capture manifest does not match the sealed review")
@@ -1055,7 +1055,7 @@ def check_elephant_media_manifest() -> dict[str, object]:
         raise SystemExit("Elephant media manifest schema is invalid")
     generated_at = manifest.get("generated_at")
     if not isinstance(generated_at, str) or not re.fullmatch(
-        r"2026-08-20T\d{2}:\d{2}:\d{2}Z", generated_at
+        r"2026-08-21T\d{2}:\d{2}:\d{2}Z", generated_at
     ):
         raise SystemExit("Elephant media manifest timestamp is invalid")
 
@@ -1544,18 +1544,18 @@ def check_elephant_media_manifest() -> dict[str, object]:
         ),
         (
             "elephant-dataset-poster",
-            36408,
-            "a66bc207b47ea52f9d7718cb010dea47c2914d8178865f3ad4834502a8ee54fc",
+            31832,
+            "40d6bae541bb06e72bf5a3461d18ca28284f412f6ebc4b8f05a497362e36cde0",
         ),
         (
             "elephant-encounters-poster",
-            56720,
-            "721ccc878ae7915ba6987b63ccc4bab79f231708109782f3caebbf91af39278d",
+            54876,
+            "19bd8ba365e3638de5e60eb6ddc55bc9f67a2611aea9827c78d40e3a1e62394c",
         ),
         (
             "elephant-files-poster",
-            48426,
-            "6bfc3de697415159d66cd3ae78d0981cba87203009ee7ac97a1d2ad146b2b14b",
+            43846,
+            "77638ef597cf3071999cddd35694ed7362b377258fe4e760196df25e638dead5",
         ),
         (
             "elephant-file-details-poster",
@@ -1564,13 +1564,13 @@ def check_elephant_media_manifest() -> dict[str, object]:
         ),
         (
             "elephant-overview-webm",
-            844558,
-            "51543dfc0638d249b5a90edc3a5dad3495404860bc742b4b58b7ea5012a52188",
+            868134,
+            "d74d5004e05e26cd9977d74ffcc703cd4ad3e9d41ab30d2c7b58f35b897e3bb6",
         ),
         (
             "elephant-overview-mp4",
-            538152,
-            "755565876e063e3f65507f98c4031cbd2fc754d8d2f14344e16df4219fb7c10b",
+            498160,
+            "f6cd30b6d5be18839522d8b93c9538e4876fc5983cd7fe867cdbbae9fb18143f",
         ),
     ]
     expected_alts = [
