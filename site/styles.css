@@ -492,7 +492,8 @@ body a:focus {
 
 .terminal-window {
   position: relative;
-  min-height: 320px;
+  min-height: 0;
+  aspect-ratio: 5 / 3;
   overflow: hidden;
   border: 1px solid rgba(180, 212, 219, 0.2);
   border-radius: 15px;
@@ -510,7 +511,7 @@ body a:focus {
   aspect-ratio: 5 / 3;
   object-fit: cover;
   object-position: top left;
-  background: #071014;
+  background: transparent;
 }
 
 .terminal-fallback {
@@ -1005,7 +1006,7 @@ table {
   }
 
   .terminal-window {
-    min-height: 190px;
+    min-height: 0;
   }
 
   .tour-controls {

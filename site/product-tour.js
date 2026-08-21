@@ -225,6 +225,45 @@
 
   let currentId = steps[0].id;
   let dialogTrigger = null;
+  let posterRequestId = 0;
+  let activePosterReveal = null;
+  const posterWarmups = new Map();
+
+  function prefersReducedData() {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection && connection.saveData) return true;
+    if (connection && /^(?:slow-)?2g$/.test(connection.effectiveType || "")) return true;
+    return typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-data: reduce)").matches;
+  }
+
+  function warmPoster(step) {
+    if (!step || !step.poster || prefersReducedData() || typeof window.Image !== "function") return;
+    const poster = step.poster;
+    const key = poster.srcset || poster.src;
+    if (posterWarmups.has(key)) return;
+
+    const image = new Image();
+    image.decoding = "async";
+    image.loading = "eager";
+    image.fetchPriority = "low";
+    if (poster.srcset) image.srcset = poster.srcset;
+    image.src = poster.src;
+    const ready = typeof image.decode === "function"
+      ? image.decode().catch(() => {})
+      : Promise.resolve();
+    posterWarmups.set(key, { image, ready });
+  }
+
+  function schedulePosterWarmup(step) {
+    if (!step || !step.poster || prefersReducedData()) return;
+    const run = () => warmPoster(step);
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(run, { timeout: 1200 });
+    } else {
+      window.setTimeout(run, 250);
+    }
+  }
 
   function stepHash(step) {
     return `#${encodeURIComponent(step.id)}`;
@@ -248,6 +287,7 @@
 
   function showPlaceholder(step, statusOverride = "") {
     setPlaceholder(step, statusOverride);
+    if (stage) stage.setAttribute("aria-busy", "false");
     if (posterFrame) posterFrame.hidden = true;
     else if (posterImage) posterImage.hidden = true;
     if (placeholder) {
@@ -268,34 +308,80 @@
       return;
     }
 
+    const requestId = ++posterRequestId;
+    const expectedSrcset = poster.srcset || "";
+    const existingSrcset = posterSource ? (posterSource.getAttribute("srcset") || "") : "";
+    const posterAlreadyAuthored = posterImage.getAttribute("src") === poster.src &&
+      existingSrcset === expectedSrcset;
+
     setPlaceholder(step, "Loading recorded preview");
-    if (posterFrame) posterFrame.hidden = true;
-    posterImage.hidden = true;
+    if (stage) stage.setAttribute("aria-busy", "true");
+    if (!posterAlreadyAuthored) {
+      if (posterFrame) posterFrame.hidden = true;
+      posterImage.hidden = true;
+    }
     if (placeholder) {
       placeholder.hidden = false;
       placeholder.removeAttribute("aria-hidden");
     }
     posterImage.dataset.tourStep = step.id;
+    posterImage.dataset.tourRequest = String(requestId);
     posterImage.alt = poster.alt;
+    posterImage.loading = "eager";
+    posterImage.fetchPriority = "high";
     if (poster.width) posterImage.width = poster.width;
     else posterImage.removeAttribute("width");
     if (poster.height) posterImage.height = poster.height;
     else posterImage.removeAttribute("height");
 
-    if (posterSource) {
-      if (poster.srcset) posterSource.srcset = poster.srcset;
-      else posterSource.removeAttribute("srcset");
-      if (poster.type) posterSource.type = poster.type;
-    }
-    posterImage.src = poster.src;
-    if (posterImage.complete && posterImage.naturalWidth > 0) {
+    if (!posterAlreadyAuthored) {
+      if (posterSource) {
+        if (poster.srcset) posterSource.srcset = poster.srcset;
+        else posterSource.removeAttribute("srcset");
+        if (poster.type) posterSource.type = poster.type;
+      }
+      posterImage.src = poster.src;
+    } else {
       if (posterFrame) posterFrame.hidden = false;
       posterImage.hidden = false;
+    }
+
+    let revealed = false;
+    let decodePending = false;
+    const reveal = () => {
+      if (
+        currentId !== step.id ||
+        posterImage.dataset.tourStep !== step.id ||
+        posterImage.dataset.tourRequest !== String(requestId) ||
+        !posterImage.complete ||
+        posterImage.naturalWidth <= 0
+      ) return;
+      revealed = true;
+      if (posterFrame) posterFrame.hidden = false;
+      posterImage.hidden = false;
+      if (stage) stage.setAttribute("aria-busy", "false");
       if (placeholder) {
         placeholder.hidden = true;
         placeholder.setAttribute("aria-hidden", "true");
       }
-    }
+    };
+    const revealAfterDecode = () => {
+      if (revealed || decodePending) return;
+      if (typeof posterImage.decode !== "function") {
+        reveal();
+        return;
+      }
+      decodePending = true;
+      posterImage.decode().then(reveal).catch(() => {
+        if (posterImage.complete && posterImage.naturalWidth > 0) {
+          window.requestAnimationFrame(reveal);
+        }
+      }).finally(() => {
+        decodePending = false;
+      });
+    };
+    activePosterReveal = revealAfterDecode;
+    revealAfterDecode();
   }
 
   function setButtonBoundary(button, disabled) {
@@ -341,6 +427,7 @@
     if (title) title.textContent = step.title;
     if (summary) summary.textContent = step.summary;
     showPoster(step);
+    schedulePosterWarmup(steps[index + 1]);
 
     setButtonBoundary(previous, index === 0);
     setButtonBoundary(next, index === steps.length - 1);
@@ -371,6 +458,8 @@
   }
 
   tabs.forEach((tab) => {
+    tab.addEventListener("pointerenter", () => warmPoster(stepById.get(tab.dataset.step)));
+    tab.addEventListener("focus", () => warmPoster(stepById.get(tab.dataset.step)));
     tab.addEventListener("click", () => setStep(tab.dataset.step));
     tab.addEventListener("keydown", (event) => {
       const index = steps.findIndex((step) => step.id === tab.dataset.step);
@@ -400,16 +489,11 @@
 
   if (posterImage) {
     posterImage.addEventListener("load", () => {
-      if (posterImage.dataset.tourStep !== currentId) return;
-      posterImage.hidden = false;
-      if (posterFrame) posterFrame.hidden = false;
-      if (placeholder) {
-        placeholder.hidden = true;
-        placeholder.setAttribute("aria-hidden", "true");
-      }
+      if (typeof activePosterReveal === "function") activePosterReveal();
     });
     posterImage.addEventListener("error", () => {
       if (posterImage.dataset.tourStep !== currentId) return;
+      activePosterReveal = null;
       const step = stepById.get(currentId);
       if (step) showPlaceholder(step, "Preview unavailable");
     });
