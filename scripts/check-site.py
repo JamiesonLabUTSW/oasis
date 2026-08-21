@@ -1711,6 +1711,29 @@ def check_contract(
     candle_manifest: dict[str, object],
     elephant_manifest: dict[str, object],
 ) -> None:
+    tour_runtime = (OUTPUT / "product-tour.js").read_text(encoding="utf-8")
+    for marker in (
+        'posterImage.loading = "eager"',
+        'posterImage.fetchPriority = "high"',
+        'image.fetchPriority = "low"',
+        "schedulePosterWarmup(steps[index + 1])",
+        "connection.saveData",
+        'stage.setAttribute("aria-busy", "true")',
+        "activePosterReveal = revealAfterDecode",
+        'if (typeof activePosterReveal === "function") activePosterReveal();',
+        "posterImage.decode().then(reveal).catch(() =>",
+        "posterRequestId",
+    ):
+        if marker not in tour_runtime:
+            raise SystemExit(f"product-tour preview performance guard is missing: {marker}")
+    styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
+    if not re.search(
+        r"\.terminal-window\s*\{[^}]*min-height:\s*0;[^}]*aspect-ratio:\s*5\s*/\s*3;",
+        styles,
+        flags=re.DOTALL,
+    ):
+        raise SystemExit("product-tour preview frame does not preserve its 5:3 layout")
+
     for page_name in (
         "index.html",
         "explore.html",
