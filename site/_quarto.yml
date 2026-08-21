@@ -30,6 +30,8 @@ website:
             text: CLI & TUI
           - href: candle.qmd
             text: Candle CLI & MCP
+          - href: elephant.qmd
+            text: Elephant ingestion
           - href: maples.qmd
             text: MAPLES
       - href: paper/paper.html

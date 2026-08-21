@@ -117,6 +117,7 @@ def main() -> None:
         "cli-tui": OUTPUT / "assets" / "tui",
         "maples": OUTPUT / "assets" / "maples",
         "candle-cli-mcp": OUTPUT / "assets" / "candle",
+        "elephant-ingestion": OUTPUT / "assets" / "elephant",
     }
     tours = {
         tour.get("id"): tour

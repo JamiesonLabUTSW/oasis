@@ -1,0 +1,478 @@
+{
+  "application": {
+    "binaries": [
+      {
+        "module": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/oasis",
+        "name": "oasis",
+        "sha256": "8f77caa64c70f5001db274e592614e138c444cfdfc35d0cee21a88d312ff242e",
+        "version": "0.1.0-mvp"
+      },
+      {
+        "module": "github.com/JamiesonLabUTSW/oasis/oasis-go/cmd/interactive",
+        "name": "oasis-tui",
+        "sha256": "45f2a8f938e63180ba78bb0fb8b07b0badbb733101a9ed23228150e765164279",
+        "version": null
+      }
+    ],
+    "elephant_runtime": {
+      "api_scope": "local-loopback",
+      "database": "isolated-postgres",
+      "fresh_storage": true,
+      "object_storage": "isolated-minio"
+    },
+    "module_identity": "github.com/JamiesonLabUTSW/oasis",
+    "source_repository_public": false,
+    "source_revision": "43b195ac9bf378b7d8a49af3aa9690e78d1d4b8d",
+    "tree_clean": true
+  },
+  "assets": [
+    {
+      "alt": "Illustrated model-neutral agent exchange proposing a three-record Elephant import and stopping before any upload.",
+      "audio_streams": 0,
+      "bytes": 43964,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-agent-brief-poster",
+      "order": 1,
+      "path": "assets/elephant/elephant-01-agent-brief-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "agent-brief",
+      "sha256": "bfd4a972b3c6c6ff7345372abbf4743c8fb2c4cec31867e01c7469f7b7fbf3ac",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "OASIS terminal showing local validation and a hashed scan of three synthetic Candle Making notes.",
+      "audio_streams": 0,
+      "bytes": 53120,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-local-checks-poster",
+      "order": 2,
+      "path": "assets/elephant/elephant-02-local-checks-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "local-checks",
+      "sha256": "65d8cf86a4d1b1bd48c0cdf76af47380565c23c01ecbe94edc37f9e35fe37739",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "OASIS data import dry run previewing one group, three coded records, and three text-note files with zero API calls.",
+      "audio_streams": 0,
+      "bytes": 41976,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-import-preview-poster",
+      "order": 3,
+      "path": "assets/elephant/elephant-03-import-preview-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "import-preview",
+      "sha256": "430954f02f75876d7a54b94e0df231c44b033554692a44301d94bc64e0bc9692",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "Terminal approval gate binding the local Elephant target and three-record import to reviewed manifest and file-set fingerprints.",
+      "audio_streams": 0,
+      "bytes": 42648,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-human-approval-poster",
+      "order": 4,
+      "path": "assets/elephant/elephant-04-human-approval-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "human-approval",
+      "sha256": "358d6dfb9262fd0ab978a79383c04323d168c6b4e05b905458219bdad6d9a69e",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "Completed OASIS import into a local Elephant service showing the reviewed synthetic records and zero failed rows.",
+      "audio_streams": 0,
+      "bytes": 59932,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-import-run-poster",
+      "order": 5,
+      "path": "assets/elephant/elephant-05-import-run-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "import-run",
+      "sha256": "8e41632fe3aef0a6da6b7d61453f19a619d965cc3ef270b4d3beb01d5dff60c1",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "OASIS TUI Elephant Groups view with the synthetic OASIS Candle Demo group selected.",
+      "audio_streams": 0,
+      "bytes": 36408,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-dataset-poster",
+      "order": 6,
+      "path": "assets/elephant/elephant-06-dataset-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "dataset",
+      "sha256": "a66bc207b47ea52f9d7718cb010dea47c2914d8178865f3ad4834502a8ee54fc",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "OASIS TUI Elephant Encounters view listing the three coded Candle Making demo encounters.",
+      "audio_streams": 0,
+      "bytes": 56720,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-encounters-poster",
+      "order": 7,
+      "path": "assets/elephant/elephant-07-encounters-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "encounters",
+      "sha256": "721ccc878ae7915ba6987b63ccc4bab79f231708109782f3caebbf91af39278d",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "OASIS TUI Elephant Files view showing the selected demo encounter and its text-note file count.",
+      "audio_streams": 0,
+      "bytes": 48426,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-files-poster",
+      "order": 8,
+      "path": "assets/elephant/elephant-08-files-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "files",
+      "sha256": "6bfc3de697415159d66cd3ae78d0981cba87203009ee7ac97a1d2ad146b2b14b",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "Read-only OASIS Elephant JSON output showing coded learners, encounter and file IDs, file types, byte counts, and stored fingerprints.",
+      "audio_streams": 0,
+      "bytes": 38594,
+      "container": "webp_pipe",
+      "duration_seconds": null,
+      "format": "webp",
+      "height": 720,
+      "id": "elephant-file-details-poster",
+      "order": 9,
+      "path": "assets/elephant/elephant-09-file-details-poster.webp",
+      "pixel_format": "yuv420p",
+      "role": "poster",
+      "scene": "file-details",
+      "sha256": "c640b730cb90427405c3690b415cdb1b7f3dbd0280a66b97ca39aee19f297c6a",
+      "video_codec": "webp",
+      "width": 1200
+    },
+    {
+      "alt": "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
+      "audio_streams": 0,
+      "bytes": 844558,
+      "container": "matroska,webm",
+      "duration_seconds": 67.166,
+      "format": "webm",
+      "height": 576,
+      "id": "elephant-overview-webm",
+      "order": 10,
+      "path": "assets/elephant/elephant-overview.webm",
+      "pixel_format": "yuv420p",
+      "role": "motion",
+      "scene": "overview",
+      "sha256": "51543dfc0638d249b5a90edc3a5dad3495404860bc742b4b58b7ea5012a52188",
+      "video_codec": "vp9",
+      "width": 960
+    },
+    {
+      "alt": "Recorded local OASIS walkthrough from agent-assisted preparation through Elephant import, TUI browsing, and read-only verification.",
+      "audio_streams": 0,
+      "bytes": 538152,
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "duration_seconds": 67.167,
+      "format": "mp4",
+      "height": 576,
+      "id": "elephant-overview-mp4",
+      "order": 11,
+      "path": "assets/elephant/elephant-overview.mp4",
+      "pixel_format": "yuv420p",
+      "role": "motion",
+      "scene": "overview",
+      "sha256": "755565876e063e3f65507f98c4031cbd2fc754d8d2f14344e16df4219fb7c10b",
+      "video_codec": "h264",
+      "width": 960
+    }
+  ],
+  "content_review": {
+    "agent_exchange_labeled_illustrated": true,
+    "atomic_import_claimed": false,
+    "fixture_digests_recorded": true,
+    "native_cli_approval_claimed": false,
+    "native_resume_claimed": false,
+    "original_filenames_claimed": false,
+    "private_evidence_hashes_recorded": true,
+    "private_paths_published": false,
+    "scan_json_called_import_manifest": false,
+    "secrets_published": false,
+    "source_hashes_recorded": true,
+    "tui_files_called_individual_file_rows": false,
+    "tui_groups_called_datasets": false,
+    "visitor_network_calls": false
+  },
+  "delivery": {
+    "asset_count": 11,
+    "capture_sources": {
+      "tape": {
+        "name": "elephant-overview.tape",
+        "private_evidence_archived": true,
+        "sha256": "78c14b85cd2f1b8dae6b126fc53472c6c86e34fc59c6d3451aa1e8ff21091550"
+      }
+    },
+    "capture_tool": "VHS",
+    "capture_tool_version": "0.10.0",
+    "codecs": {
+      "mp4": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "pixel_format": "yuv420p",
+        "video_codec": "h264"
+      },
+      "webm": {
+        "container": "matroska,webm",
+        "pixel_format": "yuv420p",
+        "video_codec": "vp9"
+      }
+    },
+    "motion_duration_seconds": 67.166,
+    "motion_has_audio": false,
+    "motion_height": 576,
+    "motion_width": 960,
+    "mp4_max_bytes": 2621440,
+    "poster_height": 720,
+    "poster_max_bytes": 153600,
+    "poster_width": 1200,
+    "total_bytes": 1804498,
+    "total_max_bytes": 6291456,
+    "webm_max_bytes": 2097152
+  },
+  "evidence": {
+    "counts": {
+      "dry_run_rows": 3,
+      "import_failed_rows": 0,
+      "import_rows": 3,
+      "readback_file_groups": 3,
+      "readback_files": 3,
+      "scan_records": 3,
+      "validated_files": 3
+    },
+    "credentials_present": false,
+    "item_count": 5,
+    "items": [
+      {
+        "archived_private": true,
+        "bytes": 168,
+        "id": "local-validate",
+        "name": "validate-summary.json",
+        "published": false,
+        "sanitized": true,
+        "sha256": "7e660e05c8c345254de85c675fa3f5f2236697e955154663cb7039a66b7c3544"
+      },
+      {
+        "archived_private": true,
+        "bytes": 367,
+        "id": "local-scan",
+        "name": "scan-summary.json",
+        "published": false,
+        "sanitized": true,
+        "sha256": "58bd48f9a8d8954ee103d36c56b092583a3969b9efdc531d08bd9e4c3dce73b5"
+      },
+      {
+        "archived_private": true,
+        "bytes": 280,
+        "id": "import-preview",
+        "name": "dry-run-summary.json",
+        "published": false,
+        "sanitized": true,
+        "sha256": "350c67296ee3745a606be1e385de0fae9cc6888360134c1ae32a678dabda919f"
+      },
+      {
+        "archived_private": true,
+        "bytes": 544,
+        "id": "import-run",
+        "name": "import-summary.json",
+        "published": false,
+        "sanitized": true,
+        "sha256": "a62372a941066ee675df4c969fc4bf21a4d6493f63e2317188f0eb66edeed113"
+      },
+      {
+        "archived_private": true,
+        "bytes": 353,
+        "id": "file-readback",
+        "name": "readback-summary.json",
+        "published": false,
+        "sanitized": true,
+        "sha256": "4a28ee84542df072943c4fd942582fa074f2a4f3ed1a28deeee396d6f18387ae"
+      }
+    ],
+    "private_paths_present": false,
+    "raw_logs_published": false,
+    "status": "archived-private"
+  },
+  "execution_boundary": {
+    "agent_exchange": {
+      "external_model_provider_calls": 0,
+      "illustrated": true,
+      "live": false,
+      "named_model_claim": false,
+      "private_reasoning_published": false
+    },
+    "approval": {
+      "changed_input_expires_approval": true,
+      "file_set_digest_bound": true,
+      "gate_type": "capture-harness",
+      "manifest_digest_bound": true,
+      "native_cli_prompt": false,
+      "target_reviewed": true
+    },
+    "credentials": {
+      "readback_key_scope": "read-only",
+      "separate_keys": true,
+      "write_key_in_argv": false,
+      "write_key_published": false,
+      "write_key_scope": "scoped-write",
+      "write_key_source": "private-environment-file"
+    },
+    "import": {
+      "atomic": false,
+      "changed_input_requires_review": true,
+      "dry_run_api_calls": 0,
+      "dry_run_command": "oasis data import manifest.csv --data-dir candle-data --dry-run",
+      "durable_row_receipt": false,
+      "files_expected": 3,
+      "groups_expected": 1,
+      "idempotency_key_used": false,
+      "import_command": "oasis data import manifest.csv --data-dir candle-data",
+      "records_expected": 3,
+      "resumable": false,
+      "rows_failed": 0,
+      "rows_total": 3,
+      "unchanged_input_safe_to_retry": true
+    },
+    "local_checks": {
+      "elephant_api_calls": 0,
+      "scan_command": "oasis data scan candle-data --hash --summary-only --fail-on-clarifications --output evidence/scan.json",
+      "scan_json_used_as_import_manifest": false,
+      "validation_command": "oasis data validate candle-data"
+    },
+    "readback": {
+      "cli_json_used": true,
+      "original_filenames_returned": false,
+      "stored_file_metadata_verified_via_cli": true,
+      "tui_encounters_view": true,
+      "tui_files_is_grouped_summary": true,
+      "tui_groups_view": true
+    },
+    "visitor_boundary": {
+      "live_service": false,
+      "visitor_elephant_calls": false,
+      "visitor_model_calls": false
+    }
+  },
+  "fixture": {
+    "file_set_canonicalization": "relative-path-tab-bytes-tab-sha256-lf",
+    "file_set_digest_algorithm": "sha256",
+    "file_set_sha256": "f6ec581a01b2c868043b7b684781edb8944f1bd36bb48060c822da7d6ce160d1",
+    "files": [
+      {
+        "bytes": 321,
+        "relative_path": "DEMO-001/note.txt",
+        "sha256": "a5f46422a19ea6506798fc1905d89899402d52e3e42a9526a05ab57c4a29d4e7"
+      },
+      {
+        "bytes": 311,
+        "relative_path": "DEMO-002/note.txt",
+        "sha256": "32330643d6100f9c8b06596d7bdc68b2e3a0fee3764f9075a89c7aeefc3fe64b"
+      },
+      {
+        "bytes": 310,
+        "relative_path": "DEMO-003/note.txt",
+        "sha256": "b98a7ccaadbe55ce97bf5b643fb0bbf3d5c6df66c556492805fe4773e32f49b0"
+      }
+    ],
+    "manifest": {
+      "bytes": 523,
+      "columns": [
+        "cohort_name",
+        "learner_name",
+        "learner_email",
+        "activity",
+        "case_name",
+        "date",
+        "room",
+        "file_path",
+        "file_type"
+      ],
+      "name": "manifest.csv",
+      "row_count": 3,
+      "sha256": "9fd3f79b756a4f571946a564f23f0c7204c79b4b1db6a2a0728b8b4b57df2ecd"
+    }
+  },
+  "generated_at": "2026-08-20T23:18:29Z",
+  "privacy_review": {
+    "all_passed": true,
+    "allowed_emails": [
+      "demo-001@example.com",
+      "demo-002@example.com",
+      "demo-003@example.com"
+    ],
+    "asset_files_scanned": 11,
+    "motion_frames_manual_reviewed": 34,
+    "motion_frames_ocr_reviewed": 67,
+    "ocr_errors": 0,
+    "posters_manual_reviewed": 9,
+    "posters_ocr_reviewed": 9,
+    "real_person_data_visible": false,
+    "sensitive_hits": 0,
+    "status": "passed"
+  },
+  "scenario": {
+    "coded_ids": [
+      "DEMO-001",
+      "DEMO-002",
+      "DEMO-003"
+    ],
+    "cohort": "OASIS Candle Demo",
+    "data_classification": "synthetic-coded",
+    "description": "A fresh synthetic Candle Making import that follows the public Perfume-to-Candle narrative without reproducing intern data, prompts, or outputs.",
+    "file_count": 3,
+    "file_type": "notes_txt",
+    "id": "elephant-agent-assisted-candle-v1",
+    "real_person_data": false,
+    "record_count": 3,
+    "reserved_email_domain": "example.com",
+    "synthetic_only": true,
+    "title": "Elephant ingestion: From a folder to verified records"
+  },
+  "schema_version": "oasis.elephant-ingestion-site-media.v1"
+}
