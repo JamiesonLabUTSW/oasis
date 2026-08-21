@@ -78,6 +78,67 @@ class TourStructureParser(HTMLParser):
             self.stages.append(values)
 
 
+class RubricGuideStructureParser(HTMLParser):
+    """Inspect the authored rubric-guide subtree without executing JavaScript."""
+
+    VOID_ELEMENTS = {
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
+    }
+    MEDIA_ELEMENTS = {"audio", "embed", "iframe", "img", "object", "picture", "video"}
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.guide_count = 0
+        self.depth = 0
+        self.tablists: list[dict[str, str]] = []
+        self.tabs: list[dict[str, str]] = []
+        self.panels: list[dict[str, str]] = []
+        self.media: list[str] = []
+        self.choices: list[dict[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {key: value or "" for key, value in attrs}
+        starts_guide = values.get("id") == "rubric-guide" and "data-rubric-guide" in values
+        inside = self.depth > 0 or starts_guide
+        if starts_guide:
+            self.guide_count += 1
+            self.depth = 1
+        elif self.depth > 0 and tag not in self.VOID_ELEMENTS:
+            self.depth += 1
+        if not inside:
+            return
+        if values.get("role") == "tablist":
+            self.tablists.append(values)
+        if "data-rubric-tab" in values:
+            self.tabs.append(values)
+        if "data-rubric-panel" in values:
+            self.panels.append(values)
+        if "data-rubric-choice" in values:
+            self.choices.append(values)
+        if tag in self.MEDIA_ELEMENTS:
+            self.media.append(tag)
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+    def handle_endtag(self, _tag: str) -> None:
+        if self.depth > 0:
+            self.depth -= 1
+
+
 def extract_tour_payload(page_name: str, content: str) -> dict[str, object]:
     matches = re.findall(
         r'<script type="application/json" data-product-tour-data(?:="")?>\s*(.*?)\s*</script>',
@@ -1741,6 +1802,7 @@ def check_contract(
         "candle.html",
         "elephant.html",
         "maples.html",
+        "rubric.html",
     ):
         page = (OUTPUT / page_name).read_text(encoding="utf-8")
         stylesheet_links = re.findall(
@@ -1754,6 +1816,10 @@ def check_contract(
         if 'href="./elephant.html"' not in page or "Elephant ingestion" not in page:
             raise SystemExit(
                 f"Elephant ingestion is missing from the project navigation in {page_name}"
+            )
+        if 'href="./rubric.html"' not in page or "Improve a rubric" not in page:
+            raise SystemExit(
+                f"rubric guide is missing from the project navigation in {page_name}"
             )
 
     home = (OUTPUT / "index.html").read_text(encoding="utf-8")
@@ -1788,6 +1854,11 @@ def check_contract(
         "pause for explicit approval",
         "stored file types, byte counts, and fingerprints",
         "Browse all guided tours",
+        "New interactive guide",
+        "Improve a rubric, one decision at a time",
+        "Start the rubric improvement guide",
+        'href="./rubric.html"',
+        "not a recorded Rubric Maker or grading run",
     ):
         if marker not in home:
             raise SystemExit(f"homepage tour marker missing: {marker}")
@@ -2261,11 +2332,218 @@ def check_contract(
         'href="https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo/"',
         'href="https://ut-real-ai-project-maples.com/wayfinder-grading-run-demo/"',
         'href="https://ut-real-ai-project-maples.com/sail-2026-maples-poster-walkthrough/"',
+        "Available now · interactive guide",
+        "Open the rubric improvement guide",
+        'href="./rubric.html"',
     ):
         if marker not in explore:
             raise SystemExit(f"Explore overview marker missing: {marker}")
     if "youtube.com/embed" in explore or "youtube-nocookie.com/embed" in explore:
         raise SystemExit("Explore must link to YouTube without loading an embedded player")
+
+    rubric = (OUTPUT / "rubric.html").read_text(encoding="utf-8")
+    rubric_steps = [
+        "baseline",
+        "focus",
+        "review",
+        "compare",
+        "decide",
+        "trial",
+        "revise",
+        "ready",
+    ]
+    rubric_structure = RubricGuideStructureParser()
+    rubric_structure.feed(rubric)
+    rubric_ids = TourStructureParser()
+    rubric_ids.feed(rubric)
+    duplicate_rubric_ids = sorted(
+        {value for value in rubric_ids.ids if rubric_ids.ids.count(value) > 1}
+    )
+    if duplicate_rubric_ids:
+        raise SystemExit(f"duplicate HTML ids in rubric.html: {duplicate_rubric_ids}")
+    if rubric_structure.guide_count != 1:
+        raise SystemExit("rubric page must contain exactly one interactive guide")
+    if (
+        len(rubric_structure.tablists) != 1
+        or rubric_structure.tablists[0].get("aria-label")
+        != "Rubric improvement steps"
+    ):
+        raise SystemExit("rubric guide tablist label is invalid")
+    if rubric_structure.media:
+        raise SystemExit(
+            f"rubric guide must not load images or media: {rubric_structure.media}"
+        )
+    if [tab.get("data-rubric-tab") for tab in rubric_structure.tabs] != rubric_steps:
+        raise SystemExit("rubric guide tabs are missing or out of order")
+    if [panel.get("data-rubric-panel") for panel in rubric_structure.panels] != rubric_steps:
+        raise SystemExit("rubric guide panels are missing or out of order")
+    if len(rubric_structure.tabs) != 8 or len(rubric_structure.panels) != 8:
+        raise SystemExit("rubric guide must contain exactly eight tabs and panels")
+    for index, (tab, panel) in enumerate(
+        zip(rubric_structure.tabs, rubric_structure.panels, strict=True)
+    ):
+        expected_step = rubric_steps[index]
+        if (
+            tab.get("id") != f"rubric-tab-{expected_step}"
+            or tab.get("role") != "tab"
+            or tab.get("type") != "button"
+            or tab.get("aria-controls") != expected_step
+            or tab.get("aria-selected") != ("true" if index == 0 else "false")
+            or tab.get("tabindex") != ("0" if index == 0 else "-1")
+            or panel.get("id") != expected_step
+            or panel.get("role") != "tabpanel"
+            or panel.get("aria-labelledby") != f"rubric-tab-{expected_step}"
+            or panel.get("tabindex") != "0"
+            or "hidden" in panel
+            or not panel.get("data-title")
+            or not panel.get("data-summary")
+        ):
+            raise SystemExit(f"rubric guide ARIA contract is invalid: {expected_step}")
+    if (
+        [choice.get("data-rubric-choice") for choice in rubric_structure.choices]
+        != ["RM-01", "RM-02", "RM-03", "RM-04"]
+        or [choice.get("aria-pressed") for choice in rubric_structure.choices]
+        != ["true", "true", "true", "false"]
+    ):
+        raise SystemExit("rubric walkthrough decision controls are invalid")
+
+    rubric_markers = (
+        "Prepared example · no Rubric Maker run",
+        "outside the plugin’s documented OSCE scope",
+        "Using the page does not start an agent or model, run a grader, or contact MAPLES or OASIS",
+        "rubric-import",
+        "osce-rubric-review",
+        "alignment, safety, observability, objectivity, feasibility, and reliability",
+        "osce-rubric-transform",
+        "grading-dry-run",
+        "evaluate-dry-run",
+        "not output from a Rubric Maker review run",
+        "editorial illustrations, not outputs from a Rubric Maker skill run or a recorded grading run",
+        "newly authored for the bicycle example with Codex assistance",
+        "Prepared source artifact",
+        "1 · unsafe",
+        "2 · mostly correct",
+        "3 · correct",
+        "contiguous <code>Score1</code>, <code>Score2</code>, and <code>Score3</code> keys",
+        "RM-01 · Score1 safety boundary",
+        "RM-02 · Score2 middle anchor",
+        "RM-03 · Score3 passing anchor",
+        "RM-04 · Technique measurement",
+        "one structured suggestion for each field or score anchor being changed",
+        "RM-01 through RM-04 are editorial walkthrough labels",
+        "Score 1: <code>incorrect</code>",
+        "Score 2: <code>mostly correct</code>",
+        "Score 3: <code>correct</code>",
+        "<code>Technique</code> is empty in the prepared source",
+        "Score 3 when both pads contact the rim",
+        "use 1 and stop when the observation shows a damaged rim",
+        "use 2 when no stop condition is present",
+        "use 3 only when every passing check is visible",
+        "<code>unscorable: true</code>",
+        "This is not a fourth rubric score anchor",
+        "evidence mode, and contiguous <code>Score1</code>…<code>ScoreN</code> ordering",
+        "Prepared trial",
+        "3 · meets",
+        "1 · stop",
+        "2 · revise",
+        "not an executed transform or validation result",
+        "Before approval, confirm",
+        "Obtain sign-off from domain experts and intended reviewers",
+        "walkthrough controls only",
+        "name the suggestions or rubric locations to apply",
+        "prepared v2 below stays fixed to the initial RM-01, RM-02, and RM-03 decision",
+        "a visible gap returns at both pads and neither pad remains against the rim",
+        "do not imitate native Rubric Maker, Wayfinder, MAPLES, or SimRubrics controls",
+        "Wayfinder Rubric Studio is the MAPLES web experience",
+        "SimRubrics is a separate research application",
+        "or a claim that MAPLES evolved from it",
+        "academic-research-only license",
+        "JavaScript is off, so all eight steps are shown in order",
+        'href="https://ut-real-ai-project-maples.com/mt-docs/"',
+        'href="https://ut-real-ai-project-maples.com/mt-docs/rubric-maker-skill/"',
+        'href="https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo/"',
+        'href="https://www.youtube.com/watch?v=MKwseFKuFLs"',
+        'href="https://github.com/JamiesonLabUTSW/maples-toolkit/releases/tag/rubric-maker-skill%2Fv0.1.0"',
+        'href="./explore.html"',
+        'href="./maples.html"',
+        'href="./index.html"',
+    )
+    for marker in rubric_markers:
+        if marker not in rubric:
+            raise SystemExit(f"rubric guide truth or navigation marker missing: {marker}")
+    for forbidden in (
+        "zero-shot",
+        "oasis rubric check",
+        "actual agent result",
+        "actual model result",
+        "Rubric Maker web app",
+        "MAPLES evolved from SimRubrics",
+        "0 · unsafe",
+        "0 · stop",
+        "use 0 and stop",
+        "not observed",
+        "validated scope",
+        "no skill, agent, or model produced them",
+        "name the suggestion IDs",
+        "Review suggestions by ID",
+        "wheel turns freely by hand",
+    ):
+        if forbidden in rubric:
+            raise SystemExit(f"rubric guide crosses its method boundary: {forbidden}")
+    if re.search(r'<script\s+[^>]*src="(?:https?:)?//', rubric):
+        raise SystemExit("rubric guide must not load a third-party script")
+    if re.search(r'<(?:iframe|video|audio|picture)\b', rubric):
+        raise SystemExit("rubric page must not embed third-party or motion media")
+
+    rubric_runtime_links = re.findall(
+        r'src="rubric-guide\.js\?v=([0-9a-f]{12})"',
+        rubric,
+    )
+    rubric_runtime = OUTPUT / "rubric-guide.js"
+    if len(rubric_runtime_links) != 1:
+        raise SystemExit("rubric guide runtime is not fingerprinted")
+    if rubric_runtime_links[0] != digest(rubric_runtime)[:12]:
+        raise SystemExit("rubric guide runtime fingerprint is stale")
+    if rubric_runtime.stat().st_size > 6_000:
+        raise SystemExit("rubric guide runtime exceeds its 6 KB budget")
+    rubric_runtime_text = rubric_runtime.read_text(encoding="utf-8")
+    for marker in (
+        'guide.setAttribute("data-rubric-enhanced", "")',
+        'panel.setAttribute("aria-hidden", String(!active))',
+        'tab.setAttribute("aria-selected", String(active))',
+        'button.setAttribute("aria-pressed", String(!pressed))',
+        'event.key === "ArrowRight"',
+        'event.key === "Home"',
+        'event.key === "End"',
+        "window.history.pushState",
+        'window.addEventListener("hashchange"',
+    ):
+        if marker not in rubric_runtime_text:
+            raise SystemExit(f"rubric guide interaction guard is missing: {marker}")
+    for network_api in ("fetch(", "XMLHttpRequest", "WebSocket", "sendBeacon"):
+        if network_api in rubric_runtime_text:
+            raise SystemExit(f"rubric guide runtime must remain offline: {network_api}")
+    for invalid_tab_key in ('event.key === "ArrowDown"', 'event.key === "ArrowUp"'):
+        if invalid_tab_key in rubric_runtime_text:
+            raise SystemExit(
+                f"horizontal rubric tabs must preserve page scrolling: {invalid_tab_key}"
+            )
+
+    for style_contract in (
+        r"\.rubric-step-tabs,\s*\.rubric-guide-progress,\s*\.rubric-guide-controls\s*\{[^}]*display:\s*none;",
+        r"\[data-rubric-guide\]\[data-rubric-enhanced\]\s+\.rubric-step-tabs\s*\{[^}]*display:\s*flex;",
+        r"\.rubric-step-tabs button\s*\{[^}]*min-height:\s*44px;",
+        r"\.rubric-step-tabs button:focus-visible,[^{]*\{[^}]*outline:\s*3px solid #79cfff;",
+        r"\.rubric-decision-controls\s*\{[^}]*display:\s*none;",
+        r"\[data-rubric-guide\]\[data-rubric-enhanced\]\s+\.rubric-decision-controls\s*\{[^}]*display:\s*grid;",
+        r"\.rubric-step-layout\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);",
+        r"\.rubric-step-panel:focus-visible\s*\{[^}]*box-shadow:\s*inset 0 0 0 3px #79cfff;",
+        r"\.rubric-deep-link\s*\{[^}]*min-height:\s*44px;",
+        r"\.rubric-guide \.eyebrow,[^{]*\{[^}]*color:\s*#e0876a;",
+        r"\.rubric-step-panel code\s*\{[^}]*white-space:\s*normal;[^}]*word-break:\s*break-all;",
+    ):
+        if not re.search(style_contract, styles, flags=re.DOTALL):
+            raise SystemExit(f"rubric guide fallback or accessibility style is missing: {style_contract}")
 
     styles = (OUTPUT / "styles.css").read_text(encoding="utf-8")
     for motion_style_contract in (
@@ -2385,6 +2663,50 @@ def check_contract(
         raise SystemExit("publication capture-manifest inventory is incomplete")
     if publication.get("tour_overview") != "explore.html":
         raise SystemExit("publication tour overview is missing")
+    guide_rows = publication.get("interactive_guides", [])
+    if not isinstance(guide_rows, list) or len(guide_rows) != 1:
+        raise SystemExit("publication interactive-guide inventory is invalid")
+    rubric_guide = guide_rows[0]
+    if (
+        set(rubric_guide)
+        != {
+            "id",
+            "title",
+            "path",
+            "status",
+            "recorded",
+            "live_service",
+            "visitor_network_calls",
+            "rubric_maker_skill_run",
+            "recorded_grading_run",
+            "editorial_assistance",
+            "data_classification",
+            "real_person_data",
+            "example_domain",
+            "method",
+            "documented_scope",
+            "example_within_documented_scope",
+            "step_count",
+        }
+        or rubric_guide.get("id") != "rubric-improvement"
+        or rubric_guide.get("title") != "Improve a rubric, one decision at a time"
+        or rubric_guide.get("path") != "rubric.html"
+        or rubric_guide.get("status") != "interactive"
+        or rubric_guide.get("recorded") is not False
+        or rubric_guide.get("live_service") is not False
+        or rubric_guide.get("visitor_network_calls") is not False
+        or rubric_guide.get("rubric_maker_skill_run") is not False
+        or rubric_guide.get("recorded_grading_run") is not False
+        or rubric_guide.get("editorial_assistance") != "Codex"
+        or rubric_guide.get("data_classification") != "newly-authored-synthetic"
+        or rubric_guide.get("real_person_data") is not False
+        or rubric_guide.get("example_domain") != "bicycle maintenance"
+        or rubric_guide.get("method") != "Rubric Maker v0.1.0"
+        or rubric_guide.get("documented_scope") != "OSCE-focused rubric workflows"
+        or rubric_guide.get("example_within_documented_scope") is not False
+        or rubric_guide.get("step_count") != 8
+    ):
+        raise SystemExit("publication rubric-guide truth boundary is invalid")
     tour_rows = publication.get("tours", [])
     tours = {item.get("id"): item for item in tour_rows}
     if len(tours) != len(tour_rows):
@@ -2591,6 +2913,7 @@ def main() -> None:
         "candle.html",
         "elephant.html",
         "maples.html",
+        "rubric.html",
     )
     missing_pages = [name for name in required_pages if not (OUTPUT / name).is_file()]
     if missing_pages:

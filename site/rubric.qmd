@@ -1,0 +1,285 @@
+---
+title: "Improve a rubric, one decision at a time"
+subtitle: "A lightweight click-through based on the public Rubric Maker v0.1.0 method"
+description: "Walk through a prepared bicycle brake-adjustment example to see how rubric authors can focus, review, compare, trial, and revise rubric wording."
+page-layout: full
+---
+
+::: {.rubric-guide-intro}
+This guide uses a newly written **bicycle brake-adjustment rubric** to make the method easy to see without clinical, learner, or other real-person data. The content is prepared and illustrative. Using the page does not start an agent or model, run a grader, or contact MAPLES or OASIS.
+:::
+
+::: {.rubric-scope-note role="note" aria-label="Method and example scope"}
+**Scope note:** [Rubric Maker v0.1.0](https://ut-real-ai-project-maples.com/mt-docs/rubric-maker-skill/) is an installable agent plugin focused on OSCE rubrics. Bicycle maintenance is outside the plugin’s documented OSCE scope. It is used here only to teach the general review loop; a qualified domain expert still needs to approve any rubric before use.
+:::
+
+::: {#rubric-guide .rubric-guide data-rubric-guide=""}
+::: {.rubric-guide-topline}
+::: {.rubric-guide-heading}
+::: {.eyebrow}
+Interactive rubric guide
+:::
+
+<h2 data-rubric-title>Start with the rubric you actually have</h2>
+<p data-rubric-summary>Preserve the original wording as version 1 so every later change is visible and reversible.</p>
+:::
+
+::: {.rubric-guide-status role="group" aria-label="Guide status"}
+<span class="rubric-guide-status-dot" aria-hidden="true"></span>
+<span>Prepared example · no Rubric Maker run</span>
+:::
+:::
+
+```{=html}
+<div class="rubric-step-tabs" role="tablist" aria-label="Rubric improvement steps">
+  <button type="button" role="tab" id="rubric-tab-baseline" aria-controls="baseline" aria-selected="true" tabindex="0" data-rubric-tab="baseline">1 · Baseline</button>
+  <button type="button" role="tab" id="rubric-tab-focus" aria-controls="focus" aria-selected="false" tabindex="-1" data-rubric-tab="focus">2 · Focus</button>
+  <button type="button" role="tab" id="rubric-tab-review" aria-controls="review" aria-selected="false" tabindex="-1" data-rubric-tab="review">3 · Review</button>
+  <button type="button" role="tab" id="rubric-tab-compare" aria-controls="compare" aria-selected="false" tabindex="-1" data-rubric-tab="compare">4 · Compare</button>
+  <button type="button" role="tab" id="rubric-tab-decide" aria-controls="decide" aria-selected="false" tabindex="-1" data-rubric-tab="decide">5 · Decide</button>
+  <button type="button" role="tab" id="rubric-tab-trial" aria-controls="trial" aria-selected="false" tabindex="-1" data-rubric-tab="trial">6 · Trial</button>
+  <button type="button" role="tab" id="rubric-tab-revise" aria-controls="revise" aria-selected="false" tabindex="-1" data-rubric-tab="revise">7 · Revise</button>
+  <button type="button" role="tab" id="rubric-tab-ready" aria-controls="ready" aria-selected="false" tabindex="-1" data-rubric-tab="ready">8 · Ready</button>
+</div>
+```
+
+<div class="rubric-guide-progress" aria-hidden="true"><span data-rubric-progress></span></div>
+
+<section id="baseline" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-baseline" tabindex="0" data-rubric-panel="baseline" data-title="Start with the rubric you actually have" data-summary="Preserve the original wording as version 1 so every later change is visible and reversible.">
+<div class="rubric-step-kicker">Step 1 · Baseline</div>
+<div class="rubric-step-layout">
+<div>
+<h3>Import faithfully before improving</h3>
+<p>In a real agent session, <code>rubric-import</code> can bring existing material into Rubric Maker YAML or JSON while preserving its wording and structure. For this walkthrough, the version below was written specifically for the page.</p>
+<p class="rubric-prepared-label">Prepared source artifact · <code>bicycle-brake-rubric-v1.yaml</code></p>
+</div>
+<div class="rubric-version-card" role="group" aria-label="Baseline rubric version 1">
+<div class="rubric-version-heading"><strong>Mechanical rim-brake adjustment</strong><span>v1 · baseline</span></div>
+<dl class="rubric-criteria-list">
+  <div><dt>Prepare safely</dt><dd>1 · unsafe &nbsp; 2 · partly safe &nbsp; 3 · safe</dd></div>
+  <div class="rubric-focus-row"><dt>Adjust the brake correctly</dt><dd>1 · incorrect &nbsp; 2 · mostly correct &nbsp; 3 · correct</dd></div>
+  <div><dt>Test the brake</dt><dd>1 · not tested &nbsp; 2 · partly tested &nbsp; 3 · tested</dd></div>
+</dl>
+</div>
+</div>
+<p class="rubric-muted">The displayed values map to the plugin schema’s contiguous <code>Score1</code>, <code>Score2</code>, and <code>Score3</code> keys.</p>
+<div class="rubric-takeaway"><strong>Why keep v1?</strong> A faithful baseline prevents a helpful-looking rewrite from silently changing the task, score scale, or evidence you intended to assess.</div>
+</section>
+
+<section id="focus" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-focus" tabindex="0" data-rubric-panel="focus" data-title="Choose one scoring problem" data-summary="Focus the review on the vague middle criterion instead of rewriting everything at once.">
+<div class="rubric-step-kicker">Step 2 · Focus</div>
+<div class="rubric-step-layout">
+<div>
+<h3>Name the decision a rater cannot make reliably</h3>
+<p>“Adjust the brake correctly” sounds reasonable, but it does not say what a reviewer should see or how “mostly correct” differs from “correct.” We will improve that one decision first.</p>
+<div class="rubric-question-card">
+<span>Review question</span>
+<strong>What observable evidence separates a usable adjustment from one that still needs work?</strong>
+</div>
+</div>
+<div>
+<h4>Evidence the task can actually reveal</h4>
+<ul class="rubric-check-list">
+  <li>Each pad contacts the rim, not the tire.</li>
+  <li>With the lever released, neither pad stays against the rim.</li>
+  <li>The wheel turns by hand without continuous scraping.</li>
+  <li>The lever applies the brake before reaching the handlebar.</li>
+</ul>
+<p class="rubric-muted">These details are authored for the example. They are not advice for repairing a bicycle and still require expert review.</p>
+</div>
+</div>
+</section>
+
+<section id="review" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-review" tabindex="0" data-rubric-panel="review" data-title="Review through six quality lenses" data-summary="Use the released review pillars to explain what is working, what is missing, and what deserves attention first.">
+<div class="rubric-step-kicker">Step 3 · Review</div>
+<h3>Make the critique inspectable</h3>
+<p>Rubric Maker’s <code>osce-rubric-review</code> skill examines alignment, safety, observability, objectivity, feasibility, and reliability. The notes below are prepared examples of that structure—not output from a Rubric Maker review run.</p>
+<div class="rubric-pillar-grid">
+  <article><span>Alignment</span><strong>Keep</strong><p>The item matches the stated brake-adjustment task.</p></article>
+  <article><span>Safety</span><strong>Improve</strong><p>No stop rule covers a damaged rim or frayed cable.</p></article>
+  <article><span>Observability</span><strong>Improve</strong><p>“Correctly” does not identify visible evidence.</p></article>
+  <article><span>Objectivity</span><strong>Improve</strong><p>“Mostly” leaves too much room for interpretation.</p></article>
+  <article><span>Feasibility</span><strong>Keep</strong><p>The core checks can be observed without special equipment.</p></article>
+  <article><span>Reliability</span><strong>Improve</strong><p>Two reviewers could score the same adjustment differently.</p></article>
+</div>
+<div class="rubric-takeaway"><strong>Priority:</strong> define the observable pass condition and add a safety stop before polishing style.</div>
+</section>
+
+<section id="compare" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-compare" tabindex="0" data-rubric-panel="compare" data-title="Compare specific proposals" data-summary="Keep each current anchor, proposed anchor, and reason together so a person can judge every change.">
+<div class="rubric-step-kicker">Step 4 · Compare</div>
+<h3>Review suggestions one change at a time</h3>
+<p>The released workflow can return one structured suggestion for each field or score anchor being changed. These four suggestions and reasons were prewritten for this guide; RM-01 through RM-04 are editorial walkthrough labels, not required fields in the v0.1.0 suggestion contract.</p>
+<div class="rubric-suggestion-list">
+<article class="rubric-suggestion" data-suggestion="RM-01">
+<header><span>RM-01 · Score1 safety boundary</span><strong>Recommended</strong></header>
+<div class="rubric-compare-grid">
+<div><span>Current</span><p>Score 1: <code>incorrect</code></p></div>
+<div><span>Proposed</span><p>Score 1 and stop when the observation shows a damaged rim, a frayed cable, tire contact, or a brake that does not engage.</p></div>
+</div>
+<p><strong>Reason:</strong> makes the lowest anchor and its safety boundary explicit.</p>
+</article>
+<article class="rubric-suggestion" data-suggestion="RM-02">
+<header><span>RM-02 · Score2 middle anchor</span><strong>Recommended</strong></header>
+<div class="rubric-compare-grid">
+<div><span>Current</span><p>Score 2: <code>mostly correct</code></p></div>
+<div><span>Proposed</span><p>Score 2 when no stop condition is present but at least one passing check is missing.</p></div>
+</div>
+<p><strong>Reason:</strong> gives the middle anchor a concrete distinction from both stopping and passing.</p>
+</article>
+<article class="rubric-suggestion" data-suggestion="RM-03">
+<header><span>RM-03 · Score3 passing anchor</span><strong>Recommended</strong></header>
+<div class="rubric-compare-grid">
+<div><span>Current</span><p>Score 3: <code>correct</code></p></div>
+<div><span>Proposed</span><p>Score 3 when both pads contact the rim below the tire, release fully, the wheel turns without continuous scraping, and the lever does not reach the handlebar.</p></div>
+</div>
+<p><strong>Reason:</strong> ties the passing score to evidence that two reviewers can inspect.</p>
+</article>
+<article class="rubric-suggestion" data-suggestion="RM-04">
+<header><span>RM-04 · Technique measurement</span><strong>Question</strong></header>
+<div class="rubric-compare-grid">
+<div><span>Current</span><p><code>Technique</code> is empty in the prepared source.</p></div>
+<div><span>Proposed</span><p>Require exactly 1.5 mm of clearance at both pads.</p></div>
+</div>
+<p><strong>Reason to pause:</strong> the proposed precision needs a measurement method the task and observation setup do not provide.</p>
+</article>
+</div>
+</section>
+
+<section id="decide" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-decide" tabindex="0" data-rubric-panel="decide" data-title="Let a person choose the changes" data-summary="Select useful suggestions, decline weak ones, and create an explicit version 2 rather than overwriting the source.">
+<div class="rubric-step-kicker">Step 5 · Decide</div>
+<div class="rubric-step-layout">
+<div>
+<h3>Accept the evidence, not the confidence</h3>
+<p>In a real agent conversation, the reviewer can name the suggestions or rubric locations to apply. The buttons here are walkthrough controls only; they do not imitate native Rubric Maker, Wayfinder, MAPLES, or SimRubrics controls. They update the selection summary, while the prepared v2 below stays fixed to the initial RM-01, RM-02, and RM-03 decision.</p>
+```{=html}
+<div class="rubric-decision-controls" role="group" aria-label="Prepared walkthrough decisions">
+  <button type="button" data-rubric-choice="RM-01" aria-pressed="true"><span>RM-01</span> Apply Score1 safety boundary</button>
+  <button type="button" data-rubric-choice="RM-02" aria-pressed="true"><span>RM-02</span> Apply Score2 middle anchor</button>
+  <button type="button" data-rubric-choice="RM-03" aria-pressed="true"><span>RM-03</span> Apply Score3 passing anchor</button>
+  <button type="button" data-rubric-choice="RM-04" aria-pressed="false"><span>RM-04</span> Apply exact clearance technique</button>
+</div>
+```
+<p class="rubric-decision-note" data-rubric-decision aria-live="polite">Prepared decision: apply RM-01, RM-02, and RM-03; leave RM-04 out.</p>
+</div>
+<div class="rubric-version-flow" role="group" aria-label="Rubric version flow">
+<div><span>Preserve</span><strong>v1</strong><small>original wording</small></div>
+<span aria-hidden="true">→</span>
+<div><span>Transform</span><strong>v2</strong><small>selected changes only</small></div>
+</div>
+</div>
+<div class="rubric-takeaway"><strong>Prepared v2 scoring rule:</strong> use 1 and stop when the observation shows a damaged rim, a frayed cable, tire contact, or a brake that does not engage; use 2 when no stop condition is present but at least one passing check is missing; use 3 only when every passing check is visible.</div>
+<div class="rubric-takeaway"><strong>Dry-run evidence rule:</strong> when the evidence is insufficient to score, mark the grade-sheet item <code>unscorable: true</code>, state why, and route it for review rather than guessing. This is not a fourth rubric score anchor.</div>
+<p class="rubric-prepared-label">In a real workflow, ask <code>osce-rubric-transform</code> to write <code>bicycle-brake-rubric-v2.yaml</code>, then validate it with Rubric Maker’s bundled support. This page does neither operation.</p>
+</section>
+
+<section id="trial" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-trial" tabindex="0" data-rubric-panel="trial" data-title="Trial the revised anchors" data-summary="Use synthetic observations to check whether the new wording produces sensible distinctions before any real assessment.">
+<div class="rubric-step-kicker">Step 6 · Trial</div>
+<h3>Look for grading friction, not a flattering score</h3>
+<p>Rubric Maker v0.1.0 includes <code>grading-dry-run</code> and <code>evaluate-dry-run</code>. The observations and scores below are editorial illustrations, not outputs from a Rubric Maker skill run or a recorded grading run.</p>
+<div class="rubric-trial-table-wrap">
+<table class="rubric-trial-table">
+<caption>Prepared trial of the revised brake-adjustment item</caption>
+<thead><tr><th scope="col">Synthetic observation</th><th scope="col">Prepared score</th><th scope="col">What the anchor reveals</th></tr></thead>
+<tbody>
+<tr><th scope="row">T-01 · Pads meet the rim below the tire; both release; no continuous scrape; lever stops short of the handlebar.</th><td><span class="rubric-score rubric-score-pass">3 · meets</span></td><td>All stated evidence is present.</td></tr>
+<tr><th scope="row">T-02 · Left pad touches the tire when the lever is applied.</th><td><span class="rubric-score rubric-score-stop">1 · stop</span></td><td>The safety boundary is visible.</td></tr>
+<tr><th scope="row">T-03 · Pads meet the rim and the lever holds, but one pad remains in contact after release.</th><td><span class="rubric-score rubric-score-review">2 · revise</span></td><td>The middle score now has a concrete defect.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="rubric-takeaway"><strong>Prepared evaluation:</strong> v2 distinguishes the three observations, but “continuous scraping” could still be interpreted differently. That is a useful revision target.</div>
+</section>
+
+<section id="revise" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-revise" tabindex="0" data-rubric-panel="revise" data-title="Revise only what the trial exposed" data-summary="Tighten the one phrase that caused friction, preserve version 2, and validate a new version 3.">
+<div class="rubric-step-kicker">Step 7 · Revise</div>
+<div class="rubric-step-layout">
+<div>
+<h3>Make the smallest defensible change</h3>
+<p>The trial did not justify a wholesale rewrite. It exposed one phrase that needs more direct evidence.</p>
+<div class="rubric-inline-diff" role="group" aria-label="Prepared wording revision">
+<div><span>v2</span><p>“The wheel turns without continuous scraping.”</p></div>
+<div><span>v3</span><p>“With the lever released, a visible gap returns at both pads and neither pad remains against the rim.”</p></div>
+</div>
+</div>
+<div>
+<h4>Repeat the checks that matter</h4>
+<ol class="rubric-number-list">
+  <li>Write <code>bicycle-brake-rubric-v3.yaml</code>; keep v1 and v2.</li>
+  <li>Validate required fields, evidence mode, and contiguous <code>Score1</code>…<code>ScoreN</code> ordering.</li>
+  <li>Repeat the synthetic trial, including borderline cases.</li>
+  <li>Ask a bicycle-maintenance expert and independent reviewers to test the wording.</li>
+</ol>
+</div>
+</div>
+<div class="rubric-takeaway"><strong>Keep the evidence boundary:</strong> if the view or observation log does not support a score, mark the item <code>unscorable: true</code>, explain why, and route it for review. Do not turn missing evidence into a pass or a fail.</div>
+<p class="rubric-prepared-label">Prepared revision plan · not an executed transform or validation result</p>
+</section>
+
+<section id="ready" class="rubric-step-panel" role="tabpanel" aria-labelledby="rubric-tab-ready" tabindex="0" data-rubric-panel="ready" data-title="Check readiness with clear boundaries" data-summary="A rubric is ready only when its purpose, evidence, anchors, safety rules, version, and human approval are all explicit.">
+<div class="rubric-step-kicker">Step 8 · Ready</div>
+<div class="rubric-step-layout">
+<div>
+<h3>Before approval, confirm</h3>
+<ul class="rubric-ready-list">
+  <li><span aria-hidden="true">•</span><div><strong>Purpose</strong><p>Confirm the task and intended use are stated.</p></div></li>
+  <li><span aria-hidden="true">•</span><div><strong>Evidence</strong><p>Confirm each score points to something a reviewer can observe.</p></div></li>
+  <li><span aria-hidden="true">•</span><div><strong>Boundaries</strong><p>Confirm safety stops and unscorable-evidence handling are explicit.</p></div></li>
+  <li><span aria-hidden="true">•</span><div><strong>Version</strong><p>Confirm the candidate file and its history are identifiable.</p></div></li>
+  <li><span aria-hidden="true">•</span><div><strong>People</strong><p>Obtain sign-off from domain experts and intended reviewers.</p></div></li>
+</ul>
+</div>
+<div class="rubric-handoff-card">
+<span>After approval</span>
+<h4>Hand the rubric to the assessment workflow</h4>
+<p>The approved artifact can be uploaded or mapped for use in MAPLES and OASIS. That connected handoff is a separate operation and may invoke services; it is not performed by this guide.</p>
+<a href="maples.qmd">See the MAPLES review tour</a>
+</div>
+</div>
+<div class="rubric-takeaway"><strong>Ready does not mean frozen.</strong> Keep the rubric version tied to its evidence and revisit it when reviewers disagree, the task changes, or new failure cases appear.</div>
+</section>
+
+```{=html}
+<div class="rubric-guide-controls">
+<button type="button" class="tour-button" data-rubric-previous disabled><span aria-hidden="true">←</span> Previous step</button>
+<span data-rubric-count aria-hidden="true">1 of 8</span>
+<button type="button" class="tour-button tour-button-primary" data-rubric-next>Next step <span aria-hidden="true">→</span></button>
+<a class="rubric-deep-link" data-rubric-deep-link href="#baseline">Link to this step</a>
+</div>
+```
+
+<div class="visually-hidden" data-rubric-live aria-live="polite"></div>
+
+<noscript><p class="rubric-noscript">JavaScript is off, so all eight steps are shown in order. No content is missing.</p></noscript>
+:::
+
+## Where this fits
+
+::: {.rubric-family-grid}
+::: {.rubric-family-card}
+### Rubric Maker
+
+The [public Rubric Maker v0.1.0 plugin](https://ut-real-ai-project-maples.com/mt-docs/rubric-maker-skill/) is an installable agent skill bundle for creating, importing, reviewing, transforming, validating, and testing OSCE rubric artifacts. The public package lists Codex CLI and Claude Code as supported runtimes and an academic-research-only license.
+:::
+
+::: {.rubric-family-card}
+### Wayfinder Rubric Studio
+
+Wayfinder Rubric Studio is the MAPLES web experience for assisted rubric creation and refinement. Its visible compare-and-decide workflow is shown in the interns’ [public article](https://ut-real-ai-project-maples.com/wayfinder-rubric-authoring-demo/) and [YouTube video](https://www.youtube.com/watch?v=MKwseFKuFLs).
+:::
+
+::: {.rubric-family-card}
+### SimRubrics
+
+SimRubrics is a separate research application for rubric development. It is part of the broader OASIS family, but this click-through is not a SimRubrics screen or a claim that MAPLES evolved from it.
+:::
+:::
+
+## Method and content notes
+
+This click-through follows the public [MAPLES Toolkit marketplace](https://ut-real-ai-project-maples.com/mt-docs/) and [Rubric Maker Skills catalog](https://ut-real-ai-project-maples.com/mt-docs/rubric-maker-skill/), with the workflow locked to the released `rubric-maker-skill/v0.1.0` package. It uses released skills for faithful import, review, transform, dry-run grading, and dry-run evaluation; it does not present unreleased capabilities.
+
+All rubric wording, walkthrough suggestion labels, observations, scores, decisions, and revision notes on this page were newly authored for the bicycle example with Codex assistance. They contain no private rubric wording, private outputs, clinical data, learner data, or real-person data. They illustrate how to reason about a rubric; they are not outputs from a recorded Rubric Maker review, transform, or grading run, and they do not show that Rubric Maker validated this particular result.
+
+[Open the exact v0.1.0 release](https://github.com/JamiesonLabUTSW/maples-toolkit/releases/tag/rubric-maker-skill%2Fv0.1.0) · [Browse every OASIS tour](explore.qmd) · [Return home](index.qmd)
+
+<script src="rubric-guide.js" defer></script>
