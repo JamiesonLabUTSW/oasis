@@ -11,7 +11,7 @@ project:
 
 website:
   title: OASIS
-  description: "Project information, guided product tours, recorded software demonstrations, and the OASIS technical report"
+  description: "Project information, interactive guides, recorded product tours, and the OASIS technical report"
   site-url: https://jamiesonlabutsw.github.io/oasis/
   search: false
   favicon: images/oasis-favicon.png
@@ -34,6 +34,8 @@ website:
             text: Elephant ingestion
           - href: maples.qmd
             text: MAPLES
+          - href: rubric.qmd
+            text: Improve a rubric
       - href: paper/paper.html
         text: Technical Report
       - href: paper/OASIS_technical_report.pdf

@@ -1,7 +1,7 @@
 ---
 title: "OASIS: Open Assessment and Scoring Infrastructure Stack"
 subtitle: "Rubric-based multimodal assessment using large language models"
-description: "Project information, guided product tours, recorded software demonstrations, and technical report for OASIS"
+description: "Project information, interactive guides, recorded product tours, and technical report for OASIS"
 image: images/oasis-tui-tour-social.jpg
 page-layout: article
 ---
@@ -92,6 +92,18 @@ Start with an agent-prepared manifest, let OASIS validate and preview it, pause 
 [Browse all guided tours](explore.qmd)
 :::
 
+::: {.rubric-home-callout}
+::: {.eyebrow}
+New interactive guide
+:::
+
+### Improve a rubric, one decision at a time
+
+Start with an intentionally vague bicycle brake-adjustment rubric. Focus one scoring problem, review it through six quality lenses, compare four prepared suggestions, trial clearer anchors on synthetic observations, and keep every revision visible. It is an illustrative click-through—not a recorded Rubric Maker or grading run.
+
+[Start the rubric improvement guide](rubric.qmd){.tour-cta}
+:::
+
 ## Technical report
 
 For readers who want the details, the report explains the architecture, how rubrics become model prompts, how each media type is graded, how the command-line and agent interfaces work, and how OASIS records evidence.
@@ -109,6 +121,6 @@ MAPLES is the web application for grading and review. Wayfinder Rubric Studio he
 
 ## Publication scope
 
-This publication includes project information, guided tours, recorded demonstrations, and the technical report. Each tour explains what data it uses and whether anything was connected live. It does not yet include application source code, binaries, installation packages, sample datasets, or a tagged software release; any future release will state exactly what it contains and which terms apply.
+This publication includes project information, interactive guides, recorded demonstrations, and the technical report. Each experience explains what data it uses and whether anything was connected live. It does not yet include application source code, binaries, installation packages, sample datasets, or a tagged software release; any future release will state exactly what it contains and which terms apply.
 
 <script src="homepage-terminal.js" defer></script>

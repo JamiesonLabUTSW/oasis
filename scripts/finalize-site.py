@@ -49,6 +49,10 @@ def fingerprint_project_assets() -> None:
             f"rendered homepage terminal runtime is missing: {homepage_runtime}"
         )
     homepage_runtime_version = digest(homepage_runtime)[:12]
+    rubric_runtime = OUTPUT / "rubric-guide.js"
+    if not rubric_runtime.is_file():
+        raise SystemExit(f"rendered rubric guide runtime is missing: {rubric_runtime}")
+    rubric_runtime_version = digest(rubric_runtime)[:12]
     project_pages = sorted(OUTPUT.glob("*.html"))
     if not project_pages:
         raise SystemExit("no rendered project pages found for stylesheet fingerprinting")
@@ -80,6 +84,17 @@ def fingerprint_project_assets() -> None:
                     'src="homepage-terminal.js'
                     f'?v={homepage_runtime_version}"'
                 ),
+            )
+        rubric_runtime_original = 'src="rubric-guide.js"'
+        rubric_runtime_count = content.count(rubric_runtime_original)
+        if rubric_runtime_count > 1:
+            raise SystemExit(
+                f"expected at most one rubric guide runtime link in {page}"
+            )
+        if rubric_runtime_count == 1:
+            content = content.replace(
+                rubric_runtime_original,
+                f'src="rubric-guide.js?v={rubric_runtime_version}"',
             )
         page.write_text(content, encoding="utf-8")
 

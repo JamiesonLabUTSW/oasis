@@ -4,7 +4,7 @@
   "canonical_url": "https://jamiesonlabutsw.github.io/oasis/",
   "repository_url": "https://github.com/JamiesonLabUTSW/oasis",
   "site_updated_at": "2026-08-20",
-  "scope": "project information, guided product tours, recorded software demonstrations, and technical report only",
+  "scope": "project information, interactive guides, recorded product tours, and technical report only",
   "application_source_included": false,
   "installable_software_included": false,
   "software_demonstrations": {
@@ -16,6 +16,27 @@
     "data_classification": "declared per tour"
   },
   "tour_overview": "explore.html",
+  "interactive_guides": [
+    {
+      "id": "rubric-improvement",
+      "title": "Improve a rubric, one decision at a time",
+      "path": "rubric.html",
+      "status": "interactive",
+      "recorded": false,
+      "live_service": false,
+      "visitor_network_calls": false,
+      "rubric_maker_skill_run": false,
+      "recorded_grading_run": false,
+      "editorial_assistance": "Codex",
+      "data_classification": "newly-authored-synthetic",
+      "real_person_data": false,
+      "example_domain": "bicycle maintenance",
+      "method": "Rubric Maker v0.1.0",
+      "documented_scope": "OSCE-focused rubric workflows",
+      "example_within_documented_scope": false,
+      "step_count": 8
+    }
+  ],
   "tours": [
     {
       "id": "cli-tui",
