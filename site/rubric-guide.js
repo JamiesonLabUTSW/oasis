@@ -14,6 +14,13 @@
   const next = guide.querySelector("[data-rubric-next]");
   const deepLink = guide.querySelector("[data-rubric-deep-link]");
   const live = guide.querySelector("[data-rubric-live]");
+  const evolutionNodes = Array.from(guide.querySelectorAll("[data-rubric-evolution-node]"));
+  const evolutionCaption = guide.querySelector("[data-rubric-evolution-caption]");
+  const viewButtons = Array.from(guide.querySelectorAll("[data-rubric-candidate-view]"));
+  const anchors = Array.from(guide.querySelectorAll("[data-rubric-anchor]"));
+  const decisionNote = guide.querySelector("[data-rubric-decision]");
+  const v2Status = guide.querySelector("[data-rubric-v2-status]");
+  const versionLabel = guide.querySelector("[data-rubric-version-label]");
   const stepIds = panels.map((panel) => panel.dataset.rubricPanel);
 
   if (
@@ -54,8 +61,16 @@
 
     const panel = panels[safeIndex];
     const stepId = stepIds[safeIndex];
+    const evolutionStage = Number(panel.dataset.evolutionStage || 0);
     if (title) title.textContent = panel.dataset.title || "Improve the rubric";
     if (summary) summary.textContent = panel.dataset.summary || "";
+    evolutionNodes.forEach((node, index) => {
+      node.dataset.state = index < evolutionStage ? "complete" : index === evolutionStage ? "current" : "upcoming";
+      node.querySelector("[data-rubric-evolution-state]").textContent = index < evolutionStage ? "Complete" : index === evolutionStage ? "Now showing" : "Ahead";
+      if (index === evolutionStage) node.setAttribute("aria-current", "step");
+      else node.removeAttribute("aria-current");
+    });
+    if (evolutionCaption) evolutionCaption.textContent = `Now showing: ${panel.dataset.evolutionLabel}.`;
     if (progress) progress.style.width = `${((safeIndex + 1) / panels.length) * 100}%`;
     if (count) count.textContent = `${safeIndex + 1} of ${panels.length}`;
     if (previous) previous.disabled = safeIndex === 0;
@@ -74,7 +89,10 @@
       window.history.pushState(null, "", `#${stepId}`);
     }
     if (options.focus === "tab") tabs[safeIndex].focus();
-    if (options.focus === "panel") panel.focus({ preventScroll: true });
+    if (options.focus === "panel") {
+      panel.focus();
+      panel.scrollIntoView({ block: "start", inline: "nearest" });
+    }
     if (options.announce && live) {
       live.textContent = `Step ${safeIndex + 1} of ${panels.length}: ${panel.dataset.title}`;
     }
@@ -97,16 +115,25 @@
   if (previous) previous.addEventListener("click", () => show(currentIndex - 1, { updateHash: true, focus: "panel", announce: true }));
   if (next) next.addEventListener("click", () => show(currentIndex + 1, { updateHash: true, focus: "panel", announce: true }));
 
-  guide.querySelectorAll("[data-rubric-choice]").forEach((button) => {
+  function updateCandidate(version) {
+    const selected = new Set(version === "v2" ? ["RM-01", "RM-02", "RM-03"] : []);
+    anchors.forEach((anchor) => {
+      const applied = selected.has(anchor.dataset.rubricAnchor);
+      anchor.dataset.changeState = applied ? "applied" : "original";
+      anchor.querySelector("[data-if-applied]").hidden = !applied;
+      anchor.querySelector("[data-if-original]").hidden = applied;
+      anchor.querySelector("dt span").textContent = applied ? "Changed in candidate v2" : "Preserved from v1";
+    });
+    const isV2 = version === "v2";
+    if (versionLabel) versionLabel.textContent = isV2 ? "v2 · walkthrough candidate" : "v1 · preserved fields";
+    if (v2Status) v2Status.textContent = isV2 ? "3 prepared changes applied · not saved or validated" : "Original fields shown · no candidate version created";
+    if (decisionNote) decisionNote.textContent = isV2 ? "Walkthrough candidate v2: RM-01, RM-02, and RM-03 applied; RM-04 left out. Nothing is saved or validated." : "Preserved v1 fields shown. Apply the prepared choices to return to the walkthrough v2 candidate.";
+  }
+
+  viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const pressed = button.getAttribute("aria-pressed") === "true";
-      button.setAttribute("aria-pressed", String(!pressed));
-      const selected = Array.from(guide.querySelectorAll('[data-rubric-choice][aria-pressed="true"]'))
-        .map((item) => item.dataset.rubricChoice);
-      const note = guide.querySelector("[data-rubric-decision]");
-      if (note) note.textContent = selected.length
-        ? `Walkthrough selection: apply ${selected.join(" and ")}. Nothing is saved.`
-        : "Walkthrough selection: apply neither suggestion. Nothing is saved.";
+      viewButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      updateCandidate(button.dataset.rubricCandidateView);
     });
   });
 
@@ -114,5 +141,6 @@
     const index = indexFromHash();
     if (index !== null) show(index, { focus: "panel", announce: true });
   });
+  updateCandidate("v2");
   show(indexFromHash() ?? 0);
 })();

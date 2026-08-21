@@ -34,6 +34,12 @@
       "method": "Rubric Maker v0.1.0",
       "documented_scope": "OSCE-focused rubric workflows",
       "example_within_documented_scope": false,
+      "feedback_display": "prepared-editorial-rubric-maker-style",
+      "prepared_feedback_rounds": 2,
+      "rubric_versions_shown": ["v1", "v2", "v3"],
+      "dynamic_candidate_preview": true,
+      "expert_approval_performed": false,
+      "evolution_stage_count": 5,
       "step_count": 8
     }
   ],

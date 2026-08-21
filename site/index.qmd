@@ -99,7 +99,7 @@ New interactive guide
 
 ### Improve a rubric, one decision at a time
 
-Start with an intentionally vague bicycle brake-adjustment rubric. Focus one scoring problem, review it through six quality lenses, compare four prepared suggestions, trial clearer anchors on synthetic observations, and keep every revision visible. It is an illustrative click-through—not a recorded Rubric Maker or grading run.
+Watch an intentionally vague bicycle brake-adjustment rubric evolve from v1 to v3. Prepared Rubric Maker-style feedback leads to a human-selected v2; a synthetic dry run exposes one more scoring problem; and that feedback produces a focused v3 candidate. Every source and version stays visible. It is an illustrative click-through—not a recorded Rubric Maker or grading run.
 
 [Start the rubric improvement guide](rubric.qmd){.tour-cta}
 :::

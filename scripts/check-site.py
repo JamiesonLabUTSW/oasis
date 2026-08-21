@@ -107,7 +107,11 @@ class RubricGuideStructureParser(HTMLParser):
         self.tabs: list[dict[str, str]] = []
         self.panels: list[dict[str, str]] = []
         self.media: list[str] = []
-        self.choices: list[dict[str, str]] = []
+        self.candidate_views: list[dict[str, str]] = []
+        self.evolution_nodes: list[dict[str, str]] = []
+        self.evolution_lists: list[dict[str, str]] = []
+        self.evolution_states: list[dict[str, str]] = []
+        self.anchors: list[dict[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {key: value or "" for key, value in attrs}
@@ -126,8 +130,16 @@ class RubricGuideStructureParser(HTMLParser):
             self.tabs.append(values)
         if "data-rubric-panel" in values:
             self.panels.append(values)
-        if "data-rubric-choice" in values:
-            self.choices.append(values)
+        if "data-rubric-candidate-view" in values:
+            self.candidate_views.append(values)
+        if "data-rubric-evolution-node" in values:
+            self.evolution_nodes.append(values)
+        if tag == "ol" and "rubric-evolution" in values.get("class", "").split():
+            self.evolution_lists.append(values)
+        if "data-rubric-evolution-state" in values:
+            self.evolution_states.append(values)
+        if "data-rubric-anchor" in values:
+            self.anchors.append(values)
         if tag in self.MEDIA_ELEMENTS:
             self.media.append(tag)
 
@@ -1856,6 +1868,9 @@ def check_contract(
         "Browse all guided tours",
         "New interactive guide",
         "Improve a rubric, one decision at a time",
+        "evolve from v1 to v3",
+        "Prepared Rubric Maker-style feedback",
+        "synthetic dry run exposes one more scoring problem",
         "Start the rubric improvement guide",
         'href="./rubric.html"',
         "not a recorded Rubric Maker or grading run",
@@ -2334,6 +2349,8 @@ def check_contract(
         'href="https://ut-real-ai-project-maples.com/sail-2026-maples-poster-walkthrough/"',
         "Available now · interactive guide",
         "Open the rubric improvement guide",
+        "prepared Rubric Maker-style feedback",
+        "persistent version strip keeps every refinement and its source visible",
         'href="./rubric.html"',
     ):
         if marker not in explore:
@@ -2379,6 +2396,7 @@ def check_contract(
         raise SystemExit("rubric guide panels are missing or out of order")
     if len(rubric_structure.tabs) != 8 or len(rubric_structure.panels) != 8:
         raise SystemExit("rubric guide must contain exactly eight tabs and panels")
+    evolution_stages = ["0", "0", "1", "1", "2", "3", "4", "4"]
     for index, (tab, panel) in enumerate(
         zip(rubric_structure.tabs, rubric_structure.panels, strict=True)
     ):
@@ -2397,18 +2415,73 @@ def check_contract(
             or "hidden" in panel
             or not panel.get("data-title")
             or not panel.get("data-summary")
+            or panel.get("data-evolution-stage") != evolution_stages[index]
+            or not panel.get("data-evolution-label")
         ):
             raise SystemExit(f"rubric guide ARIA contract is invalid: {expected_step}")
+    if [node.get("data-rubric-evolution-node") for node in rubric_structure.evolution_nodes] != [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+    ]:
+        raise SystemExit("rubric evolution stages are missing or out of order")
     if (
-        [choice.get("data-rubric-choice") for choice in rubric_structure.choices]
-        != ["RM-01", "RM-02", "RM-03", "RM-04"]
-        or [choice.get("aria-pressed") for choice in rubric_structure.choices]
-        != ["true", "true", "true", "false"]
+        len(rubric_structure.evolution_lists) != 1
+        or rubric_structure.evolution_lists[0].get("aria-label")
+        != "Rubric evolution from version 1 to version 3"
+        or len(rubric_structure.evolution_states) != 5
     ):
-        raise SystemExit("rubric walkthrough decision controls are invalid")
+        raise SystemExit("rubric evolution ordered-list semantics are invalid")
+    if (
+        [view.get("data-rubric-candidate-view") for view in rubric_structure.candidate_views]
+        != ["v1", "v2"]
+        or [view.get("aria-pressed") for view in rubric_structure.candidate_views]
+        != ["false", "true"]
+    ):
+        raise SystemExit("rubric walkthrough version-comparison controls are invalid")
+    if [anchor.get("data-rubric-anchor") for anchor in rubric_structure.anchors] != [
+        "RM-01",
+        "RM-02",
+        "RM-03",
+        "RM-04",
+    ]:
+        raise SystemExit("rubric v2 candidate preview anchors are invalid")
+    if rubric.count("data-rubric-evolution-state") != 5:
+        raise SystemExit("rubric evolution state labels are incomplete")
+    anchor_sections = re.findall(
+        r'<div data-rubric-anchor="(RM-\d+)"[^>]*>(.*?)</div>',
+        rubric,
+        flags=re.DOTALL,
+    )
+    if [anchor_id for anchor_id, _section in anchor_sections] != [
+        "RM-01",
+        "RM-02",
+        "RM-03",
+        "RM-04",
+    ]:
+        raise SystemExit("rubric dynamic anchor sections are incomplete")
+    for anchor_id, section in anchor_sections:
+        if (
+            not re.search(r"<dt>.*?<span>", section, flags=re.DOTALL)
+            or "data-if-applied" not in section
+            or "data-if-original" not in section
+        ):
+            raise SystemExit(
+                f"rubric dynamic anchor children are incomplete: {anchor_id}"
+            )
+    if "data-rubric-choice" in rubric:
+        raise SystemExit("rubric guide must use the canonical v1/v2 comparison path")
 
     rubric_markers = (
         "Prepared example · no Rubric Maker run",
+        "Rubric evolution",
+        "Full path: v1 baseline → prepared review feedback → human-selected v2 → prepared dry-run feedback → v3 candidate",
+        'aria-label="Rubric evolution from version 1 to version 3"',
+        "Prepared · not a skill run",
+        "Prepared · not a grading run",
+        "Expert approval still required",
         "outside the plugin’s documented OSCE scope",
         "Using the page does not start an agent or model, run a grader, or contact MAPLES or OASIS",
         "rubric-import",
@@ -2429,6 +2502,10 @@ def check_contract(
         "RM-02 · Score2 middle anchor",
         "RM-03 · Score3 passing anchor",
         "RM-04 · Technique measurement",
+        "1:ScoringLogic.Score1",
+        "1:ScoringLogic.Score2",
+        "1:ScoringLogic.Score3",
+        "1:Technique",
         "one structured suggestion for each field or score anchor being changed",
         "RM-01 through RM-04 are editorial walkthrough labels",
         "Score 1: <code>incorrect</code>",
@@ -2436,9 +2513,6 @@ def check_contract(
         "Score 3: <code>correct</code>",
         "<code>Technique</code> is empty in the prepared source",
         "Score 3 when both pads contact the rim",
-        "use 1 and stop when the observation shows a damaged rim",
-        "use 2 when no stop condition is present",
-        "use 3 only when every passing check is visible",
         "<code>unscorable: true</code>",
         "This is not a fourth rubric score anchor",
         "evidence mode, and contiguous <code>Score1</code>…<code>ScoreN</code> ordering",
@@ -2446,17 +2520,37 @@ def check_contract(
         "3 · meets",
         "1 · stop",
         "2 · revise",
+        "T-04 · The right pad brushes once per wheel revolution",
+        "Prepared feedback F1",
+        "Replace “release fully” and “the wheel turns without continuous scraping”",
+        "v2 · Score3",
+        "Both pads contact the rim below the tire, release fully, the wheel turns without continuous scraping, and the lever does not reach the handlebar",
+        "v3 · Score3",
+        "after release, a visible gap returns at both pads and remains for one hand turn; the lever does not reach the handlebar",
+        "invites a 2-versus-3 disagreement",
         "not an executed transform or validation result",
         "Before approval, confirm",
         "Obtain sign-off from domain experts and intended reviewers",
         "walkthrough controls only",
         "name the suggestions or rubric locations to apply",
-        "prepared v2 below stays fixed to the initial RM-01, RM-02, and RM-03 decision",
-        "a visible gap returns at both pads and neither pad remains against the rim",
+        "For this prepared path, the human decision is fixed and visible",
+        "Use them to compare the preserved v1 fields with the resulting v2 candidate",
+        'data-rubric-candidate-view="v1"',
+        'data-rubric-candidate-view="v2"',
+        "v2 · walkthrough candidate",
+        "3 prepared changes applied · not saved or validated",
+        "Focus criterion · Adjust the brake correctly",
+        "Changed in v2",
+        "Prepared T-04 rerun",
+        "a visible gap returns at both pads and remains for one hand turn",
+        "v3 · prepared candidate",
+        "Refined after T-04",
         "do not imitate native Rubric Maker, Wayfinder, MAPLES, or SimRubrics controls",
         "Wayfinder Rubric Studio is the MAPLES web experience",
         "SimRubrics is a separate research application",
         "or a claim that MAPLES evolved from it",
+        "It mirrors the released skills’ sequence",
+        "it does not run those skills or present unreleased capabilities",
         "academic-research-only license",
         "JavaScript is off, so all eight steps are shown in order",
         'href="https://ut-real-ai-project-maples.com/mt-docs/"',
@@ -2471,6 +2565,14 @@ def check_contract(
     for marker in rubric_markers:
         if marker not in rubric:
             raise SystemExit(f"rubric guide truth or navigation marker missing: {marker}")
+    for full_snapshot_marker in (
+        "<strong>Prepare safely</strong><span>Unchanged from v1</span>",
+        "<strong>Test the brake</strong><span>Unchanged from v1</span>",
+    ):
+        if rubric.count(full_snapshot_marker) != 2:
+            raise SystemExit(
+                f"rubric v2/v3 full snapshot context is invalid: {full_snapshot_marker}"
+            )
     for forbidden in (
         "zero-shot",
         "oasis rubric check",
@@ -2487,6 +2589,7 @@ def check_contract(
         "name the suggestion IDs",
         "Review suggestions by ID",
         "wheel turns freely by hand",
+        "It uses released skills",
     ):
         if forbidden in rubric:
             raise SystemExit(f"rubric guide crosses its method boundary: {forbidden}")
@@ -2494,6 +2597,30 @@ def check_contract(
         raise SystemExit("rubric guide must not load a third-party script")
     if re.search(r'<(?:iframe|video|audio|picture)\b', rubric):
         raise SystemExit("rubric page must not embed third-party or motion media")
+    rubric_subresources = re.findall(
+        r'<(?:script|link|img|source|video|audio|iframe)\b[^>]*(?:src|href)="([^"]+)"',
+        rubric,
+        flags=re.IGNORECASE,
+    )
+    for resource in rubric_subresources:
+        if re.match(r"^(?:https?:)?//", resource, flags=re.IGNORECASE):
+            raise SystemExit(f"rubric page loads a remote subresource: {resource}")
+        if resource.startswith("data:"):
+            continue
+        resource_path = resource.split("?", 1)[0].split("#", 1)[0].removeprefix("./")
+        resolved_resource = (OUTPUT / resource_path).resolve()
+        if OUTPUT.resolve() not in resolved_resource.parents or not resolved_resource.is_file():
+            raise SystemExit(f"rubric page subresource is missing or unsafe: {resource}")
+        if resolved_resource.suffix == ".css":
+            resource_css = resolved_resource.read_text(encoding="utf-8")
+            if re.search(
+                r"(?:@import\s+(?:url\()?|url\()\s*[\"']?(?:https?:)?//",
+                resource_css,
+                flags=re.IGNORECASE,
+            ):
+                raise SystemExit(
+                    f"rubric stylesheet loads a remote dependency: {resource}"
+                )
 
     rubric_runtime_links = re.findall(
         r'src="rubric-guide\.js\?v=([0-9a-f]{12})"',
@@ -2504,14 +2631,25 @@ def check_contract(
         raise SystemExit("rubric guide runtime is not fingerprinted")
     if rubric_runtime_links[0] != digest(rubric_runtime)[:12]:
         raise SystemExit("rubric guide runtime fingerprint is stale")
-    if rubric_runtime.stat().st_size > 6_000:
-        raise SystemExit("rubric guide runtime exceeds its 6 KB budget")
+    if rubric_runtime.stat().st_size > 7_000:
+        raise SystemExit("rubric guide runtime exceeds its 7 KB budget")
     rubric_runtime_text = rubric_runtime.read_text(encoding="utf-8")
+    if "data-rubric-choice" in rubric_runtime_text:
+        raise SystemExit("rubric runtime must not create arbitrary downstream choices")
     for marker in (
         'guide.setAttribute("data-rubric-enhanced", "")',
         'panel.setAttribute("aria-hidden", String(!active))',
         'tab.setAttribute("aria-selected", String(active))',
-        'button.setAttribute("aria-pressed", String(!pressed))',
+        'item.setAttribute("aria-pressed", String(item === button))',
+        'node.setAttribute("aria-current", "step")',
+        'node.removeAttribute("aria-current")',
+        'anchor.dataset.changeState = applied ? "applied" : "original"',
+        'anchor.querySelector("[data-if-applied]").hidden = !applied',
+        'version === "v2" ? ["RM-01", "RM-02", "RM-03"] : []',
+        '"Original fields shown · no candidate version created"',
+        'updateCandidate(button.dataset.rubricCandidateView)',
+        'updateCandidate("v2")',
+        'panel.scrollIntoView({ block: "start", inline: "nearest" })',
         'event.key === "ArrowRight"',
         'event.key === "Home"',
         'event.key === "End"',
@@ -2523,6 +2661,8 @@ def check_contract(
     for network_api in ("fetch(", "XMLHttpRequest", "WebSocket", "sendBeacon"):
         if network_api in rubric_runtime_text:
             raise SystemExit(f"rubric guide runtime must remain offline: {network_api}")
+    if "preventScroll" in rubric_runtime_text:
+        raise SystemExit("rubric guide sequential navigation must reveal the new panel start")
     for invalid_tab_key in ('event.key === "ArrowDown"', 'event.key === "ArrowUp"'):
         if invalid_tab_key in rubric_runtime_text:
             raise SystemExit(
@@ -2536,9 +2676,18 @@ def check_contract(
         r"\.rubric-step-tabs button:focus-visible,[^{]*\{[^}]*outline:\s*3px solid #79cfff;",
         r"\.rubric-decision-controls\s*\{[^}]*display:\s*none;",
         r"\[data-rubric-guide\]\[data-rubric-enhanced\]\s+\.rubric-decision-controls\s*\{[^}]*display:\s*grid;",
+        r"\.rubric-decision-list li\s*\{[^}]*display:\s*flex;[^}]*flex-wrap:\s*wrap;",
         r"\.rubric-step-layout\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);",
+        r"\.rubric-step-panel\s*\{[^}]*scroll-margin-top:\s*5rem;",
         r"\.rubric-step-panel:focus-visible\s*\{[^}]*box-shadow:\s*inset 0 0 0 3px #79cfff;",
         r"\.rubric-deep-link\s*\{[^}]*min-height:\s*44px;",
+        r"\.rubric-evolution\s*\{[^}]*grid-template-columns:\s*repeat\(5, minmax\(0, 1fr\)\);",
+        r"\.rubric-evolution li\s*\{[^}]*min-width:\s*0;[^}]*min-height:\s*7\.3rem;",
+        r"\.rubric-evolution li\[data-state=\"current\"\]\s*\{[^}]*border-color:\s*#ffe09a;",
+        r"\.rubric-feedback-source\s*\{[^}]*border:\s*1px solid rgba\(156, 221, 225, 0\.24\);",
+        r"\.rubric-anchor-preview \[data-change-state=\"applied\"\]\s*\{[^}]*box-shadow:\s*inset 4px 0 0 #ffe09a;",
+        r"\.rubric-step-panel code:not\(\.sourceCode\)\s*\{[^}]*color:\s*#ffe09a;[^}]*background:\s*#071521;",
+        r"@media \(max-width:\s*768px\)[\s\S]*?\.rubric-evolution\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);",
         r"\.rubric-guide \.eyebrow,[^{]*\{[^}]*color:\s*#e0876a;",
         r"\.rubric-step-panel code\s*\{[^}]*white-space:\s*normal;[^}]*word-break:\s*break-all;",
     ):
@@ -2686,6 +2835,12 @@ def check_contract(
             "method",
             "documented_scope",
             "example_within_documented_scope",
+            "feedback_display",
+            "prepared_feedback_rounds",
+            "rubric_versions_shown",
+            "dynamic_candidate_preview",
+            "expert_approval_performed",
+            "evolution_stage_count",
             "step_count",
         }
         or rubric_guide.get("id") != "rubric-improvement"
@@ -2704,6 +2859,13 @@ def check_contract(
         or rubric_guide.get("method") != "Rubric Maker v0.1.0"
         or rubric_guide.get("documented_scope") != "OSCE-focused rubric workflows"
         or rubric_guide.get("example_within_documented_scope") is not False
+        or rubric_guide.get("feedback_display")
+        != "prepared-editorial-rubric-maker-style"
+        or rubric_guide.get("prepared_feedback_rounds") != 2
+        or rubric_guide.get("rubric_versions_shown") != ["v1", "v2", "v3"]
+        or rubric_guide.get("dynamic_candidate_preview") is not True
+        or rubric_guide.get("expert_approval_performed") is not False
+        or rubric_guide.get("evolution_stage_count") != 5
         or rubric_guide.get("step_count") != 8
     ):
         raise SystemExit("publication rubric-guide truth boundary is invalid")

@@ -91,7 +91,7 @@ Available now · interactive guide
 
 ### Author and refine a rubric
 
-Use a newly authored bicycle maintenance example to focus one vague scoring decision, review six quality pillars, compare prepared suggestions, trial revised anchors on synthetic observations, and keep the final choice with a person.
+Follow a newly authored bicycle maintenance rubric from v1 through prepared Rubric Maker-style feedback, a human-selected v2, synthetic dry-run feedback, and a focused v3 candidate. The persistent version strip keeps every refinement and its source visible.
 
 [Open the rubric improvement guide](rubric.qmd){.tour-cta}
 :::
