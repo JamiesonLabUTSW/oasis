@@ -28,6 +28,7 @@ artifact.
 
 ## Technical report
 
+- [Read and cite the preprint on arXiv](https://arxiv.org/abs/2609.09180)
 - [Read the technical report online](https://jamiesonlabutsw.github.io/oasis/paper/paper.html)
 - [Download the technical report (PDF)](https://jamiesonlabutsw.github.io/oasis/paper/OASIS_technical_report.pdf)
 

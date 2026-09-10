@@ -108,6 +108,7 @@ Watch an intentionally vague bicycle brake-adjustment rubric evolve from v1 to v
 
 For readers who want the details, the report explains the architecture, how rubrics become model prompts, how each media type is graded, how the command-line and agent interfaces work, and how OASIS records evidence.
 
+- [Read and cite the preprint on arXiv](https://arxiv.org/abs/2609.09180)
 - [Read the technical report online](paper/paper.html)
 - [Download the technical report (PDF)](paper/OASIS_technical_report.pdf)
 

@@ -2864,6 +2864,15 @@ def check_contract(
         raise SystemExit("homepage tour teasers are missing their 5:3 media contract")
 
     publication = json.loads((OUTPUT / "publication.json").read_text(encoding="utf-8"))
+    if publication.get("arxiv") != {
+        "id": "2609.09180",
+        "version": "v1",
+        "category": "cs.SE",
+        "url": "https://arxiv.org/abs/2609.09180",
+        "submitted_at": "2026-08-26T21:40:05Z",
+        "public_record_captured_at": "2026-09-09",
+    }:
+        raise SystemExit("publication arXiv record is missing or incorrect")
     demo = publication.get("software_demonstrations", {})
     if not (
         demo.get("recorded")
