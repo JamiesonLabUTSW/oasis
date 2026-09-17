@@ -40,6 +40,8 @@ website:
         text: Technical Report
       - href: paper/OASIS_technical_report.pdf
         text: PDF
+      - href: https://github.com/JamiesonLabUTSW/oasis-demo
+        text: Demo repository
     right:
       - icon: github
         href: https://github.com/JamiesonLabUTSW/oasis
@@ -50,6 +52,10 @@ website:
     right:
       - text: Technical report
         href: paper/paper.html
+      - text: Demo repository
+        href: https://github.com/JamiesonLabUTSW/oasis-demo
+      - text: arXiv preprint
+        href: https://arxiv.org/abs/2609.09180
       - text: Jamieson Lab at UT Southwestern
         href: https://labs.utsouthwestern.edu/jamieson-lab
       - text: Andrew Jamieson faculty profile
