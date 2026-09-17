@@ -114,6 +114,11 @@ For readers who want the details, the report explains the architecture, how rubr
 
 ## Related projects and demonstrations
 
+The separate [OASIS demo repository](https://github.com/JamiesonLabUTSW/oasis-demo)
+provides the public demo distribution entry point and frozen application-image
+references. Complete installation uses a separately supplied assisted kit; the
+demo repository states its current availability and terms.
+
 MAPLES is the web application for grading and review. Wayfinder Rubric Studio helps authors build rubrics inside MAPLES, while Wayfinder Operator is the related—but separate—CLI/TUI experience.
 
 - [Explore UT-REAL, a multi-site MAPLES project](https://ut-real-ai-project-maples.com/)

@@ -34,6 +34,11 @@ artifact.
 
 ## Related projects and demonstrations
 
+The separate [OASIS demo repository](https://github.com/JamiesonLabUTSW/oasis-demo)
+is the public demo distribution entry point, with frozen application-image
+references and its own availability and license notices. Complete installation
+uses a separately supplied assisted kit.
+
 MAPLES is the platform's grading and review application. Wayfinder Rubric
 Studio is its authoring assistant; Wayfinder Operator is the CLI/TUI sibling.
 They share an ecosystem name but are not the same interface.
